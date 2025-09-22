@@ -1,0 +1,113 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+.navbar a:hover {
+    background: #555;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+/* Buttons */
+.btn, .btn-edit, .btn-delete {
+    display: inline-block;
+    background: #337ab7;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.btn-edit {
+    background: #f0ad4e;
+}
+
+.btn-delete {
+    background: #d9534f;
+}
+
+/* Forms */
+form {
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type='text'],
+form input[type='number'],
+form input[type='date'] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #337ab7;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Errors */
+.errors {
+    background: #f2dede;
+    color: #a94442;
+    padding: 10px;
+    border: 1px solid #ebccd1;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}

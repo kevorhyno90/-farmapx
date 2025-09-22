@@ -1,6 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { readData, writeData } = require('../utils/db'); // Import the new DB module
+const { body, validationResult } = require('express-validator');
+const { readData, writeData } = require('../utils/db');
+
+// --- Validation Rules ---
+const livestockValidationRules = [
+    body('type').not().isEmpty().withMessage('Type is required.').trim().escape(),
+    body('breed').not().isEmpty().withMessage('Breed is required.').trim().escape(),
+    body('quantity').isInt({ gt: 0 }).withMessage('Quantity must be a positive number.'),
+    body('health_status').not().isEmpty().withMessage('Health status is required.').trim().escape()
+];
 
 // --- Livestock Routes ---
 
@@ -12,55 +21,73 @@ router.get('/', (req, res) => {
 
 // 2. Show the form to add new livestock
 router.get('/add', (req, res) => {
-    res.render('livestock/add');
+    res.render('livestock/add', { errors: [], livestock: {} });
 });
 
 // 3. Handle the submission of the 'add' form
-router.post('/add', (req, res) => {
+router.post('/add', livestockValidationRules, (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).render('livestock/add', {
+            errors: errors.array(),
+            livestock: req.body
+        });
+    }
+
     const data = readData();
-    const newAnimal = {
-        id: `animal_${new Date().getTime()}`,
-        species: req.body.species,
+    const newLivestock = {
+        id: `livestock_${new Date().getTime()}`,
+        type: req.body.type,
         breed: req.body.breed,
-        birth_date: req.body.birth_date,
+        quantity: parseInt(req.body.quantity),
         health_status: req.body.health_status
     };
-    data.livestock.push(newAnimal);
+    data.livestock.push(newLivestock);
     writeData(data);
     res.redirect('/livestock');
 });
 
-// 4. Show the form to edit an animal
+// 4. Show the form to edit livestock
 router.get('/edit/:id', (req, res) => {
     const data = readData();
-    const animal = data.livestock.find(l => l.id === req.params.id);
-    if (animal) {
-        res.render('livestock/edit', { animal });
+    const livestock = data.livestock.find(l => l.id === req.params.id);
+    if (livestock) {
+        res.render('livestock/edit', { livestock, errors: [] });
     } else {
-        res.status(404).send('Animal not found');
+        res.status(404).send('Livestock not found');
     }
 });
 
 // 5. Handle the submission of the 'edit' form
-router.post('/edit/:id', (req, res) => {
+router.post('/edit/:id', livestockValidationRules, (req, res) => {
+    const errors = validationResult(req);
     const data = readData();
-    const animalIndex = data.livestock.findIndex(l => l.id === req.params.id);
-    if (animalIndex !== -1) {
-        data.livestock[animalIndex] = {
-            id: req.params.id,
-            species: req.body.species,
-            breed: req.body.breed,
-            birth_date: req.body.birth_date,
-            health_status: req.body.health_status
-        };
-        writeData(data);
-        res.redirect('/livestock');
-    } else {
-        res.status(404).send('Animal not found');
+    const livestockIndex = data.livestock.findIndex(l => l.id === req.params.id);
+
+    if (livestockIndex === -1) {
+        return res.status(404).send('Livestock not found');
     }
+
+    if (!errors.isEmpty()) {
+        const livestock = { id: req.params.id, ...req.body };
+        return res.status(400).render('livestock/edit', {
+            errors: errors.array(),
+            livestock
+        });
+    }
+
+    data.livestock[livestockIndex] = {
+        id: req.params.id,
+        type: req.body.type,
+        breed: req.body.breed,
+        quantity: parseInt(req.body.quantity),
+        health_status: req.body.health_status
+    };
+    writeData(data);
+    res.redirect('/livestock');
 });
 
-// 6. Handle the deletion of an animal
+// 6. Handle the deletion of livestock
 router.post('/delete/:id', (req, res) => {
     let data = readData();
     data.livestock = data.livestock.filter(l => l.id !== req.params.id);

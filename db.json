@@ -1,76 +1,88 @@
+
 {
   "crops": [
     {
-      "id": "crop_1",
+      "id": "crop_1678886400000",
+      "name": "Tomatoes",
+      "planted_date": "2023-03-15",
+      "expected_harvest": "2023-07-20",
+      "status": "Growing"
+    },
+    {
+      "id": "crop_1679886400000",
       "name": "Corn",
-      "planted_date": "2024-05-15",
-      "expected_harvest": "2024-09-20",
+      "planted_date": "2023-04-01",
+      "expected_harvest": "2023-09-15",
       "status": "Growing"
     },
     {
-      "id": "crop_2",
-      "name": "Wheat",
-      "planted_date": "2024-04-10",
-      "expected_harvest": "2024-08-01",
+      "id": "crop_1680886400000",
+      "name": "Carrots",
+      "planted_date": "2023-02-20",
+      "expected_harvest": "2023-06-10",
       "status": "Harvested"
-    },
-    {
-      "id": "crop_3",
-      "name": "Soybeans",
-      "planted_date": "2024-05-20",
-      "expected_harvest": "2024-10-05",
-      "status": "Growing"
     }
   ],
   "livestock": [
     {
-      "id": "lvst_1",
-      "tag_id": "C-001",
-      "species": "Cow",
-      "last_health_check": "2024-07-10",
-      "status": "Healthy"
+      "id": "livestock_1681886400000",
+      "type": "Cattle",
+      "breed": "Holstein",
+      "quantity": 50,
+      "health_status": "Good"
     },
     {
-      "id": "lvst_2",
-      "tag_id": "S-012",
-      "species": "Sheep",
-      "last_health_check": "2024-07-05",
-      "status": "Requires Attention"
+      "id": "livestock_1682886400000",
+      "type": "Chickens",
+      "breed": "Leghorn",
+      "quantity": 200,
+      "health_status": "Excellent"
     }
   ],
   "inventory": [
     {
-      "id": "inv_1",
-      "item_name": "Fertilizer (50kg bags)",
-      "quantity": 150,
-      "last_restocked": "2024-06-20"
+      "id": "inv_1683886400000",
+      "item_name": "Tractor",
+      "category": "Machinery",
+      "quantity": 2,
+      "condition": "Good"
     },
     {
-      "id": "inv_2",
-      "item_name": "Animal Feed (25kg bags)",
-      "quantity": 80,
-      "last_restocked": "2024-07-01"
+      "id": "inv_1684886400000",
+      "item_name": "Fertilizer",
+      "category": "Supplies",
+      "quantity": 1000,
+      "condition": "New"
     },
     {
-      "id": "item_1758554221110",
-      "name": "tractor",
-      "quantity": 1
+      "id": "inv_1685886400000",
+      "item_name": "Harvested Carrots",
+      "category": "Produce",
+      "quantity": 500,
+      "condition": "Fresh"
     }
   ],
   "financials": [
     {
-      "id": "fin_1",
-      "type": "Expense",
-      "item": "Tractor Fuel",
-      "amount": 250.75,
-      "date": "2024-07-12"
+      "id": "fin_1686886400000",
+      "type": "income",
+      "category": "Produce Sale",
+      "amount": 1500,
+      "date": "2023-06-12"
     },
     {
-      "id": "fin_2",
-      "type": "Revenue",
-      "item": "Sale of Wheat",
-      "amount": 5500,
-      "date": "2024-08-05"
+      "id": "fin_1687886400000",
+      "type": "expense",
+      "category": "Feed",
+      "amount": 400,
+      "date": "2023-06-15"
+    },
+    {
+      "id": "fin_1688886400000",
+      "type": "expense",
+      "category": "Fuel",
+      "amount": 150,
+      "date": "2023-06-20"
     }
   ]
 }

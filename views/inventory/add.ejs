@@ -1,28 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Inventory</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <meta charset="UTF-8">
+    <title>Add Inventory Item</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
     <div class="container">
-        <h1>Add New Inventory</h1>
+        <h1>Add New Inventory Item</h1>
+        <% if (locals.errors && errors.length > 0) { %>
+            <div class="errors">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
         <form action="/inventory/add" method="POST">
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div>
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" required>
-            </div>
-            <div>
-                <label for="unit">Unit:</label>
-                <input type="text" id="unit" name="unit" required>
-            </div>
-            <button type="submit" class="btn">Add Item</button>
-            <a href="/" class="btn btn-back">Back to Dashboard</a>
+            <label for="item_name">Item Name:</label>
+            <input type="text" id="item_name" name="item_name" value="<%= locals.inventory ? inventory.item_name : '' %>" required>
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" value="<%= locals.inventory ? inventory.category : '' %>" required>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="<%= locals.inventory ? inventory.quantity : '' %>" required>
+
+            <label for="condition">Condition:</label>
+            <input type="text" id="condition" name="condition" value="<%= locals.inventory ? inventory.condition : '' %>" required>
+
+            <button type="submit">Add Item</button>
         </form>
     </div>
 </body>

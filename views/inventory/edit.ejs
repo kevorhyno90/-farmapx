@@ -1,28 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Edit Inventory</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <meta charset="UTF-8">
+    <title>Edit Inventory Item</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
     <div class="container">
         <h1>Edit Inventory Item</h1>
-        <form action="/inventory/edit/<%= item.id %>" method="POST">
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="<%= item.name %>" required>
+        <% if (locals.errors && errors.length > 0) { %>
+            <div class="errors">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
             </div>
-            <div>
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" value="<%= item.quantity %>" required>
-            </div>
-            <div>
-                <label for="unit">Unit:</label>
-                <input type="text" id="unit" name="unit" value="<%= item.unit %>" required>
-            </div>
-            <button type="submit" class="btn">Update Item</button>
-            <a href="/inventory" class="btn btn-back">Back to Inventory</a>
+        <% } %>
+        <form action="/inventory/edit/<%= inventory.id %>" method="POST">
+            <label for="item_name">Item Name:</label>
+            <input type="text" id="item_name" name="item_name" value="<%= inventory.item_name %>" required>
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" value="<%= inventory.category %>" required>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="<%= inventory.quantity %>" required>
+
+            <label for="condition">Condition:</label>
+            <input type="text" id="condition" name="condition" value="<%= inventory.condition %>" required>
+
+            <button type="submit">Update Item</button>
         </form>
     </div>
 </body>

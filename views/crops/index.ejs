@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Crops</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
@@ -13,22 +14,27 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Planting Date</th>
-                    <th>Harvest Date</th>
+                    <th>Planted Date</th>
+                    <th>Expected Harvest</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <% crops.forEach(crop => { %>
+                <% crops.forEach(function(crop) { %>
                     <tr>
                         <td><%= crop.name %></td>
-                        <td><%= crop.planting_date %></td>
-                        <td><%= crop.harvest_date %></td>
+                        <td><%= new Date(crop.planted_date).toLocaleDateString() %></td>
+                        <td><%= new Date(crop.expected_harvest).toLocaleDateString() %></td>
+                        <td><%= crop.status %></td>
                         <td>
-                            <a href="/crops/edit/<%= crop.id %>">Edit</a>
+                            <a href="/crops/edit/<%= crop.id %>" class="btn-edit">Edit</a>
+                            <form action="/crops/delete/<%= crop.id %>?_method=DELETE" method="POST" style="display:inline;">
+                                <button type="submit" class="btn-delete">Delete</button>
+                            </form>
                         </td>
                     </tr>
-                <% }) %>
+                <% }); %>
             </tbody>
         </table>
     </div>

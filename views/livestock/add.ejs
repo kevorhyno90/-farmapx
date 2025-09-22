@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Add Livestock</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
     <div class="container">
         <h1>Add New Livestock</h1>
+        <% if (locals.errors && errors.length > 0) { %>
+            <div class="errors">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
         <form action="/livestock/add" method="POST">
-            <div>
-                <label for="tag_id">Tag ID:</label>
-                <input type="text" id="tag_id" name="tag_id" required>
-            </div>
-            <div>
-                <label for="species">Species:</label>
-                <input type="text" id="species" name="species" required>
-            </div>
-            <div>
-                <label for="breed">Breed:</label>
-                <input type="text" id="breed" name="breed" required>
-            </div>
-            <div>
-                <label for="birth_date">Birth Date:</label>
-                <input type="date" id="birth_date" name="birth_date" required>
-            </div>
-            <button type="submit" class="btn">Add Animal</button>
-            <a href="/" class="btn btn-back">Back to Dashboard</a>
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type" value="<%= locals.livestock ? livestock.type : '' %>" required>
+
+            <label for="breed">Breed:</label>
+            <input type="text" id="breed" name="breed" value="<%= locals.livestock ? livestock.breed : '' %>" required>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="<%= locals.livestock ? livestock.quantity : '' %>" required>
+
+            <label for="health_status">Health Status:</label>
+            <input type="text" id="health_status" name="health_status" value="<%= locals.livestock ? livestock.health_status : '' %>" required>
+
+            <button type="submit">Add Livestock</button>
         </form>
     </div>
 </body>

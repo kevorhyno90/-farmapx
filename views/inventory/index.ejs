@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Inventory</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
@@ -12,23 +13,28 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Item Name</th>
+                    <th>Category</th>
                     <th>Quantity</th>
-                    <th>Unit</th>
+                    <th>Condition</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <% inventory.forEach(item => { %>
+                <% inventory.forEach(function(item) { %>
                     <tr>
-                        <td><%= item.name %></td>
+                        <td><%= item.item_name %></td>
+                        <td><%= item.category %></td>
                         <td><%= item.quantity %></td>
-                        <td><%= item.unit %></td>
+                        <td><%= item.condition %></td>
                         <td>
-                            <a href="/inventory/edit/<%= item.id %>">Edit</a>
+                            <a href="/inventory/edit/<%= item.id %>" class="btn-edit">Edit</a>
+                            <form action="/inventory/delete/<%= item.id %>?_method=DELETE" method="POST" style="display:inline;">
+                                <button type="submit" class="btn-delete">Delete</button>
+                            </form>
                         </td>
                     </tr>
-                <% }) %>
+                <% }); %>
             </tbody>
         </table>
     </div>

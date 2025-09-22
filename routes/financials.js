@@ -1,35 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
-
-// Path to the JSON database
-const dbPath = path.join(__dirname, '..', 'db.json');
-
-// --- Helper Functions to Read/Write DB ---
-const readData = () => {
-    try {
-        const jsonData = fs.readFileSync(dbPath);
-        const data = JSON.parse(jsonData);
-        return { 
-            crops: data.crops || [], 
-            livestock: data.livestock || [], 
-            inventory: data.inventory || [], 
-            financials: data.financials || [] 
-        };
-    } catch (error) {
-        console.error("Error reading or parsing db.json in financials.js:", error);
-        return { crops: [], livestock: [], inventory: [], financials: [] };
-    }
-};
-
-const writeData = (data) => {
-    try {
-        fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
-    } catch (error) {
-        console.error("Error writing to db.json in financials.js:", error);
-    }
-};
+const { readData, writeData } = require('../utils/db'); // Import the new DB module
 
 // --- Financials Routes ---
 

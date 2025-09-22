@@ -1,6 +1,11 @@
+require('dotenv').config(); // Load environment variables from .env file
+
 const express = require('express');
 const path = require('path');
-const { readData } = require('./utils/db'); // Import the new DB module
+const portfinder = require('portfinder');
+const methodOverride = require('method-override');
+const helmet = require('helmet'); // Import helmet
+const { readData } = require('./utils/db');
 
 // --- Routers ---
 const cropsRouter = require('./routes/crops');
@@ -9,18 +14,21 @@ const inventoryRouter = require('./routes/inventory');
 const financialsRouter = require('./routes/financials');
 
 const app = express();
-const port = parseInt(process.env.PORT) || 8080;
+const preferredPort = parseInt(process.env.PORT) || 3000;
 
-// --- Middleware ---
+// --- Security Middleware ---
+app.use(helmet()); // Use helmet
+
+// --- Other Middleware ---
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // --- Main Routes ---
 app.get('/', (req, res) => {
   const data = readData();
-  // The new readData ensures financials and crops are always arrays
   res.render('dashboard', { financials: data.financials, crops: data.crops });
 });
 
@@ -30,6 +38,13 @@ app.use('/livestock', livestockRouter);
 app.use('/inventory', inventoryRouter);
 app.use('/financials', financialsRouter);
 
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
+// Find an open port and start the server
+portfinder.getPort({ port: preferredPort }, (err, port) => {
+    if (err) {
+        console.error('Could not find an open port:', err);
+        process.exit(1);
+    }
+    app.listen(port, () => {
+        console.log(`Server is running on http://localhost:${port}`);
+    });
 });

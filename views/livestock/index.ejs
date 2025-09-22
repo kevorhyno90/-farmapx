@@ -1,34 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Livestock</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
     <div class="container">
         <h1>Livestock</h1>
-        <a href="/livestock/add" class="btn">Add New Animal</a>
+        <a href="/livestock/add" class="btn">Add New Livestock</a>
         <table>
             <thead>
                 <tr>
                     <th>Type</th>
                     <th>Breed</th>
-                    <th>Birth Date</th>
+                    <th>Quantity</th>
+                    <th>Health Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <% livestock.forEach(animal => { %>
+                <% livestock.forEach(function(animal) { %>
                     <tr>
                         <td><%= animal.type %></td>
                         <td><%= animal.breed %></td>
-                        <td><%= animal.birth_date %></td>
+                        <td><%= animal.quantity %></td>
+                        <td><%= animal.health_status %></td>
                         <td>
-                            <a href="/livestock/edit/<%= animal.id %>">Edit</a>
+                            <a href="/livestock/edit/<%= animal.id %>" class="btn-edit">Edit</a>
+                            <form action="/livestock/delete/<%= animal.id %>?_method=DELETE" method="POST" style="display:inline;">
+                                <button type="submit" class="btn-delete">Delete</button>
+                            </form>
                         </td>
                     </tr>
-                <% }) %>
+                <% }); %>
             </tbody>
         </table>
     </div>

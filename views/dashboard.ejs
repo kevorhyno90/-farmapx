@@ -47,7 +47,9 @@
     </div>
 
     <script>
-        const financialsData = <%- JSON.stringify(financials) %>;
+        const financialsData = <async (params) => {
+            %
+        }- JSON.stringify(financials) %>;
         const cropsData = <%- JSON.stringify(crops) %>;
 
         // Financials Chart
