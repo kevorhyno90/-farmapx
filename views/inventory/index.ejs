@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="container">
+        <h1>Inventory</h1>
+        <a href="/inventory/add" class="btn">Add New Item</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% inventory.forEach(item => { %>
+                    <tr>
+                        <td><%= item.name %></td>
+                        <td><%= item.quantity %></td>
+                        <td><%= item.unit %></td>
+                        <td>
+                            <a href="/inventory/edit/<%= item.id %>">Edit</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

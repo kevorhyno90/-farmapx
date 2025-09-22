@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Livestock</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="container">
+        <h1>Add New Livestock</h1>
+        <form action="/livestock/add" method="POST">
+            <div>
+                <label for="tag_id">Tag ID:</label>
+                <input type="text" id="tag_id" name="tag_id" required>
+            </div>
+            <div>
+                <label for="species">Species:</label>
+                <input type="text" id="species" name="species" required>
+            </div>
+            <div>
+                <label for="breed">Breed:</label>
+                <input type="text" id="breed" name="breed" required>
+            </div>
+            <div>
+                <label for="birth_date">Birth Date:</label>
+                <input type="date" id="birth_date" name="birth_date" required>
+            </div>
+            <button type="submit" class="btn">Add Animal</button>
+            <a href="/" class="btn btn-back">Back to Dashboard</a>
+        </form>
+    </div>
+</body>
+</html>

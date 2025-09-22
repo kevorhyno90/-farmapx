@@ -1,0 +1,76 @@
+{
+  "crops": [
+    {
+      "id": "crop_1",
+      "name": "Corn",
+      "planted_date": "2024-05-15",
+      "expected_harvest": "2024-09-20",
+      "status": "Growing"
+    },
+    {
+      "id": "crop_2",
+      "name": "Wheat",
+      "planted_date": "2024-04-10",
+      "expected_harvest": "2024-08-01",
+      "status": "Harvested"
+    },
+    {
+      "id": "crop_3",
+      "name": "Soybeans",
+      "planted_date": "2024-05-20",
+      "expected_harvest": "2024-10-05",
+      "status": "Growing"
+    }
+  ],
+  "livestock": [
+    {
+      "id": "lvst_1",
+      "tag_id": "C-001",
+      "species": "Cow",
+      "last_health_check": "2024-07-10",
+      "status": "Healthy"
+    },
+    {
+      "id": "lvst_2",
+      "tag_id": "S-012",
+      "species": "Sheep",
+      "last_health_check": "2024-07-05",
+      "status": "Requires Attention"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "inv_1",
+      "item_name": "Fertilizer (50kg bags)",
+      "quantity": 150,
+      "last_restocked": "2024-06-20"
+    },
+    {
+      "id": "inv_2",
+      "item_name": "Animal Feed (25kg bags)",
+      "quantity": 80,
+      "last_restocked": "2024-07-01"
+    },
+    {
+      "id": "item_1758554221110",
+      "name": "tractor",
+      "quantity": 1
+    }
+  ],
+  "financials": [
+    {
+      "id": "fin_1",
+      "type": "Expense",
+      "item": "Tractor Fuel",
+      "amount": 250.75,
+      "date": "2024-07-12"
+    },
+    {
+      "id": "fin_2",
+      "type": "Revenue",
+      "item": "Sale of Wheat",
+      "amount": 5500,
+      "date": "2024-08-05"
+    }
+  ]
+}

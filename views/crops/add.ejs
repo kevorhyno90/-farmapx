@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Crop</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="container">
+        <h1>Add New Crop</h1>
+        <form action="/crops/add" method="POST">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="planting_date">Planting Date:</label>
+                <input type="date" id="planting_date" name="planting_date" required>
+            </div>
+            <div>
+                <label for="harvest_date">Expected Harvest Date:</label>
+                <input type="date" id="harvest_date" name="harvest_date" required>
+            </div>
+            <button type="submit" class="btn">Add Crop</button>
+            <a href="/" class="btn btn-back">Back to Dashboard</a>
+        </form>
+    </div>
+</body>
+</html>

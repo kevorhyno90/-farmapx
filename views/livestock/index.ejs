@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Livestock</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="container">
+        <h1>Livestock</h1>
+        <a href="/livestock/add" class="btn">Add New Animal</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Breed</th>
+                    <th>Birth Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% livestock.forEach(animal => { %>
+                    <tr>
+                        <td><%= animal.type %></td>
+                        <td><%= animal.breed %></td>
+                        <td><%= animal.birth_date %></td>
+                        <td>
+                            <a href="/livestock/edit/<%= animal.id %>">Edit</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "name": "node-express-web",
+  "name": "vet-farmage",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^4.5.0",
     "ejs": "^3.1.9",
     "express": "^4.21.2"
   },

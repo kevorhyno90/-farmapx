@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Crop</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="container">
+        <h1>Edit Crop</h1>
+        <form action="/crops/edit/<%= crop.id %>" method="POST">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="<%= crop.name %>" required>
+            </div>
+            <div>
+                <label for="planting_date">Planting Date:</label>
+                <input type="date" id="planting_date" name="planting_date" value="<%= crop.planting_date %>" required>
+            </div>
+            <div>
+                <label for="harvest_date">Expected Harvest Date:</label>
+                <input type="date" id="harvest_date" name="harvest_date" value="<%= crop.harvest_date %>" required>
+            </div>
+            <button type="submit" class="btn">Update Crop</button>
+            <a href="/crops" class="btn btn-back">Back to Crops</a>
+        </form>
+    </div>
+</body>
+</html>

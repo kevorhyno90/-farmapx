@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crops</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container">
+        <h1>Crops</h1>
+        <a href="/crops/add" class="btn">Add New Crop</a>
+        <a href="/" class="btn btn-back">Back</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Planting Date</th>
+                    <th>Harvest Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% crops.forEach(crop => { %>
+                    <tr>
+                        <td><%= crop.name %></td>
+                        <td><%= crop.plantingDate %></td>
+                        <td><%= crop.harvestDate %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
