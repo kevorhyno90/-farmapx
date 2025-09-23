@@ -1,50 +1,48 @@
-require('dotenv').config(); // Load environment variables from .env file
 
 const express = require('express');
 const path = require('path');
-const portfinder = require('portfinder');
-const methodOverride = require('method-override');
-const helmet = require('helmet'); // Import helmet
-const { readData } = require('./utils/db');
-
-// --- Routers ---
-const cropsRouter = require('./routes/crops');
-const livestockRouter = require('./routes/livestock');
-const inventoryRouter = require('./routes/inventory');
-const financialsRouter = require('./routes/financials');
-
+const cors = require('cors');
 const app = express();
-const preferredPort = parseInt(process.env.PORT) || 3000;
+const port = process.env.PORT || 3002;
 
-// --- Security Middleware ---
-app.use(helmet()); // Use helmet
-
-// --- Other Middleware ---
-app.use(express.static(path.join(__dirname, 'public')));
+// Middleware for parsing JSON and URL-encoded data
+app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
-app.set('views', path.join(__dirname, 'views'));
+
+// EJS setup
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // --- Main Routes ---
 app.get('/', (req, res) => {
-  const data = readData();
-  res.render('dashboard', { financials: data.financials, crops: data.crops });
+    // This will now serve as the main shell of the PWA
+    res.render('index', { title: 'Farm Dashboard' });
 });
 
-// --- Section Routes ---
-app.use('/crops', cropsRouter);
-app.use('/livestock', livestockRouter);
-app.use('/inventory', inventoryRouter);
-app.use('/financials', financialsRouter);
+// --- API Routes for Data Sync ---
+const apiRoutes = require('./routes/api');
+app.use('/api', apiRoutes);
 
-// Find an open port and start the server
-portfinder.getPort({ port: preferredPort }, (err, port) => {
-    if (err) {
-        console.error('Could not find an open port:', err);
-        process.exit(1);
-    }
-    app.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`);
-    });
+// --- Page-specific Routes ---
+const livestockRoutes = require('./routes/livestock');
+app.use('/livestock', livestockRoutes);
+const cropRoutes = require('./routes/crops');
+app.use('/crops', cropRoutes);
+const financialRoutes = require('./routes/financials');
+app.use('/financials', financialRoutes);
+const inventoryRoutes = require('./routes/inventory');
+app.use('/inventory', inventoryRoutes);
+
+// --- Centralized Error Handling ---
+app.use((err, req, res, next) => {
+    console.error('Global error handler:', err);
+    res.status(500).json({ error: 'Something went wrong on the server.' });
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
