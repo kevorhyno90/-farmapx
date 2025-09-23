@@ -17,25 +17,24 @@ app.set('views', path.join(__dirname, 'views'));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// --- Main Routes ---
+// --- Main Route ---
 app.get('/', (req, res) => {
-    // This will now serve as the main shell of the PWA
     res.render('index', { title: 'Farm Dashboard' });
 });
 
-// --- API Routes for Data Sync ---
-const apiRoutes = require('./routes/api');
-app.use('/api', apiRoutes);
-
-// --- Page-specific Routes ---
+// --- Refactored Routes ---
 const livestockRoutes = require('./routes/livestock');
-app.use('/livestock', livestockRoutes);
+app.use('/api/livestock', livestockRoutes);
+
 const cropRoutes = require('./routes/crops');
-app.use('/crops', cropRoutes);
+app.use('/api/crops', cropRoutes);
+
 const financialRoutes = require('./routes/financials');
-app.use('/financials', financialRoutes);
+app.use('/api/financials', financialRoutes);
+
 const inventoryRoutes = require('./routes/inventory');
-app.use('/inventory', inventoryRoutes);
+app.use('/api/inventory', inventoryRoutes);
+
 
 // --- Centralized Error Handling ---
 app.use((err, req, res, next) => {
