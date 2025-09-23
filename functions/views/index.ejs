@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omwenga Farms - Smart Dashboard</title>
+    <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#3b82f6"/>
+</script>
+    
+    <style>
+        /* --- Enhanced Fonts & Variables --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        :root {
+            /* Enhanced Color Palette */
+            --bg-main: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --bg-card-hover: rgba(255, 255, 255, 1);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-accent: #1e293b;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --border-hover: rgba(148, 163, 184, 0.6);
+            
+            /* Modern Color Scheme */
+            --color-green: #10b981;
+            --color-green-light: #d1fae5;
+            --color-red: #ef4444;
+            --color-red-light: #fee2e2;
+            --color-amber: #f59e0b;
+            --color-amber-light: #fef3c7;
+            --color-blue: #3b82f6;
+            --color-blue-light: #dbeafe;
+            --color-purple: #8b5cf6;
+            --color-purple-light: #ede9fe;
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --backdrop-blur: blur(16px);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        /* --- Enhanced Header & Navigation --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 24px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .header:hover::before {
+            left: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .header nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            margin: 0 8px;
+            font-weight: 500;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-purple-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .header nav a:hover::before,
+        .header nav a.active::before {
+            opacity: 1;
+        }
+
+        .header nav a.active {
+            color: var(--color-blue);
+            font-weight: 600;
+        }
+
+        .header nav a:hover {
+            color: var(--color-blue);
+            transform: translateY(-2px);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-actions span {
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-actions span:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .user-profile {
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--color-green-light), var(--color-blue-light));
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- Enhanced Dropdown Menu --- */
+        .nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            min-width: 200px;
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            border-radius: 16px;
+            padding: 12px 0;
+            margin-top: 8px;
+            border: 1px solid var(--glass-border);
+            animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideDown {
+            from { 
+                opacity: 0; 
+                transform: translateY(-16px) scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .dropdown-menu a {
+            color: var(--text-primary);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            margin: 0 !important;
+            font-weight: 500 !important;
+            border-radius: 12px;
+            margin: 4px 8px !important;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--color-blue-light);
+            color: var(--color-blue);
+            transform: translateX(4px);
+        }
+
+        .nav-item:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* --- Enhanced Dashboard Grid --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 24px;
+        }
+
+        /* --- Enhanced Card Styling --- */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: var(--backdrop-blur);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-blue), var(--color-purple), var(--color-green));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edit-btn, .btn-add-record {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-blue);
+            cursor: pointer;
+            border: 2px solid var(--color-blue-light);
+            padding: 8px 16px;
+            border-radius: 12px;
+            background: var(--color-blue-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .edit-btn:hover, .btn-add-record:hover {
+            background: var(--color-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+
+        .card ul li {
+            margin-bottom: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .card ul li:hover {
+            padding-left: 8px;
+            border-bottom-color: var(--color-blue-light);
+        }
+
+        .card ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Enhanced Table Styles --- */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            background: var(--bg-card);
+        }
+
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        thead th {
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-purple-light));
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            color: var(--text-accent);
+        }
+
+        tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--color-blue-light);
+            transform: scale(1.01);
+        }
+
+        /* --- Enhanced Action List Accordion --- */
+        .action-list li {
+            padding: 16px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            margin-bottom: 8px;
+        }
+
+        .task-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .arrow {
+            font-size: 1.2rem;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--color-blue);
+            font-weight: bold;
+        }
+
+        .task-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            opacity: 0;
+        }
+
+        .action-list li:hover {
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-green-light));
+            border-color: var(--color-blue-light);
+            transform: translateX(4px);
+        }
+
+        .action-list li:hover .task-details {
+            max-height: 200px;
+            padding-top: 16px;
+            margin-top: 12px;
+            border-top: 2px solid var(--color-blue-light);
+            opacity: 1;
+        }
+
+        .action-list li:hover .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* --- Enhanced Progress Bar --- */
+        .progress-bar {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--color-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: var(--color-green-light);
+            padding: 4px 8px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        /* --- Enhanced Quick Links --- */
+        .quick-link {
+            display: block;
+            text-align: center;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--color-blue-light), var(--color-purple-light));
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--color-blue);
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid var(--color-blue-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-blue);
+        }
+
+        .quick-link:hover::before {
+            left: 100%;
+        }
+
+        /* --- Enhanced Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        @keyframes modalSlideIn {
+            from { 
+                transform: translateY(-40px) scale(0.9); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        /* --- Enhanced Button Styles --- */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--color-blue-light);
+            color: var(--color-blue);
+            border: 2px solid var(--color-blue-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* --- Enhanced Population Cards --- */
+        .population-card {
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-card), var(--color-blue-light));
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .population-card:hover {
+            transform: translateY(-4px) scale(1.05);
+        }
+
+        .population-card .count {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .population-card .label {
+            font-weight: 600;
+            color: var(--text-accent);
+            font-size: 1.1rem;
+        }
+
+        .population-card .breakdown {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+        }
+
+        /* --- Enhanced Management Tabs --- */
+        .management-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 3px solid var(--border-color);
+            margin-bottom: 24px;
+            padding-bottom: 8px;
+        }
+
+        .tab-link {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-radius: 12px 12px 0 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .tab-link::before {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-link.active::before {
+            transform: scaleX(1);
+        }
+
+        .tab-link.active {
+            color: var(--color-blue);
+            background: var(--color-blue-light);
+        }
+
+        .tab-link:hover {
+            background: var(--color-blue-light);
+            color: var(--color-blue);
+            transform: translateY(-2px);
+        }
+
+        /* --- Enhanced Form Styles --- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-accent);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            box-sizing: border-box;
+            background: var(--bg-card);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* --- Enhanced Sync Calendar --- */
+        .sync-calendar-timeline {
+            list-style: none;
+            padding: 0;
+            position: relative;
+        }
+
+        .sync-calendar-timeline::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--color-blue), var(--color-purple));
+            border-radius: 2px;
+        }
+
+        .sync-calendar-timeline li {
+            padding: 16px 0 16px 48px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .sync-calendar-timeline li::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background: var(--color-blue);
+            border: 4px solid white;
+            border-radius: 50%;
+            position: absolute;
+            left: 8px;
+            top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- Enhanced TMR Styles --- */
+        .tmr-summary-table .status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .tmr-summary-table .status.low {
+            background: var(--color-amber-light);
+            color: var(--color-amber);
+        }
+
+        .tmr-summary-table .status.high {
+            background: var(--color-red-light);
+            color: var(--color-red);
+        }
+
+        .tmr-summary-table .status.ok {
+            background: var(--color-green-light);
+            color: var(--color-green);
+        }
+
+        /* --- Enhanced Tooltip --- */
+        #tmr-tooltip {
+            position: absolute;
+            display: none;
+            background: var(--text-accent);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            z-index: 1001;
+            max-width: 280px;
+            pointer-events: none;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: var(--backdrop-blur);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                padding: 20px;
+            }
+            
+            .header nav {
+                justify-content: center;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .management-tabs {
+                justify-content: center;
+            }
+        }
+
+        /* --- Enhanced Animations --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* --- Additional Enhancements --- */
+        .meta-info {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 500;
+            padding: 12px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .view-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        /* Keep all existing functionality styles */
+        .management-section { display: none; }
+        .management-section.active { display: block; }
+        .sub-section { display: none; }
+        .sub-section.active { display: block; }
+        .grid-container, .breeding-grid, .population-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .sub-card {
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            background: var(--bg-card);
+            transition: all 0.3s ease;
+        }
+        .sub-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .sub-card h4 { margin-top: 0; font-weight: 700; }
+        .sub-card ul { padding-left: 20px; margin-bottom: 0; }
+        .tmr-mixer-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        @media (max-width: 900px) { .tmr-mixer-layout { grid-template-columns: 1fr; } }
+        .tmr-inputs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        #ingredient-selector { 
+            max-height: 400px; 
+            overflow-y: auto; 
+            border: 2px solid var(--border-color); 
+            padding: 16px; 
+            border-radius: 12px;
+            background: var(--bg-card);
+        }
+        #ingredient-selector label { 
+            display: block; 
+            margin-bottom: 8px; 
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        #ingredient-selector label:hover {
+            background: var(--color-blue-light);
+        }
+        .tmr-summary-table .nutrient-name { font-weight: 600; }
+        .sync-calendar-input { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            margin-bottom: 20px;
+        }
+        .sync-calendar-input input { 
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+        }
+        .actions-cell { white-space: nowrap; }
+        .btn-edit-row, .btn-delete-row {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            border-radius: 8px;
+            border: 2px solid;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-edit-row {
+            color: var(--color-blue);
+            border-color: var(--color-blue);
+        }
+        .btn-edit-row:hover {
+            background: var(--color-blue);
+            color: white;
+        }
+        .btn-delete-row {
+            color: var(--color-red);
+            border-color: var(--color-red);
+        }
+        .btn-delete-row:hover {
+            background: var(--color-red);
+            color: white;
+        }
+        tr.editing-row {
+            background: var(--color-blue-light) !important;
+        }
+        tr.editing-row td input, tr.editing-row td select, tr.editing-row td textarea {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid var(--color-blue);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        .notes-area {
+            margin-top: 24px;
+        }
+        .notes-area label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .notes-area textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+        }
+        .notes-area button {
+            margin-top: 12px;
+            float: right;
+        }
+        .sub-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .sub-tab-link {
+            padding: 10px 20px;
+            border: 2px solid transparent;
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        .sub-tab-link.active {
+            background: var(--color-blue-light);
+            color: var(--color-blue);
+            border-color: var(--border-color);
+        }
+        .sub-tab-link:hover {
+            background: var(--color-blue-light);
+            color: var(--color-blue);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .modal-close:hover {
+            background: var(--color-red-light);
+            color: var(--color-red);
+        }
+        .modal-body { 
+            overflow-y: auto;
+            padding-right: 15px;
+            margin-right: -15px;
+        }
+        .modal-footer { 
+            margin-top: 24px; 
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .btn-danger {
+            background: var(--color-red);
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo"><strong>📊 Omwenga Farms</strong></div>
+        <nav>
+            <a href="#" class="active" id="nav-dashboard">🏠 Dashboard</a>
+            <div class="nav-item">
+                <a href="#">🐄 Livestock ▾</a>
+                <div class="dropdown-menu">
+                    <a href="#" id="nav-cattle">Cattle</a>
+                    <a href="#">Goats</a>
+                    <a href="#">Sheep</a>
+                    <a href="#">Poultry</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#">🌱 Crops ▾</a>
+                <div class="dropdown-menu">
+                    <a href="#">Bananas</a>
+                    <a href="#">Vegetables</a>
+                    <a href="#">Avocado</a>
+                    <a href="#">Maize</a>
+                    <a href="#">Others</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#">🧑‍⚕️ Health ▾</a>
+                 <div class="dropdown-menu">
+                    <a href="#">Vaccination Records</a>
+                    <a href="#">Treatment Logs</a>
+                    <a href="#">Inventory</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#">💰 Finances ▾</a>
+                 <div class="dropdown-menu">
+                    <a href="#">Income</a>
+                    <a href="#">Expenses</a>
+                    <a href="#">Reports</a>
+                </div>
+            </div>
+        </nav>
+        <div class="header-actions">
+            <span class="search">🔍 Search...</span>
+            <span class="add-new">+ Add New</span>
+            <span class="notifications">🔔 <span id="notification-count">7</span></span>
+            <span class="user-profile">Dr. Devin O. ▾</span>
+        </div>
+    </header>
+
+    <div class="meta-info" id="last-synced">Syncing...</div>
+
+    <main class="dashboard-grid">
+        
+        <div class="card">
+            <div class="card-header">
+                <h3>☀️ At a Glance</h3>
+            </div>
+            <p><strong id="greeting-text">Good Afternoon, Dr. Omwenga.</strong> <br> Weather: Partly cloudy, 25°C in Kericho.</p>
+            <ul>
+                <li>• <strong>Total Herd Size:</strong> <span id="herd-size">174</span> Animals</li>
+                <li>• <strong>Land Under Cultivation:</strong> <span id="land-size">14.5</span> Hectares</li>
+                <li>• <strong>Est. Farm Value:</strong> KSh <span id="farm-value">15,210,000</span> <br><small>(Includes livestock & standing crops)</small></li>
+            </ul>
+        </div>
+
+        <div class="card">
+             <div class="card-header">
+                <h3>🚨 Action Required</h3>
+             </div>
+            <p>A prioritized list of your most urgent tasks. Hover over each item to expand.</p>
+            <ul class="action-list" id="dashboard-action-list">
+                 <!-- Reminders will be dynamically inserted here -->
+            </ul>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3>🌽 Field & Crop Status</h3>
+            </div>
+             <p>An overview of your arable operations.</p>
+             <ul class="action-list" id="crop-list">
+             </ul>
+            <a href="#" class="quick-link">Go to Crop Management →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>🧑‍⚕️ Herd Health Status</h3>
+            </div>
+            <p><strong>Health Breakdown:</strong>
+            <span style="color:var(--color-green)">[ 🟢 Healthy: <span id="health-healthy">168</span> ]</span> 
+            <span style="color:var(--color-amber)">[ 🟡 Treatment: <span id="health-treatment">4</span> ]</span> 
+            <span style="color:var(--color-blue)">[ 🔵 Observation: <span id="health-observation">2</span> ]</span>
+            </p>
+            <ul class="action-list">
+                 <li>
+                   <div class="task-summary"><span>• <strong>Vaccinations Due (Next 7 Days):</strong> 12</span><span class="arrow">▾</span></div>
+                   <div class="task-details">Group C (8), Group A (4)</div>
+                </li>
+            </ul>
+            <a href="#" class="quick-link">View Full Health Register →</a>
+        </div>
+        
+        <div class="card">
+             <div class="card-header">
+                <h3>📈 Financial Snapshot (Last 30 Days)</h3>
+             </div>
+            <p>Tracking the farm's blended business performance.</p>
+            <ul class="action-list">
+                <li>
+                    <div class="task-summary">
+                        <span>• <strong>Net Profit:</strong> <span style="color:var(--color-green);">KSh <span id="finance-profit">164,600</span></span></span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="task-details">Livestock Profit: KSh 234.6K <br>Crops Loss: KSh 70K</div>
+                </li>
+            </ul>
+             <a href="#" class="quick-link">View Detailed Financials →</a>
+        </div>
+        
+        <div class="card">
+             <div class="card-header">
+                <h3>🐄 Livestock & Breeding</h3>
+             </div>
+             <p>A combined view of your herd and breeding pipeline.</p>
+             <ul class="action-list" id="livestock-list">
+             </ul>
+             <a href="#" class="quick-link">View All Livestock & Breeding →</a>
+        </div>
+    </main>
+
+    <main id="cattle-management-view" style="display: none;">
+        <div class="view-header">
+            <h2>🐄 Cattle Management</h2>
+            <button class="btn" id="back-btn">← Back</button>
+        </div>
+        <div class="management-tabs">
+            <button class="tab-link active" data-target="population-section">Animal Population</button>
+            <button class="tab-link" data-target="breeding-section">Breeding & Genetics</button>
+            <button class="tab-link" data-target="nutrition-section">Nutrition & Feeding</button>
+            <button class="tab-link" data-target="health-section">Health Care</button>
+            <button class="tab-link" data-target="milk-section">Milk Records</button>
+        </div>
+        <div id="management-content">
+             <!-- Animal Population Section -->
+            <div id="population-section" class="management-section active">
+                 <div class="card">
+                    <div class="card-header">
+                        <h3>Herd Composition</h3>
+                        <button class="btn-add-record" data-action="edit-population">Edit Population</button>
+                    </div>
+                    <div class="population-grid" id="population-grid-container">
+                        <!-- Population cards will be inserted here -->
+                    </div>
+                 </div>
+            </div>
+             <!-- Breeding and Genetics Section -->
+            <div id="breeding-section" class="management-section">
+                <div class="card">
+                    <div class="sub-tabs">
+                        <button class="sub-tab-link active" data-sub-target="breeding-overview">Overview & Reminders</button>
+                        <button class="sub-tab-link" data-sub-target="breeding-records">Breeding Records</button>
+                        <button class="sub-tab-link" data-sub-target="breeding-sync">Synchronization</button>
+                    </div>
+                    <div id="breeding-overview" class="sub-section active">
+                        <div class="breeding-grid">
+                            <div class="sub-card" id="breeding-reminders"></div>
+                            <div class="sub-card" id="herd-status"></div>
+                        </div>
+                         <div class="notes-area">
+                            <label for="overview-notes">Overview Notes</label>
+                            <textarea id="overview-notes" placeholder="General notes on breeding plans..."></textarea>
+                            <button class="btn btn-primary" data-action="save-notes">Save Notes</button>
+                        </div>
+                    </div>
+                    <div id="breeding-records" class="sub-section">
+                        <div class="card-header" style="padding: 0;">
+                            <h3>Comprehensive Breeding Records</h3>
+                            <button class="btn-add-record" data-action="add-breeding">＋ Add Record</button>
+                        </div>
+                        <div class="table-container" id="breeding-table-container"></div>
+                    </div>
+                    <div id="breeding-sync" class="sub-section">
+                        <div class="breeding-grid">
+                            <div class="sub-card" id="sync-calendar"></div>
+                        </div>
+                         <div class="card-header" style="padding: 0; margin-top: 20px;">
+                            <h3>Synchronization Log</h3>
+                            <button class="btn-add-record" data-action="add-sync">＋ Add Animal</button>
+                        </div>
+                        <div class="table-container" id="sync-table-container"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Nutrition Section -->
+            <div id="nutrition-section" class="management-section">
+                <div class="card">
+                     <div class="sub-tabs">
+                        <button class="sub-tab-link active" data-sub-target="tmr-mixer">TMR Mixer</button>
+                        <button class="sub-tab-link" data-sub-target="ingredients-store">Ingredients Store</button>
+                        <button class="sub-tab-link" data-sub-target="animal-requirements">Animal Requirements</button>
+                        <button class="sub-tab-link" data-sub-target="nutrition-reports">Reports</button>
+                        <button class="sub-tab-link" data-sub-target="silage-records">Silage</button>
+                        <button class="sub-tab-link" data-sub-target="pasture-records">Pastures</button>
+                    </div>
+
+                    <div id="tmr-mixer" class="sub-section active">
+                        <div class="card-header" style="padding:0;"><h3>Ration Formulation Tool</h3></div>
+                        <div class="tmr-inputs-grid">
+                            <div class="form-group">
+                                <label for="animal-group-selector">Select Animal Group:</label>
+                                <select id="animal-group-selector"></select>
+                            </div>
+                             <div class="form-group">
+                                <label for="milk-price-input">Milk Price (KES/L):</label>
+                                <input type="number" id="milk-price-input" value="50">
+                            </div>
+                             <div class="form-group">
+                                <label for="milk-yield-input">Target Milk Yield (L/day):</label>
+                                <input type="number" id="milk-yield-input" value="30">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="tmr-mixer-layout">
+                            <div id="ingredient-selector-container">
+                                <h4>Select Ingredients</h4>
+                                <div id="ingredient-selector"></div>
+                            </div>
+                            <div id="tmr-formulation-container">
+                                <h4>Ration Mix (As Fed Basis)</h4>
+                                <div class="table-container" id="tmr-table-container" style="margin-top:0;"></div>
+                                <h4>Nutritional Analysis (DM Basis)</h4>
+                                <div class="table-container" id="tmr-summary-container" style="margin-top:0;"></div>
+                                <h4>Economic Analysis (per Cow, per Day)</h4>
+                                <div class="table-container" id="tmr-economic-container" style="margin-top:0;"></div>
+                            </div>
+                        </div>
+                        <div class="card-header" style="padding:0; margin-top: 20px;">
+                             <h3></h3>
+                             <button class="btn btn-primary" data-action="formulate-and-report">Formulate & View Report</button>
+                        </div>
+                    </div>
+                     <div id="ingredients-store" class="sub-section">
+                         <div class="card-header" style="padding: 0;">
+                            <h3>Feed Ingredients Store</h3>
+                            <button class="btn-add-record" data-action="add-ingredient">＋ Add Ingredient</button>
+                        </div>
+                        <div class="table-container" id="ingredients-table-container"></div>
+                    </div>
+                     <div id="animal-requirements" class="sub-section">
+                        <h3>Nutritional Requirements</h3>
+                        <div class="grid-container" id="requirements-container"></div>
+                     </div>
+                     <div id="nutrition-reports" class="sub-section">
+                         <div class="card-header" style="padding: 0;">
+                             <h3>TMR Formulation Report</h3>
+                             <button class="btn btn-primary" onclick="window.print()">Print / Download Report</button>
+                         </div>
+                         <div id="tmr-report-output" style="margin-top:20px; border: 1px solid var(--border-color); padding: 20px; border-radius: 8px;">Click "Formulate & View Report" in the TMR Mixer to generate a report.</div>
+                     </div>
+                     <div id="silage-records" class="sub-section">
+                          <div class="card-header" style="padding: 0;">
+                            <h3>Silage Records</h3>
+                            <button class="btn-add-record" data-action="add-silage">＋ Add Record</button>
+                        </div>
+                        <div class="table-container" id="silage-table-container"></div>
+                     </div>
+                     <div id="pasture-records" class="sub-section">
+                         <div class="card-header" style="padding: 0;">
+                            <h3>Pasture Records</h3>
+                            <button class="btn-add-record" data-action="add-pasture">＋ Add Record</button>
+                        </div>
+                        <div class="table-container" id="pasture-table-container"></div>
+                     </div>
+
+                </div>
+            </div>
+             <!-- Placeholder Sections -->
+            <div id="health-section" class="management-section"><div class="card"><p>Health Care module coming soon.</p></div></div>
+            <div id="milk-section" class="management-section"><div class="card"><p>Milk Records module coming soon.</p></div></div>
+        </div>
+    </main>
+
+    <!-- Modal for Popups -->
+    <div class="modal-overlay" id="main-modal">
+        <div class="modal-content">
+            <button class="modal-close" data-action="close-modal">&times;</button>
+            <h3 id="modal-title"></h3>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-action="close-modal">Cancel</button>
+                <button class="btn btn-primary" id="modal-save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tmr-tooltip"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- DATE UTILITIES ---
+            const addDays = (date, days) => {
+                if (!date) return null;
+                const result = new Date(date);
+                result.setDate(result.getDate() + days);
+                return result;
+            };
+            const formatDate = (date) => {
+                if (!date) return 'N/A';
+                const d = new Date(date);
+                if (isNaN(d.getTime())) return 'N/A';
+                return d.toLocaleDateString('en-GB'); // dd/mm/yyyy
+            };
+            const toInputDate = (date) => {
+                if (!date) return '';
+                const d = new Date(date);
+                if (isNaN(d.getTime())) return '';
+                return d.toISOString().split('T')[0];
+            };
+
+            // --- DATA STORE ---
+            let farmData = {
+                population: {
+                    lactating_early: 15, lactating_mid: 20, lactating_late: 5,
+                    heifers: 25, calves: 15, dryCows: 8, bulls: 8
+                },
+                crops: [
+                     { name: 'Maize', field: 'A', size: 5, status: 'Harvesting', progress: 92 },
+                     { name: 'Silage Napier', field: 'B', size: 4, status: 'Vegetative', progress: 55 },
+                ],
+                breedingRecords: [
+                    { id: 1, date: '2025-08-15', cowId: 'KE-HF-0199', event: 'AI', sire: 'KAG-088', result: 'Pending Check', comments: 'Strong heat signs.', checkDate: null, dueDate: null },
+                    { id: 2, date: '2025-07-20', cowId: 'KE-HF-0182', event: 'AI', sire: 'SIMBA-01', result: 'Confirmed Pregnant', comments: 'Confirmed via ultrasound.', checkDate: '2025-08-24', dueDate: '2026-04-28' },
+                    { id: 3, date: '2025-08-05', cowId: 'KE-HF-0113', event: 'Calving', sire: 'N/A', result: 'Live Calf', comments: 'Heifer calf, healthy.', checkDate: null, dueDate: null },
+                ],
+                 syncRecords: [ {id: 1, cowId: 'KE-HF-0205', day0: '2025-10-01'} ],
+                syncCalendar: { startDate: toInputDate(new Date('2025-10-01')) },
+                ingredients: [
+                    { id: 1, name: 'Napier Grass', cost: 5, dm: 25, cp: 12, me: 9.5, ndf: 60, adf: 40, ca: 0.6, p: 0.3 },
+                    { id: 2, name: 'Maize Silage', cost: 8, dm: 35, cp: 8, me: 11.0, ndf: 45, adf: 28, ca: 0.3, p: 0.25 },
+                    { id: 3, name: 'Rhodes Grass Hay', cost: 25, dm: 88, cp: 8, me: 8.0, ndf: 65, adf: 45, ca: 0.4, p: 0.2 },
+                    { id: 4, name: 'Dairy Meal (16% CP)', cost: 55, dm: 89, cp: 16, me: 12.5, ndf: 25, adf: 12, ca: 0.8, p: 0.5 },
+                    { id: 5, name: 'Maize Germ', cost: 45, dm: 88, cp: 11, me: 13.5, ndf: 30, adf: 10, ca: 0.1, p: 0.6 },
+                    { id: 6, name: 'Wheat Bran', cost: 35, dm: 89, cp: 15, me: 11.5, ndf: 40, adf: 12, ca: 0.1, p: 1.1 },
+                    { id: 7, name: 'Sunflower Cake', cost: 50, dm: 90, cp: 28, me: 12.0, ndf: 35, adf: 22, ca: 0.4, p: 0.8 },
+                    { id: 8, name: 'BSF Maggots (dried)', cost: 150, dm: 92, cp: 42, me: 15.0, ndf: 10, adf: 8, ca: 1.5, p: 0.8 },
+                    { id: 9, name: 'Omena (Fish Meal)', cost: 120, dm: 91, cp: 55, me: 13.0, ndf: 8, adf: 5, ca: 4.0, p: 2.5 },
+                    { id: 10, name: 'All Purpose Mineral', cost: 200, dm: 98, cp: 0, me: 0, ndf: 0, adf: 0, ca: 20, p: 10 },
+                    { id: 11, name: 'Kikuyu Grass', cost: 4, dm: 22, cp: 14, me: 10, ndf: 55, adf: 35, ca: 0.5, p: 0.35 },
+                    { id: 12, name: 'Sorghum (Sugar Graze)', cost: 6, dm: 28, cp: 9, me: 10.5, ndf: 58, adf: 38, ca: 0.4, p: 0.2 },
+                    { id: 13, name: 'Maize Grain', cost: 50, dm: 88, cp: 9, me: 13.8, ndf: 12, adf: 3, ca: 0.05, p: 0.3 },
+                    { id: 14, name: 'Maize (Green Forage)', cost: 5, dm: 25, cp: 9, me: 10.2, ndf: 50, adf: 30, ca: 0.3, p: 0.2 },
+                    { id: 15, name: 'Sorghum Silage', cost: 7, dm: 32, cp: 7, me: 10.5, ndf: 50, adf: 32, ca: 0.3, p: 0.2 },
+                    { id: 16, name: 'Napier Silage', cost: 6, dm: 25, cp: 7, me: 9, ndf: 65, adf: 45, ca: 0.5, p: 0.25 },
+                    { id: 17, name: 'Onchonga (Sardines)', cost: 115, dm: 90, cp: 52, me: 12.5, ndf: 9, adf: 6, ca: 3.8, p: 2.4 },
+                    { id: 18, name: 'Fermented Maize Bran', cost: 32, dm: 88, cp: 13, me: 12, ndf: 38, adf: 15, ca: 0.1, p: 0.9 },
+                    { id: 19, name: 'Limestone Flour (Calcium)', cost: 25, dm: 99, cp: 0, me: 0, ndf: 0, adf: 0, ca: 38, p: 0 },
+                    { id: 20, name: 'Dairy Mineral Mix', cost: 220, dm: 98, cp: 0, me: 0, ndf: 0, adf: 0, ca: 18, p: 9 },
+                    { id: 21, name: 'Banana Leaves', cost: 2, dm: 18, cp: 10, me: 7.5, ndf: 68, adf: 48, ca: 1, p: 0.2 },
+                    { id: 22, name: 'Cottonseed Cake', cost: 60, dm: 91, cp: 41, me: 12.5, ndf: 25, adf: 16, ca: 0.2, p: 1.1 },
+                    { id: 23, name: 'Chick Mash', cost: 70, dm: 88, cp: 20, me: 12.5, ndf: 12, adf: 6, ca: 1, p: 0.7 },
+                    { id: 24, name: 'Growers Mash', cost: 65, dm: 88, cp: 16, me: 12, ndf: 15, adf: 8, ca: 0.9, p: 0.6 },
+                    { id: 25, name: 'Layers Mash', cost: 60, dm: 88, cp: 17, me: 11.5, ndf: 15, adf: 8, ca: 4, p: 0.7 },
+                    { id: 26, name: 'Canola Meal', cost: 75, dm: 90, cp: 36, me: 12, ndf: 22, adf: 12, ca: 0.7, p: 1 },
+                    { id: 27, name: 'Soybean Cake', cost: 95, dm: 89, cp: 46, me: 13.5, ndf: 13, adf: 7, ca: 0.3, p: 0.7 },
+                    { id: 28, name: 'Toxin Binder', cost: 350, dm: 95, cp: 0, me: 0, ndf: 0, adf: 0, ca: 0, p: 0 },
+                    { id: 29, name: 'Bypass Protein (e.g. SoyPass)', cost: 130, dm: 90, cp: 50, me: 14, ndf: 12, adf: 6, ca: 0.3, p: 0.7 },
+                    { id: 30, name: 'Dry Cow Minerals', cost: 210, dm: 98, cp: 0, me: 0, ndf: 0, adf: 0, ca: 15, p: 5 },
+                    { id: 31, name: 'Maize Bran', cost: 30, dm: 88, cp: 12, me: 11.8, ndf: 40, adf: 14, ca: 0.1, p: 1 },
+                    { id: 32, name: 'Molasses', cost: 40, dm: 75, cp: 3, me: 12, ndf: 0, adf: 0, ca: 0.8, p: 0.1 },
+                    { id: 33, name: 'Wheat Pollard', cost: 38, dm: 89, cp: 16, me: 12.8, ndf: 35, adf: 11, ca: 0.15, p: 1 },
+                    { id: 34, name: 'Avocado Seed Meal', cost: 15, dm: 88, cp: 7, me: 11.5, ndf: 25, adf: 15, ca: 0.2, p: 0.2 },
+                    { id: 35, name: 'Sweet Potato Vines (Fresh)', cost: 3, dm: 15, cp: 15, me: 10, ndf: 45, adf: 35, ca: 1.0, p: 0.3 },
+                    { id: 36, name: 'Cassava Leaves (Fresh)', cost: 4, dm: 25, cp: 22, me: 10.5, ndf: 40, adf: 30, ca: 1.5, p: 0.5 },
+                    { id: 37, name: 'Leucaena Leaves', cost: 10, dm: 30, cp: 24, me: 9.8, ndf: 42, adf: 33, ca: 1.8, p: 0.25 },
+                    { id: 38, name: 'Moringa Leaves (Dry)', cost: 80, dm: 90, cp: 27, me: 11.0, ndf: 22, adf: 18, ca: 2.0, p: 0.4 },
+                    { id: 39, name: 'Desmodium (Greenleaf)', cost: 6, dm: 20, cp: 18, me: 9.5, ndf: 50, adf: 40, ca: 1.2, p: 0.28 }
+                ],
+                animalRequirements: [
+                    { id: 1, name: 'High Yielding Dairy Cow (30L/day)', req: { dm_kg: 22, cp_perc: 17, me_mj_kg: 11.5, ndf_perc: 32, adf_perc: 21, ca_perc: 0.7, p_perc: 0.4 } },
+                    { id: 2, name: 'Mid Lactation Dairy Cow (20L/day)', req: { dm_kg: 20, cp_perc: 16, me_mj_kg: 11.0, ndf_perc: 35, adf_perc: 23, ca_perc: 0.6, p_perc: 0.35 } },
+                    { id: 3, name: 'Growing Heifer (12-18 months)', req: { dm_kg: 8, cp_perc: 14, me_mj_kg: 10.5, ndf_perc: 40, adf_perc: 25, ca_perc: 0.5, p_perc: 0.3 } },
+                    { id: 4, name: 'Layer Chicken', req: { dm_kg: 0.12, cp_perc: 16, me_mj_kg: 11.5, ndf_perc: 15, adf_perc: 8, ca_perc: 4.0, p_perc: 0.6 } }
+                ],
+                silageRecords: [ {id: 1, pitId: "Pit A", crop: "Maize", dateFilled: "2025-04-15", estTonnes: 50, notes: "Good compaction."}],
+                pastureRecords: [ {id: 1, paddockId: "Paddock C1", type: "Rhodes Grass", datePlanted: "2024-10-20", lastGrazed: "2025-08-25", status: "Ready"}],
+                tmrMixer: {
+                    animalGroupId: 1,
+                    milkYield: 30,
+                    milkPrice: 50,
+                    ingredients: [
+                        { id: 2, asFedKg: 40 }, // Maize Silage
+                        { id: 3, asFedKg: 15 }, // Rhodes Grass Hay
+                        { id: 4, asFedKg: 8 }, // Dairy Meal
+                    ]
+                }
+            };
+            
+            // --- Elements ---
+            const mainDashboard = document.querySelector('.dashboard-grid');
+            const cattleView = document.getElementById('cattle-management-view');
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const managementSections = document.querySelectorAll('.management-section');
+            let cattleTabHistory = [];
+            const mainModal = document.getElementById('main-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const modalSaveBtn = document.getElementById('modal-save-btn');
+            const tooltip = document.getElementById('tmr-tooltip');
+            let editingRecordId = null;
+            let currentModalAction = null;
+
+
+            // --- RENDER FUNCTIONS ---
+            function renderAll() {
+                renderDashboard();
+                renderPopulationView();
+                renderBreedingSection();
+                renderNutritionSection();
+            }
+            
+            function renderDashboard() {
+                 document.getElementById('crop-list').innerHTML = farmData.crops.map(crop => `<li><div class="task-summary"><span>• <strong>${crop.name} (${crop.field}):</strong> ${crop.size} Ha - \`[ ${crop.status} ]\`</span><span class="arrow">▾</span></div><div class="task-details">Progress: <span class="progress-bar">[${'█'.repeat(Math.round(crop.progress/10))}${'░'.repeat(10-Math.round(crop.progress/10))}] ${crop.progress}%</span></div></li>`).join('');
+                renderActionRequiredList();
+            }
+
+            function getBreedingReminders() {
+                const reminders = [];
+                const today = new Date();
+                
+                farmData.breedingRecords.forEach(record => {
+                    const recordDate = new Date(record.date);
+                    if (record.event === 'AI' || record.event === 'Natural Service') {
+                        if (record.result === 'Pending Check') {
+                            const checkDate = record.checkDate ? new Date(record.checkDate) : addDays(recordDate, 35); 
+                            if (checkDate >= today && checkDate <= addDays(today, 14)) {
+                                reminders.push({ text: `<strong>Pregnancy Check:</strong> ${record.cowId}`, date: formatDate(checkDate) });
+                            }
+                        }
+                    }
+                    if(record.result === 'Confirmed Pregnant') {
+                        const dueDate = record.dueDate ? new Date(record.dueDate) : addDays(recordDate, 283);
+                        if (dueDate >= today && dueDate <= addDays(today, 30)) {
+                           reminders.push({ text: `<strong>Due for Calving:</strong> ${record.cowId}`, date: formatDate(dueDate) });
+                        }
+                    }
+                    if(record.result === 'Not Conceived' || record.event === 'Calving') {
+                        const nextServiceDate = addDays(recordDate, 50);
+                         if (nextServiceDate >= today && nextServiceDate <= addDays(today, 7)) {
+                           reminders.push({ text: `<strong>Due for Service:</strong> ${record.cowId}`, date: formatDate(nextServiceDate) });
+                        }
+                    }
+                });
+                 return reminders.sort((a,b) => new Date(a.date.split('/').reverse().join('-')) - new Date(b.date.split('/').reverse().join('-')));
+            }
+
+            function renderActionRequiredList() {
+                const container = document.getElementById('dashboard-action-list');
+                const breedingReminders = getBreedingReminders();
+                let staticTasks = [
+                     { text: '<strong>Harvest Maize (Field A)</strong>', date: 'Starts Today'},
+                     { text: '<strong>Vaccinate Heifers (Group B)</strong>', date: 'Due by 2:15 PM'}
+                ];
+
+                let allTasks = [...staticTasks, ...breedingReminders];
+                
+                container.innerHTML = allTasks.map(task => `
+                    <li><div class="task-summary"><span>• ${task.text} - \`${task.date}\`</span><span class="arrow">▾</span></div>
+                    <div class="task-details">More details for this task can be added here.</div></li>`).join('');
+            }
+
+            function renderPopulationView() {
+                const container = document.getElementById('population-grid-container');
+                const pop = farmData.population;
+                const totalLactating = pop.lactating_early + pop.lactating_mid + pop.lactating_late;
+                const totalCattle = totalLactating + pop.heifers + pop.calves + pop.dryCows + pop.bulls;
+
+                container.innerHTML = `
+                    <div class="sub-card population-card">
+                        <div class="count">${totalCattle}</div>
+                        <div class="label">Total Cattle</div>
+                    </div>
+                    <div class="sub-card population-card">
+                        <div class="count">${totalLactating}</div>
+                        <div class="label">Lactating Cows</div>
+                        <div class="breakdown">
+                            Early: ${pop.lactating_early} | Mid: ${pop.lactating_mid} | Late: ${pop.lactating_late}
+                        </div>
+                    </div>
+                     <div class="sub-card population-card">
+                        <div class="count">${pop.heifers}</div>
+                        <div class="label">Heifers</div>
+                    </div>
+                     <div class="sub-card population-card">
+                        <div class="count">${pop.calves}</div>
+                        <div class="label">Calves</div>
+                    </div>
+                     <div class="sub-card population-card">
+                        <div class="count">${pop.dryCows}</div>
+                        <div class="label">Dry Cows</div>
+                    </div>
+                     <div class="sub-card population-card">
+                        <div class="count">${pop.bulls}</div>
+                        <div class="label">Bulls</div>
+                    </div>
+                `;
+            }
+
+            function renderBreedingSection() {
+                renderBreedingReminders();
+                renderHerdStatus();
+                renderSyncCalendar();
+                renderBreedingTable();
+                renderSyncTable();
+            }
+
+            function renderBreedingReminders() {
+                const container = document.getElementById('breeding-reminders');
+                const reminders = getBreedingReminders();
+                let content = '<h4>🗓️ Breeding Reminders</h4>';
+                if (reminders.length > 0) {
+                    content += '<ul>';
+                    reminders.forEach(r => { content += `<li>${r.text} - <strong>${r.date}</strong></li>`; });
+                    content += '</ul>';
+                } else { content += '<p>No upcoming breeding events.</p>'; }
+                container.innerHTML = content;
+            }
+            
+            function renderHerdStatus() {
+                const container = document.getElementById('herd-status');
+                 let inCalf = [], awaiting = [], open = [];
+                 const latestStatus = {};
+                 farmData.breedingRecords.forEach(r => {
+                     if (!latestStatus[r.cowId] || new Date(r.date) > new Date(latestStatus[r.cowId].date)) {
+                         latestStatus[r.cowId] = r;
+                     }
+                 });
+                 for (const cowId in latestStatus) {
+                     const status = latestStatus[cowId].result;
+                     if(status === 'Confirmed Pregnant') inCalf.push(cowId);
+                     else if (status === 'Pending Check') awaiting.push(cowId);
+                     else open.push(cowId);
+                 }
+                container.innerHTML = `<h4>Herd Breeding Status</h4>
+                    <p><strong>In-Calf:</strong> ${inCalf.length} animals</p>
+                    <p><strong>Awaiting Confirmation:</strong> ${awaiting.length} animals</p>
+                    <p><strong>Open / Ready to Serve:</strong> ${open.length} animals</p>`;
+            }
+
+            function renderSyncCalendar() {
+                const container = document.getElementById('sync-calendar');
+                const day0 = new Date(farmData.syncCalendar.startDate);
+                container.innerHTML = `<h4>🧬 AI Synchronization Calendar</h4>
+                <p>Based on Ovsynch protocol. Set your start date.</p>
+                <div class="sync-calendar-input">
+                    <label for="sync-start-date">Day 0:</label>
+                    <input type="date" id="sync-start-date" value="${toInputDate(day0)}">
+                </div>
+                <ul class="sync-calendar-timeline">
+                    <li><strong>Day 0 (${formatDate(day0)}):</strong> GnRH Injection</li>
+                    <li><strong>Day 7 (${formatDate(addDays(day0, 7))}):</strong> PGF2α Injection</li>
+                    <li><strong>Day 9 (${formatDate(addDays(day0, 9))}):</strong> GnRH Injection</li>
+                    <li><strong>Day 10 (${formatDate(addDays(day0, 10))}):</strong> Timed AI</li>
+                </ul>`;
+
+                document.getElementById('sync-start-date').addEventListener('change', (e) => {
+                    farmData.syncCalendar.startDate = e.target.value;
+                    renderSyncCalendar();
+                });
+            }
+
+             function renderSyncTable() {
+                const container = document.getElementById('sync-table-container');
+                let tableHtml = `<table><thead><tr><th>Cow ID</th><th>Day 0 (GnRH)</th><th>Day 7 (PGF2α)</th><th>Day 9 (GnRH)</th><th>Day 10 (AI)</th><th>Actions</th></tr></thead><tbody>`;
+                farmData.syncRecords.forEach(r => {
+                    const day0 = new Date(r.day0);
+                    tableHtml += `<tr>
+                        <td>${r.cowId}</td><td>${formatDate(day0)}</td><td>${formatDate(addDays(day0, 7))}</td>
+                        <td>${formatDate(addDays(day0, 9))}</td><td>${formatDate(addDays(day0, 10))}</td>
+                        <td class="actions-cell"><button class="btn btn-delete-row" data-action="delete-sync" data-id="${r.id}">Delete</button></td></tr>`;
+                });
+                tableHtml += '</tbody></table>';
+                container.innerHTML = tableHtml;
+            }
+
+            // --- INLINE EDITING RENDERING ---
+            function renderBreedingTable() {
+                const container = document.getElementById('breeding-table-container');
+                let tableHtml = `<table><thead><tr><th>Service Date</th><th>Cow ID</th><th>Event</th><th>Sire</th><th>Result</th><th>Check Date</th><th>Due Date</th><th>Comments</th><th>Actions</th></tr></thead><tbody>`;
+                
+                [...farmData.breedingRecords].sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(r => {
+                    if (r.id === editingRecordId) {
+                        tableHtml += renderEditableRow(r);
+                    } else {
+                        tableHtml += renderStaticRow(r);
+                    }
+                });
+
+                tableHtml += '</tbody></table>';
+                container.innerHTML = tableHtml;
+            }
+            
+            function renderStaticRow(r) {
+                let checkDateStr, dueDateStr;
+                const serviceDate = new Date(r.date);
+                if (r.checkDate) { checkDateStr = formatDate(r.checkDate); } 
+                else if (r.event === 'AI' || r.event === 'Natural Service') { checkDateStr = `<em>${formatDate(addDays(serviceDate, 35))}</em>`;} 
+                else { checkDateStr = 'N/A'; }
+
+                if (r.dueDate) { dueDateStr = formatDate(r.dueDate); } 
+                else if (r.result === 'Confirmed Pregnant') { dueDateStr = `<em>${formatDate(addDays(serviceDate, 283))}</em>`; }
+                else { dueDateStr = 'N/A'; }
+
+                return `<tr>
+                    <td>${formatDate(r.date)}</td><td>${r.cowId}</td><td>${r.event}</td><td>${r.sire}</td><td>${r.result}</td>
+                    <td>${checkDateStr}</td><td>${dueDateStr}</td><td>${r.comments}</td>
+                    <td class="actions-cell">
+                        <button class="btn btn-edit-row" data-action="edit-breeding" data-id="${r.id}">Edit</button>
+                        <button class="btn btn-delete-row" data-action="delete-breeding" data-id="${r.id}">Delete</button>
+                    </td>
+                </tr>`;
+            }
+
+            function renderEditableRow(r) {
+                 return `<tr class="editing-row" id="editing-row">
+                    <td><input type="date" id="edit-date" value="${toInputDate(r.date)}"></td>
+                    <td><input type="text" id="edit-cowId" value="${r.cowId}"></td>
+                    <td><select id="edit-event">
+                        <option ${r.event === 'AI' ? 'selected' : ''}>AI</option>
+                        <option ${r.event === 'Natural Service' ? 'selected' : ''}>Natural Service</option>
+                        <option ${r.event === 'Calving' ? 'selected' : ''}>Calving</option>
+                    </select></td>
+                    <td><input type="text" id="edit-sire" value="${r.sire}"></td>
+                    <td><select id="edit-result">
+                        <option ${r.result === 'Pending Check' ? 'selected' : ''}>Pending Check</option>
+                        <option ${r.result === 'Confirmed Pregnant' ? 'selected' : ''}>Confirmed Pregnant</option>
+                        <option ${r.result === 'Not Conceived' ? 'selected' : ''}>Not Conceived</option>
+                        <option ${r.result === 'Live Calf' ? 'selected' : ''}>Live Calf</option>
+                    </select></td>
+                    <td><input type="date" id="edit-checkDate" value="${toInputDate(r.checkDate)}"></td>
+                    <td><input type="date" id="edit-dueDate" value="${toInputDate(r.dueDate)}"></td>
+                    <td><textarea id="edit-comments" rows="1">${r.comments}</textarea></td>
+                    <td class="actions-cell">
+                        <button class="btn btn-primary btn-edit-row" data-action="save-edit-breeding" data-id="${r.id}">Save</button>
+                        <button class="btn btn-secondary btn-edit-row" data-action="cancel-edit-breeding">Cancel</button>
+                    </td>
+                </tr>`;
+            }
+
+            // --- NUTRITION SECTION ---
+            function renderNutritionSection() {
+                renderAnimalGroupSelector();
+                renderIngredientSelector();
+                renderTmrMixTable();
+                renderTmrSummary();
+                renderIngredientsStoreTable();
+                renderAnimalRequirements();
+                renderSilageTable();
+                renderPastureTable();
+                renderTmrEconomicAnalysis();
+            }
+
+            function renderAnimalGroupSelector() {
+                const selector = document.getElementById('animal-group-selector');
+                selector.innerHTML = farmData.animalRequirements.map(group =>
+                    `<option value="${group.id}" ${group.id === farmData.tmrMixer.animalGroupId ? 'selected' : ''}>${group.name}</option>`
+                ).join('');
+            }
+
+            function renderIngredientSelector() {
+                const container = document.getElementById('ingredient-selector');
+                container.innerHTML = farmData.ingredients.map(ing => {
+                    const isChecked = farmData.tmrMixer.ingredients.some(mixIng => mixIng.id === ing.id);
+                    return `<div><label><input type="checkbox" data-action="toggle-tmr-ingredient" data-id="${ing.id}" ${isChecked ? 'checked' : ''}> ${ing.name}</label></div>`;
+                }).join('');
+            }
+
+            function renderTmrMixTable() {
+                const container = document.getElementById('tmr-table-container');
+                let tableHtml = '<table><thead><tr><th>Ingredient</th><th>As Fed (kg)</th><th>DM%</th><th>DM (kg)</th><th>Cost (KES)</th><th>Remove</th></tr></thead><tbody>';
+                let totalAsFed = 0;
+                let totalCost = 0;
+                let totalDM = 0;
+
+                farmData.tmrMixer.ingredients.forEach(mixIng => {
+                    const ingredientData = farmData.ingredients.find(i => i.id === mixIng.id);
+                    if (!ingredientData) return;
+
+                    const asFed = mixIng.asFedKg;
+                    const dmKg = (asFed * ingredientData.dm) / 100;
+                    const cost = asFed * ingredientData.cost;
+                    totalAsFed += asFed;
+                    totalDM += dmKg;
+                    totalCost += cost;
+
+                    tableHtml += `
+                        <tr>
+                            <td>${ingredientData.name}</td>
+                            <td><input type="number" step="0.5" value="${asFed}" data-action="update-tmr-weight" data-id="${mixIng.id}" style="width: 80px;"></td>
+                            <td>${ingredientData.dm.toFixed(1)}</td>
+                            <td>${dmKg.toFixed(2)}</td>
+                            <td>${cost.toFixed(2)}</td>
+                            <td><button class="btn-delete-row" data-action="remove-tmr-ingredient" data-id="${mixIng.id}" style="padding: 2px 6px;">&times;</button></td>
+                        </tr>
+                    `;
+                });
+
+                tableHtml += `
+                    </tbody><tfoot>
+                        <tr style="font-weight: bold;">
+                            <td>Total</td>
+                            <td>${totalAsFed.toFixed(2)}</td>
+                            <td>-</td>
+                            <td>${totalDM.toFixed(2)}</td>
+                            <td>${totalCost.toFixed(2)}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot></table>`;
+                container.innerHTML = tableHtml;
+            }
+
+            function calculateTmrComposition() {
+                const totals = { asFedKg: 0, dmKg: 0, cost: 0, cp_kg: 0, me_mj: 0, ndf_kg: 0, adf_kg: 0, ca_g: 0, p_g: 0 };
+                farmData.tmrMixer.ingredients.forEach(mixIng => {
+                    const ingData = farmData.ingredients.find(i => i.id === mixIng.id);
+                    if (!ingData) return;
+                    
+                    const asFed = mixIng.asFedKg;
+                    const dmKg = asFed * (ingData.dm / 100);
+
+                    totals.asFedKg += asFed;
+                    totals.dmKg += dmKg;
+                    totals.cost += asFed * ingData.cost;
+                    if (dmKg > 0) {
+                        totals.cp_kg += dmKg * (ingData.cp / 100);
+                        totals.me_mj += dmKg * ingData.me;
+                        totals.ndf_kg += dmKg * (ingData.ndf / 100);
+                        totals.adf_kg += dmKg * (ingData.adf / 100);
+                        totals.ca_g += dmKg * (ingData.ca / 100) * 1000;
+                        totals.p_g += dmKg * (ingData.p / 100) * 1000;
+                    }
+                });
+
+                const composition = {};
+                if (totals.dmKg > 0) {
+                    composition.cp_perc = (totals.cp_kg / totals.dmKg) * 100;
+                    composition.me_mj_kg = totals.me_mj / totals.dmKg;
+                    composition.ndf_perc = (totals.ndf_kg / totals.dmKg) * 100;
+                    composition.adf_perc = (totals.adf_kg / totals.dmKg) * 100;
+                    composition.ca_perc = (totals.ca_g / (totals.dmKg * 1000)) * 100;
+                    composition.p_perc = (totals.p_g / (totals.dmKg * 1000)) * 100;
+                }
+                
+                return { totals, composition };
+            }
+
+            function renderTmrSummary() {
+                const container = document.getElementById('tmr-summary-container');
+                const selectedGroup = farmData.animalRequirements.find(g => g.id === farmData.tmrMixer.animalGroupId);
+                if (!selectedGroup) {
+                    container.innerHTML = "<p>Please select an animal group.</p>";
+                    return;
+                }
+
+                const { totals, composition } = calculateTmrComposition();
+                const req = selectedGroup.req;
+                
+                const checkValue = (value, target) => {
+                    if (!target || !value) return { class: 'ok', suggestion: '' };
+                    if (value < target * 0.95) return { class: 'low', suggestion: `This is low. Try increasing high-energy feeds or protein sources.` };
+                    if (value > target * 1.05) return { class: 'high', suggestion: `This is high. Try reducing concentrates or increasing forage.` };
+                    return { class: 'ok', suggestion: '' };
+                };
+                 const suggestions = {
+                    dm_kg: { low: "DM intake is low. The ration might not be palatable or is too bulky.", high: "DM intake is too high. This could lead to health issues. Consider adding lower-energy forages." },
+                    cp_perc: { low: "Crude Protein is low. Increase protein sources like Sunflower Cake, BSF Maggots, or Dairy Meal.", high: "Crude Protein is high. This is costly and can be metabolically stressful. Reduce expensive protein sources." },
+                    me_mj_kg: { low: "Energy is low. Increase high-energy ingredients like Maize Germ or quality silage.", high: "Energy is high. This can lead to fattening. Consider replacing some concentrates with quality forage." },
+                };
+
+                const getStatus = (value, target) => `${(value / target * 100).toFixed(0)}%`;
+
+                container.innerHTML = `<table class="tmr-summary-table">
+                    <thead><tr><th>Nutrient</th><th>Requirement</th><th>Ration</th><th>Status</th></tr></thead>
+                    <tbody>
+                        <tr><td class="nutrient-name">Dry Matter Intake (kg/day)</td><td>${req.dm_kg.toFixed(2)}</td><td>${totals.dmKg.toFixed(2)}</td><td class="status ${checkValue(totals.dmKg, req.dm_kg).class}" data-suggestion="${(suggestions.dm_kg || {})[checkValue(totals.dmKg, req.dm_kg).class] || ''}">${getStatus(totals.dmKg, req.dm_kg)}</td></tr>
+                        <tr><td class="nutrient-name">Crude Protein (% DM)</td><td>${req.cp_perc.toFixed(2)}</td><td>${(composition.cp_perc || 0).toFixed(2)}</td><td class="status ${checkValue(composition.cp_perc, req.cp_perc).class}" data-suggestion="${(suggestions.cp_perc || {})[checkValue(composition.cp_perc, req.cp_perc).class] || ''}">${getStatus(composition.cp_perc, req.cp_perc)}</td></tr>
+                        <tr><td class="nutrient-name">ME (MJ/kg DM)</td><td>${req.me_mj_kg.toFixed(2)}</td><td>${(composition.me_mj_kg || 0).toFixed(2)}</td><td class="status ${checkValue(composition.me_mj_kg, req.me_mj_kg).class}" data-suggestion="${(suggestions.me_mj_kg || {})[checkValue(composition.me_mj_kg, req.me_mj_kg).class] || ''}">${getStatus(composition.me_mj_kg, req.me_mj_kg)}</td></tr>
+                        <tr><td class="nutrient-name">NDF (% DM)</td><td>${req.ndf_perc.toFixed(2)}</td><td>${(composition.ndf_perc || 0).toFixed(2)}</td><td class="status ${checkValue(composition.ndf_perc, req.ndf_perc).class}">${getStatus(composition.ndf_perc, req.ndf_perc)}</td></tr>
+                        <tr><td class="nutrient-name">ADF (% DM)</td><td>${req.adf_perc.toFixed(2)}</td><td>${(composition.adf_perc || 0).toFixed(2)}</td><td class="status ${checkValue(composition.adf_perc, req.adf_perc).class}">${getStatus(composition.adf_perc, req.adf_perc)}</td></tr>
+                        <tr><td class="nutrient-name">Calcium (% DM)</td><td>${req.ca_perc.toFixed(2)}</td><td>${(composition.ca_perc || 0).toFixed(2)}</td><td class="status ${checkValue(composition.ca_perc, req.ca_perc).class}">${getStatus(composition.ca_perc, req.ca_perc)}</td></tr>
+                        <tr><td class="nutrient-name">Phosphorus (% DM)</td><td>${req.p_perc.toFixed(2)}</td><td>${(composition.p_perc || 0).toFixed(2)}</td><td class="status ${checkValue(composition.p_perc, req.p_perc).class}">${getStatus(composition.p_perc, req.p_perc)}</td></tr>
+                    </tbody></table>`;
+            }
+
+            function renderTmrEconomicAnalysis() {
+                const container = document.getElementById('tmr-economic-container');
+                const { totals } = calculateTmrComposition();
+                const milkYield = farmData.tmrMixer.milkYield;
+                const milkPrice = farmData.tmrMixer.milkPrice;
+                
+                const feedCostPerLiter = milkYield > 0 ? totals.cost / milkYield : 0;
+                const grossMilkIncome = milkYield * milkPrice;
+                const iofc = grossMilkIncome - totals.cost;
+
+                container.innerHTML = `<table>
+                    <tbody>
+                        <tr><td class="nutrient-name">Total Feed Cost</td><td>KES ${totals.cost.toFixed(2)}</td></tr>
+                        <tr><td class="nutrient-name">Feed Cost per Liter</td><td>KES ${feedCostPerLiter.toFixed(2)}</td></tr>
+                        <tr><td class="nutrient-name">Gross Milk Income</td><td>KES ${grossMilkIncome.toFixed(2)}</td></tr>
+                        <tr style="font-weight: bold;"><td class="nutrient-name">Income Over Feed Cost (IOFC)</td><td>KES ${iofc.toFixed(2)}</td></tr>
+                    </tbody>
+                </table>`;
+            }
+
+            function renderIngredientsStoreTable() {
+                const container = document.getElementById('ingredients-table-container');
+                let table = `<table><thead><tr>
+                    <th>Name</th><th>Cost/kg</th><th>DM %</th><th>CP %</th><th>ME MJ/kg</th><th>NDF %</th><th>ADF %</th><th>Ca %</th><th>P %</th><th>Actions</th>
+                </tr></thead><tbody>`;
+                farmData.ingredients.forEach(i => {
+                    table += `<tr>
+                        <td>${i.name}</td><td>${i.cost}</td><td>${i.dm}</td><td>${i.cp}</td><td>${i.me}</td><td>${i.ndf}</td><td>${i.adf}</td><td>${i.ca}</td><td>${i.p}</td>
+                        <td class="actions-cell"><button class="btn btn-edit-row" data-action="edit-ingredient-${i.id}">Edit</button></td>
+                    </tr>`;
+                });
+                table += '</tbody></table>';
+                container.innerHTML = table;
+            }
+
+            function renderAnimalRequirements() {
+                const container = document.getElementById('requirements-container');
+                container.innerHTML = farmData.animalRequirements.map(animal => `
+                    <div class="sub-card">
+                        <h4>${animal.name}</h4>
+                        <ul>
+                            ${Object.entries(animal.req).map(([key, value]) => `<li><strong>${key.replace('_', ' ').toUpperCase()}:</strong> ${value} ${key.includes('kg') ? 'kg' : '%'}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('');
+            }
+
+            function renderSilageTable() { /* Placeholder */ }
+            function renderPastureTable() { /* Placeholder */ }
+
+            // --- NAVIGATION & TABS ---
+            function switchView(view) {
+                if (view === 'cattle') {
+                    mainDashboard.style.display = 'none';
+                    cattleView.style.display = 'block';
+                    const defaultTabId = 'population-section';
+                    cattleTabHistory = [defaultTabId];
+                    tabLinks.forEach(t => t.classList.remove('active'));
+                    managementSections.forEach(s => s.classList.remove('active'));
+                    document.querySelector(`.tab-link[data-target="${defaultTabId}"]`).classList.add('active');
+                    document.getElementById(defaultTabId).classList.add('active');
+                } else {
+                    mainDashboard.style.display = 'grid';
+                    cattleView.style.display = 'none';
+                }
+            }
+            
+            tabLinks.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.dataset.target;
+                    tabLinks.forEach(t => t.classList.remove('active'));
+                    managementSections.forEach(s => s.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                    if (cattleTabHistory[cattleTabHistory.length - 1] !== targetId) {
+                        cattleTabHistory.push(targetId);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.sub-tab-link').forEach(subTab => {
+                subTab.addEventListener('click', () => {
+                    const targetId = subTab.dataset.subTarget;
+                    document.querySelectorAll('.sub-tab-link').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
+                    subTab.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+
+            document.getElementById('nav-cattle').addEventListener('click', (e) => { e.preventDefault(); switchView('cattle'); });
+            document.getElementById('nav-dashboard').addEventListener('click', (e) => { e.preventDefault(); switchView('dashboard'); });
+            
+            document.getElementById('back-btn').addEventListener('click', () => {
+                if (cattleTabHistory.length > 1) {
+                    cattleTabHistory.pop();
+                    const previousTabId = cattleTabHistory[cattleTabHistory.length - 1];
+                    tabLinks.forEach(t => t.classList.remove('active'));
+                    managementSections.forEach(s => s.classList.remove('active'));
+                    document.querySelector(`.tab-link[data-target="${previousTabId}"]`).classList.add('active');
+                    document.getElementById(previousTabId).classList.add('active');
+                } else {
+                    switchView('dashboard');
+                }
+            });
+
+            // --- MODAL & FORM LOGIC ---
+            function openModal(action) {
+                currentModalAction = action;
+                let formHtml = '';
+
+                if (action === 'add-breeding') {
+                    modalTitle.textContent = 'Add Breeding Record';
+                    formHtml = createBreedingFormForAdd();
+                } else if (action === 'edit-population') {
+                    modalTitle.textContent = 'Edit Herd Population';
+                    formHtml = createPopulationForm();
+                } else if (action === 'add-ingredient' || action.startsWith('edit-ingredient-')) {
+                     modalTitle.textContent = action === 'add-ingredient' ? 'Add Ingredient' : 'Edit Ingredient';
+                     formHtml = createIngredientForm(action);
+                }
+                
+                modalBody.innerHTML = formHtml;
+                mainModal.style.display = 'flex';
+            }
+
+            function createBreedingFormForAdd() {
+                return `<div class="form-group"><label>Service Date</label><input type="date" id="form-date" value="${toInputDate(new Date())}"></div>
+                        <div class="form-group"><label>Cow ID</label><input type="text" id="form-cowId" placeholder="e.g. KE-HF-0123"></div>
+                        <div class="form-group"><label>Event</label><select id="form-event"><option>AI</option><option>Natural Service</option><option>Calving</option></select></div>
+                        <div class="form-group"><label>Sire</label><input type="text" id="form-sire" placeholder="e.g. SIMBA-01"></div>
+                        <div class="form-group"><label>Result</label><select id="form-result"><option>Pending Check</option><option>Confirmed Pregnant</option><option>Not Conceived</option><option>Live Calf</option></select></div>
+                        <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+                        <div class="form-group"><label>Pregnancy Check Date (Optional)</label><input type="date" id="form-checkDate"><small>Leave blank to use default calculation (35 days after service).</small></div>
+                        <div class="form-group"><label>Expected Due Date (Optional)</label><input type="date" id="form-dueDate"><small>Leave blank to use default calculation (283 days after service).</small></div>
+                        <div class="form-group"><label>Comments</label><textarea id="form-comments"></textarea></div>`;
+            }
+             function createIngredientForm(action) {
+                let ingredient = {name: '', cost: 0, dm: 0, cp: 0, me: 0, ndf: 0, adf: 0, ca: 0, p: 0};
+                if(action.startsWith('edit-ingredient-')){
+                    const id = parseInt(action.split('-')[2]);
+                    ingredient = farmData.ingredients.find(i => i.id === id);
+                }
+                return `<div class="grid-container" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group"><label>Name</label><input type="text" id="ing-name" value="${ingredient.name}"></div>
+                    <div class="form-group"><label>Cost (KES/kg)</label><input type="number" step="0.5" id="ing-cost" value="${ingredient.cost}"></div>
+                    <div class="form-group"><label>DM %</label><input type="number" step="0.1" id="ing-dm" value="${ingredient.dm}"></div>
+                    <div class="form-group"><label>CP %</label><input type="number" step="0.1" id="ing-cp" value="${ingredient.cp}"></div>
+                    <div class="form-group"><label>ME (MJ/kg)</label><input type="number" step="0.1" id="ing-me" value="${ingredient.me}"></div>
+                    <div class="form-group"><label>NDF %</label><input type="number" step="0.1" id="ing-ndf" value="${ingredient.ndf}"></div>
+                    <div class="form-group"><label>ADF %</label><input type="number" step="0.1" id="ing-adf" value="${ingredient.adf}"></div>
+                    <div class="form-group"><label>Ca %</label><input type="number" step="0.01" id="ing-ca" value="${ingredient.ca}"></div>
+                    <div class="form-group"><label>P %</label><input type="number" step="0.01" id="ing-p" value="${ingredient.p}"></div>
+                </div>`;
+            }
+
+            function createPopulationForm() {
+                const pop = farmData.population;
+                return `<div class="grid-container">
+                    <div class="form-group"><label>Lactating (Early)</label><input type="number" id="pop-lactating_early" value="${pop.lactating_early}"></div>
+                    <div class="form-group"><label>Lactating (Mid)</label><input type="number" id="pop-lactating_mid" value="${pop.lactating_mid}"></div>
+                    <div class="form-group"><label>Lactating (Late)</label><input type="number" id="pop-lactating_late" value="${pop.lactating_late}"></div>
+                    <div class="form-group"><label>Heifers</label><input type="number" id="pop-heifers" value="${pop.heifers}"></div>
+                    <div class="form-group"><label>Calves</label><input type="number" id="pop-calves" value="${pop.calves}"></div>
+                    <div class="form-group"><label>Dry Cows</label><input type="number" id="pop-dryCows" value="${pop.dryCows}"></div>
+                    <div class="form-group"><label>Bulls</label><input type="number" id="pop-bulls" value="${pop.bulls}"></div>
+                </div>`;
+            }
+
+            modalSaveBtn.addEventListener('click', () => {
+                const getVal = id => document.getElementById(id).value;
+                const getNum = id => parseFloat(getVal(id)) || 0;
+                const getValOrNull = id => { const val = getVal(id); return val === '' ? null : val; };
+
+                if (currentModalAction === 'add-breeding') {
+                    farmData.breedingRecords.push({ 
+                        id: Date.now(), date: getVal('form-date'), cowId: getVal('form-cowId'), event: getVal('form-event'), 
+                        sire: getVal('form-sire'), result: getVal('form-result'), comments: getVal('form-comments'),
+                        checkDate: getValOrNull('form-checkDate'), dueDate: getValOrNull('form-dueDate')
+                    });
+                    renderBreedingTable();
+                    renderHerdStatus();
+                    renderActionRequiredList();
+                } else if (currentModalAction === 'edit-population') {
+                    farmData.population.lactating_early = getNum('pop-lactating_early');
+                    farmData.population.lactating_mid = getNum('pop-lactating_mid');
+                    farmData.population.lactating_late = getNum('pop-lactating_late');
+                    farmData.population.heifers = getNum('pop-heifers');
+                    farmData.population.calves = getNum('pop-calves');
+                    farmData.population.dryCows = getNum('pop-dryCows');
+                    farmData.population.bulls = getNum('pop-bulls');
+                    renderPopulationView();
+                } else if (currentModalAction === 'add-ingredient' || currentModalAction.startsWith('edit-ingredient-')) {
+                    const newIng = {
+                        name: getVal('ing-name'), cost: getNum('ing-cost'), dm: getNum('ing-dm'), cp: getNum('ing-cp'), 
+                        me: getNum('ing-me'), ndf: getNum('ing-ndf'), adf: getNum('ing-adf'), ca: getNum('ing-ca'), p: getNum('ing-p')
+                    };
+                    if (currentModalAction === 'add-ingredient') {
+                        newIng.id = Date.now();
+                        farmData.ingredients.push(newIng);
+                    } else {
+                        const id = parseInt(currentModalAction.split('-')[2]);
+                        const index = farmData.ingredients.findIndex(i => i.id === id);
+                        farmData.ingredients[index] = {...farmData.ingredients[index], ...newIng};
+                    }
+                    renderIngredientsStoreTable();
+                    renderIngredientSelector();
+                }
+                mainModal.style.display = 'none';
+            });
+            
+            
+            // --- GLOBAL EVENT LISTENER ---
+            document.body.addEventListener('click', (e) => {
+                const action = e.target.dataset.action;
+                const id = parseInt(e.target.dataset.id, 10);
+                if (!action) return;
+
+                if (action === 'add-breeding' || action === 'edit-population' || action === 'add-ingredient' || action.startsWith('edit-ingredient-')) {
+                    openModal(action);
+                } else if (action === 'edit-breeding') {
+                    editingRecordId = id;
+                    renderBreedingTable();
+                } else if (action === 'save-edit-breeding') {
+                    const getVal = selector => document.querySelector(`#editing-row ${selector}`).value;
+                    const getValOrNull = selector => { const val = getVal(selector); return val === '' ? null : val; };
+                    
+                    const updatedData = {
+                        date: getVal('#edit-date'), cowId: getVal('#edit-cowId'), event: getVal('#edit-event'),
+                        sire: getVal('#edit-sire'), result: getVal('#edit-result'), comments: getVal('#edit-comments'),
+                        checkDate: getValOrNull('#edit-checkDate'), dueDate: getValOrNull('#edit-dueDate')
+                    };
+                    const index = farmData.breedingRecords.findIndex(r => r.id === id);
+                    farmData.breedingRecords[index] = { ...farmData.breedingRecords[index], ...updatedData };
+                    editingRecordId = null;
+                    renderBreedingTable();
+                    renderHerdStatus();
+                    renderActionRequiredList();
+                } else if (action === 'cancel-edit-breeding') {
+                    editingRecordId = null;
+                    renderBreedingTable();
+                }
+                else if (action.startsWith('delete-')) {
+                    const type = action.split('-')[1];
+                    if (confirm(`Are you sure you want to delete this ${type} record?`)) {
+                        farmData[`${type}Records`] = farmData[`${type}Records`].filter(r => r.id !== id);
+                        if (type === 'breeding') renderBreedingTable();
+                        if (type === 'sync') renderSyncTable();
+                    }
+                } else if (action === 'save-notes') {
+                    const button = e.target;
+                    const originalText = button.textContent;
+                    button.textContent = 'Saved!';
+                    button.style.backgroundColor = 'var(--color-green)';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.backgroundColor = '';
+                    }, 2000);
+                } else if (action === 'formulate-and-report') {
+                     const reportContainer = document.getElementById('tmr-report-output');
+                     const { totals, composition } = calculateTmrComposition();
+                     const selectedGroup = farmData.animalRequirements.find(g => g.id === farmData.tmrMixer.animalGroupId);
+                     reportContainer.innerHTML = `<h4>TMR Report for: ${selectedGroup.name}</h4>
+                        <p><strong>Total Cost:</strong> KES ${totals.cost.toFixed(2)} per ${totals.asFedKg.toFixed(2)}kg</p>
+                        <p><strong>Cost per kg (As Fed):</strong> KES ${(totals.cost / totals.asFedKg).toFixed(2)}</p>
+                        <p><strong>Cost per kg (DM):</strong> KES ${(totals.cost / totals.dmKg).toFixed(2)}</p>
+                        <h5>Composition:</h5>
+                        <ul>
+                            <li>Crude Protein: ${composition.cp_perc.toFixed(2)} %</li>
+                            <li>Metabolizable Energy: ${composition.me_mj_kg.toFixed(2)} MJ/kg</li>
+                            <li>NDF: ${composition.ndf_perc.toFixed(2)} %</li>
+                        </ul>
+                        <h5>Ingredients Used:</h5>
+                        <ul>
+                            ${farmData.tmrMixer.ingredients.map(ing => {
+                                const ingData = farmData.ingredients.find(i => i.id === ing.id);
+                                return `<li>${ingData.name}: ${ing.asFedKg} kg</li>`;
+                            }).join('')}
+                        </ul>
+                     `;
+                     // Switch to the report tab
+                     document.querySelector('.sub-tab-link[data-sub-target="nutrition-reports"]').click();
+                }
+                else if (e.target.matches('[data-action="close-modal"]')) {
+                    mainModal.style.display = 'none';
+                }
+            });
+
+             document.body.addEventListener('change', (e) => {
+                const action = e.target.dataset.action;
+                if(action === 'update-tmr-weight') {
+                    const id = parseInt(e.target.dataset.id, 10);
+                    const weight = parseFloat(e.target.value) || 0;
+                    const ing = farmData.tmrMixer.ingredients.find(i => i.id === id);
+                    if(ing) ing.asFedKg = weight;
+                    renderTmrMixTable();
+                    renderTmrSummary();
+                    renderTmrEconomicAnalysis();
+                } else if (e.target.id === 'animal-group-selector') {
+                    farmData.tmrMixer.animalGroupId = parseInt(e.target.value, 10);
+                    renderTmrSummary();
+                    renderTmrEconomicAnalysis();
+                } else if (e.target.id === 'milk-price-input' || e.target.id === 'milk-yield-input') {
+                    farmData.tmrMixer.milkPrice = parseFloat(document.getElementById('milk-price-input').value) || 0;
+                    farmData.tmrMixer.milkYield = parseFloat(document.getElementById('milk-yield-input').value) || 0;
+                    renderTmrEconomicAnalysis();
+                }
+            });
+             document.body.addEventListener('input', (e) => {
+                const action = e.target.dataset.action;
+                if(action === 'toggle-tmr-ingredient') {
+                    const id = parseInt(e.target.dataset.id, 10);
+                    if (e.target.checked) {
+                        if (!farmData.tmrMixer.ingredients.some(i => i.id === id)) {
+                             farmData.tmrMixer.ingredients.push({ id: id, asFedKg: 1 });
+                        }
+                    } else {
+                        farmData.tmrMixer.ingredients = farmData.tmrMixer.ingredients.filter(i => i.id !== id);
+                    }
+                    renderTmrMixTable();
+                    renderTmrSummary();
+                    renderTmrEconomicAnalysis();
+                }
+            });
+            
+            // --- TOOLTIP LOGIC ---
+            document.getElementById('tmr-summary-container').addEventListener('mouseover', e => {
+                if (e.target.classList.contains('status') && e.target.dataset.suggestion) {
+                    tooltip.style.display = 'block';
+                    tooltip.textContent = e.target.dataset.suggestion;
+                }
+            });
+            document.getElementById('tmr-summary-container').addEventListener('mouseout', e => {
+                 if (e.target.classList.contains('status')) {
+                    tooltip.style.display = 'none';
+                }
+            });
+             document.getElementById('tmr-summary-container').addEventListener('mousemove', e => {
+                if (tooltip.style.display === 'block') {
+                    tooltip.style.left = `${e.pageX + 15}px`;
+                    tooltip.style.top = `${e.pageY + 15}px`;
+                }
+            });
+
+
+            // --- TIME & GREETING ---
+            function updateTimeAndGreeting() {
+                const now = new Date();
+                const hour = now.getHours();
+                const options = { timeZone: 'Africa/Nairobi', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
+                document.getElementById('last-synced').textContent = `Last synced: ${new Intl.DateTimeFormat('en-US', options).format(now)}`;
+                const greetingEl = document.getElementById('greeting-text');
+                if (hour < 12) greetingEl.textContent = 'Good Morning, Dr. Omwenga.';
+                else if (hour < 18) greetingEl.textContent = 'Good Afternoon, Dr. Omwenga.';
+                else greetingEl.textContent = 'Good Evening, Dr. Omwenga.';
+            }
+
+            // --- INITIAL SETUP ---
+            renderAll();
+            updateTimeAndGreeting();
+            setInterval(updateTimeAndGreeting, 30000);
+        });
+    </script>
+   <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+    }
+</script>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
