@@ -80,6 +80,9 @@ app.use('/api/financials', financialRoutes);
 const inventoryRoutes = require('./routes/inventory');
 app.use('/api/inventory', inventoryRoutes);
 
+const healthRoutes = require('./routes/health');
+app.use('/api/health', healthRoutes);
+
 // --- Centralized Error Handling ---
 app.use((err, req, res, next) => {
     console.error('Global error handler:', err);
