@@ -1,0 +1,32 @@
+{
+  "name": "vet-farmage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chart.js": "^4.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.9",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "firebase-admin": "^12.2.0",
+    "firebase-functions": "^5.0.1",
+    "helmet": "^8.1.0",
+    "method-override": "^3.0.0",
+    "portfinder": "^1.0.38",
+    "sharp": "^0.34.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
