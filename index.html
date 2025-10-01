@@ -6,65 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farmark - Veterinary Clinic Management</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
     <header>
-        <h1>Farmark</h1>
-        <p>Your Comprehensive Veterinary & Farm Management Solution</p>
+        <h1>Farmark - Veterinary Clinic Management</h1>
     </header>
+
     <nav>
-        <a href="#" class="nav-link" data-section="dashboard">Dashboard</a>
-        <a href="#" class="nav-link" data-section="clients">Clients</a>
+        <a href="#" data-section="dashboard">Dashboard</a>
+        <a href="#" data-section="clients">Clients</a>
         <div class="dropdown">
-            <a href="#" class="nav-link">Livestock Management</a>
+            <button class="dropbtn">Livestock 
+                <i class="fa fa-caret-down"></i>
+            </button>
             <div class="dropdown-content">
-                <a href="#" class="nav-link" data-section="livestock">Animal Records</a>
-                <a href="#" class="nav-link" data-section="health">Health & Treatment</a>
-                <a href="#" class="nav-link" data-section="vaccination">Vaccination & Quarantine</a>
-                <a href="#" class="nav-link" data-section="breeding">Breeding Records</a>
-                <a href="#" class="nav-link" data-section="feed">Feed Management</a>
-                <a href="#" class="nav-link" data-section="production">Production Records</a>
-                <a href="#" class="nav-link" data-section="lab_results">Laboratory Results</a>
+                <a href="#" data-section="livestock">Animal Records</a>
+                <a href="#" data-section="health">Health & Treatment</a>
+                <a href="#" data-section="vaccination">Vaccination & Quarantine</a>
+                <a href="#" data-section="breeding">Breeding</a>
+                <a href="#" data-section="feed">Feed Management</a>
+                <a href="#" data-section="lab_results">Lab Results</a>
             </div>
         </div>
         <div class="dropdown">
-            <a href="#" class="nav-link">Crop Management</a>
+            <button class="dropbtn">Crop Management 
+                <i class="fa fa-caret-down"></i>
+            </button>
             <div class="dropdown-content">
-                <a href="#" class="nav-link" data-section="fields">Field Mapping</a>
-                <a href="#" class="nav-link" data-section="crops">Crop Planning</a>
-                <a href="#" class="nav-link" data-section="soil_analysis">Soil Analysis</a>
-                <a href="#" class="nav-link" data-section="irrigation">Irrigation</a>
-                <a href="#" class="nav-link" data-section="scouting">Scouting</a>
-                <a href="#" class="nav-link" data-section="pest_control">Pest & Disease Control</a>
-                <a href="#" class="nav-link" data-section="harvest_log">Harvest Log</a>
-                <a href="#" class="nav-link" data-section="yield">Yield Tracking</a>
+                <a href="#" data-section="fields">Fields</a>
+                <a href="#" data-section="crops">Crops</a>
+                <a href="#" data-section="soil_analysis">Soil Analysis</a>
+                <a href="#" data-section="irrigation">Irrigation</a>
+                <a href="#" data-section="scouting">Scouting</a>
+                <a href="#" data-section="pest_control">Pest & Disease</a>
+                <a href="#" data-section="harvest_log">Harvest Log</a>
+                <a href="#" data-section="yield">Yield</a>
+            </div>
+        </div>
+        <a href="#" data-section="production">Production</a>
+        <div class="dropdown">
+            <button class="dropbtn">Financials 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#" data-section="finance">Transactions</a>
+                <a href="#" data-section="budget">Budgeting</a>
+                <a href="#" data-section="invoicing">Invoicing</a>
             </div>
         </div>
         <div class="dropdown">
-            <a href="#" class="nav-link">Financial Management</a>
+            <button class="dropbtn">Inventory 
+                <i class="fa fa-caret-down"></i>
+            </button>
             <div class="dropdown-content">
-                <a href="#" class="nav-link" data-section="finance">Transactions</a>
-                 <a href="#" class="nav-link" data-section="budget">Budgeting</a>
-                 <a href="#" class="nav-link" data-section="invoicing">Invoicing</a>
+                <a href="#" data-section="supplies">Supplies</a>
+                <a href="#" data-section="harvested_goods">Harvested Goods</a>
+                <a href="#" data-section="equipment">Equipment</a>
             </div>
         </div>
-        <div class="dropdown">
-            <a href="#" class="nav-link">Inventory & Equipment</a>
-            <div class="dropdown-content">
-                <a href="#" class="nav-link" data-section="supplies">Supplies</a>
-                <a href="#" class="nav-link" data-section="harvested_goods">Harvested Goods</a>
-                <a href="#" class="nav-link" data-section="equipment">Equipment</a>
-            </div>
-        </div>
-        <a href="#" class="nav-link" data-section="reports">Reports</a>
+        <a href="#" data-section="reports">Reports</a>
     </nav>
+
     <main id="main-content">
         <!-- Content will be loaded here -->
     </main>
-    <footer>
-        <p>Done by dr.devin</p>
-    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

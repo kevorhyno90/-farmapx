@@ -1,0 +1,55 @@
+2025-10-01 13:14:00,150 - Serving at http://localhost:8080
+2025-10-01 13:14:12,910 - GET request: /
+2025-10-01 13:14:13,213 - GET request: /style.css
+2025-10-01 13:14:13,238 - GET request: /script.js
+2025-10-01 13:14:13,586 - GET request: /favicon.ico
+2025-10-01 13:16:39,710 - Serving at http://localhost:8080
+2025-10-01 13:17:06,426 - GET request: /
+2025-10-01 13:17:06,732 - GET request: /style.css
+2025-10-01 13:17:06,737 - GET request: /script.js
+2025-10-01 13:17:07,221 - GET request: /favicon.ico
+2025-10-01 13:24:01,768 - Serving at http://localhost:8080
+2025-10-01 13:24:14,506 - GET request: /
+2025-10-01 13:24:14,808 - GET request: /style.css
+2025-10-01 13:24:14,835 - GET request: /script.js
+2025-10-01 13:24:15,213 - GET request: /favicon.ico
+2025-10-01 13:26:39,510 - Serving at http://localhost:8080
+2025-10-01 13:26:46,353 - GET request: /
+2025-10-01 13:26:46,354 - Checking for file: , exists: False
+2025-10-01 13:26:46,354 - Serving index.html instead for path: 
+2025-10-01 13:26:46,638 - GET request: /style.css
+2025-10-01 13:26:46,638 - Checking for file: style.css, exists: True
+2025-10-01 13:26:46,663 - GET request: /script.js
+2025-10-01 13:26:46,665 - Checking for file: script.js, exists: True
+2025-10-01 13:26:46,912 - GET request: /favicon.ico
+2025-10-01 13:26:46,914 - Checking for file: favicon.ico, exists: False
+2025-10-01 13:26:46,914 - Serving index.html instead for path: favicon.ico
+2025-10-01 13:40:06,513 - Serving at http://localhost:8080
+2025-10-01 13:40:22,931 - GET request: /
+2025-10-01 13:40:22,931 - Checking for file: , exists: False
+2025-10-01 13:40:22,931 - Serving index.html instead for path: 
+2025-10-01 13:40:23,253 - GET request: /style.css
+2025-10-01 13:40:23,253 - Checking for file: style.css, exists: True
+2025-10-01 13:40:23,271 - GET request: /script.js
+2025-10-01 13:40:23,272 - Checking for file: script.js, exists: True
+2025-10-01 13:40:24,119 - GET request: /favicon.ico
+2025-10-01 13:40:24,120 - Checking for file: favicon.ico, exists: False
+2025-10-01 13:40:24,120 - Serving index.html instead for path: favicon.ico
+2025-10-01 13:43:11,002 - GET request: /favicon.ico
+2025-10-01 13:43:11,005 - Checking for file: favicon.ico, exists: False
+2025-10-01 13:43:11,005 - Serving index.html instead for path: favicon.ico
+2025-10-01 13:44:49,149 - Serving at http://localhost:8081
+2025-10-01 13:44:53,604 - GET request: /
+2025-10-01 13:44:53,604 - Checking for file: , exists: False
+2025-10-01 13:44:53,605 - Serving index.html instead for path: 
+2025-10-01 13:44:53,977 - GET request: /style.css
+2025-10-01 13:44:53,979 - Checking for file: style.css, exists: True
+2025-10-01 13:44:54,177 - GET request: /script.js
+2025-10-01 13:44:54,178 - Checking for file: script.js, exists: True
+2025-10-01 13:46:09,130 - Serving at http://localhost:8081
+2025-10-01 13:46:52,214 - GET request: /style.css
+2025-10-01 13:46:52,214 - Checking for file: style.css, exists: True
+2025-10-01 13:51:49,036 - Serving at http://localhost:8081
+2025-10-01 13:53:13,287 - Serving at http://localhost:8081
+2025-10-01 13:55:01,350 - Serving at http://localhost:8081
+2025-10-01 13:56:36,796 - Serving at http://localhost:8081
