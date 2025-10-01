@@ -40,10 +40,126 @@ let livestock = [
     }
 ];
 
-let breeding = [];
+let breeding = [
+    {
+        id: 1,
+        femaleId: 1,
+        maleId: 2,
+        heatDate: '2023-10-01',
+        breedingDate: '2023-10-02',
+        inseminator: 'John Doe',
+        pregnancyCheck: 'Positive',
+        dueDate: '2024-07-10',
+        calfName: 'Junior',
+        offspringId: null
+    }
+];
+
+let offspring = [
+    {
+        id: 4,
+        name: 'Junior',
+        sex: 'Male',
+        breed: 'Holstein-Angus',
+        dob: '2024-07-10',
+        sire: 'Angus',
+        dam: 'Bessie',
+        purchasePrice: 0,
+        salePrice: null,
+        group: 'Calves',
+        weights: [
+            { date: '2024-07-10', weight: 40 },
+            { date: '2024-08-10', weight: 60 },
+        ]
+    }
+];
 
 function showDashboard() {
-    app.innerHTML = '<h2>Dashboard</h2><p>Welcome to your Farm Science dashboard!</p>';
+    const totalAnimals = livestock.length;
+    const totalPurchasePrice = livestock.reduce((sum, animal) => sum + (animal.purchasePrice || 0), 0);
+    const totalSalePrice = livestock.reduce((sum, animal) => sum + (animal.salePrice || 0), 0);
+    const netValue = totalSalePrice - totalPurchasePrice;
+    const totalBreedingRecords = breeding.length;
+    const successfulBreedings = breeding.filter(r => r.pregnancyCheck === 'Positive').length;
+    const breedingSuccessRate = totalBreedingRecords > 0 ? ((successfulBreedings / totalBreedingRecords) * 100).toFixed(2) : 0;
+
+    let html = `
+        <h2>Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="dashboard-card" id="full-report">
+                <h3>Full Farm Report</h3>
+                <p>An overview of your entire farm's data.</p>
+                <div class="card-actions">
+                    <button class="save-btn">Save</button>
+                    <button class="share-btn">Share</button>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card" id="livestock-summary">
+                <h3>Livestock Summary</h3>
+                <ul>
+                    <li><strong>Total Animals:</strong> ${totalAnimals}</li>
+                    <li><strong>Total Purchase Price:</strong> $${totalPurchasePrice.toFixed(2)}</li>
+                    <li><strong>Total Sale Price:</strong> $${totalSalePrice.toFixed(2)}</li>
+                    <li><strong>Net Value:</strong> $${netValue.toFixed(2)}</li>
+                </ul>
+                <div class="card-actions">
+                    <button class="save-btn">Save</button>
+                    <button class="share-btn">Share</button>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card" id="breeding-summary">
+                <h3>Breeding Summary</h3>
+                <ul>
+                    <li><strong>Total Breeding Records:</strong> ${totalBreedingRecords}</li>
+                    <li><strong>Successful Breedings:</strong> ${successfulBreedings}</li>
+                    <li><strong>Success Rate:</strong> ${breedingSuccessRate}%</li>
+                </ul>
+                <div class="card-actions">
+                    <button class="save-btn">Save</button>
+                    <button class="share-btn">Share</button>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-card" id="financial-summary">
+                <h3>Financial Summary</h3>
+                <p>A summary of your farm's financials.</p>
+                <div class="card-actions">
+                    <button class="save-btn">Save</button>
+                    <button class="share-btn">Share</button>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    app.innerHTML = html;
+
+    // Add event listeners for the new buttons
+    document.querySelectorAll('.save-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const card = event.target.closest('.dashboard-card');
+            console.log(`Saving ${card.id} report...`);
+        });
+    });
+
+    document.querySelectorAll('.share-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const card = event.target.closest('.dashboard-card');
+            console.log(`Sharing ${card.id} report...`);
+        });
+    });
+
+    document.querySelectorAll('.download-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const card = event.target.closest('.dashboard-card');
+            console.log(`Downloading ${card.id} report...`);
+        });
+    });
 }
 
 function showLivestock(filter = '') {
@@ -198,98 +314,107 @@ function showAnimalProfile(animal) {
     document.getElementById('back-to-livestock').addEventListener('click', () => showLivestock());
 }
 
-function showBreeding() {
+function showBreeding(section = 'records') {
     let html = '<h2>Breeding Management</h2>';
-    html += '<div class="toolbar">';
-    html += '<button id="add-breeding-record">Record a Breeding Event</button>';
+
+    html += '<div class="sub-nav">';
+    html += '<a href="#" data-section="records">Breeding Records</a>';
+    html += '<a href="#" data-section="heat">Heat Detection</a>';
+    html += '<a href="#" data-section="offspring">Offspring Management</a>';
+    html += '<a href="#" data-section="genetics">Genetic Analysis</a>';
     html += '</div>';
 
-    html += '<h3>Breeding Records</h3>';
+    html += '<div id="breeding-content"></div>';
+    app.innerHTML = html;
+
+    const subNavLinks = document.querySelectorAll('.sub-nav a');
+    for (const link of subNavLinks) {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            showBreeding(event.target.dataset.section);
+        });
+    }
+
+    // Load the selected section
+    switch (section) {
+        case 'records':
+            showBreedingRecords();
+            break;
+        case 'heat':
+            showHeatDetection();
+            break;
+        case 'offspring':
+            showOffspringManagement();
+            break;
+        case 'genetics':
+            showGeneticAnalysis();
+            break;
+    }
+}
+
+function showBreedingRecords() {
+    let html = '<h3>Breeding Records</h3>';
+    html += '<div class="toolbar"><button id="add-breeding-record">Add Record</button></div>';
     html += '<table>';
-    html += '<thead><tr><th>Date</th><th>Female</th><th>Male</th><th>Status</th><th>Due Date</th><th>Actions</th></tr></thead>';
+    html += '<thead><tr><th>Female</th><th>Male</th><th>Breeding Date</th><th>Status</th><th>Due Date</th><th>Calf Name</th><th>Actions</th></tr></thead>';
     html += '<tbody>';
     for (const record of breeding) {
         const female = livestock.find(a => a.id === record.femaleId);
         const male = livestock.find(a => a.id === record.maleId);
         html += `<tr>`;
-        html += `<td>${record.date}</td>`;
         html += `<td>${female ? female.name : 'N/A'}</td>`;
         html += `<td>${male ? male.name : 'N/A'}</td>`;
-        html += `<td>${record.status}</td>`;
-        html += `<td>${record.dueDate || 'N/A'}</td>`;
-        html += `<td><button class="view-breeding-record" data-id="${record.id}">View</button></td>`;
+        html += `<td>${record.breedingDate}</td>`;
+        html += `<td>${record.pregnancyCheck}</td>`;
+        html += `<td>${record.dueDate}</td>`;
+        html += `<td>${record.calfName}</td>`;
+        html += `<td><button class="edit-breeding-record" data-id="${record.id}">Edit</button></td>`;
         html += `</tr>`;
     }
-    html += '</tbody>';
-    html += '</table>';
-
-    app.innerHTML = html;
+    html += '</tbody></table>';
+    document.getElementById('breeding-content').innerHTML = html;
 
     document.getElementById('add-breeding-record').addEventListener('click', showAddBreedingForm);
 
-    const viewButtons = document.querySelectorAll('.view-breeding-record');
-    for (const button of viewButtons) {
+    const editButtons = document.querySelectorAll('.edit-breeding-record');
+    for (const button of editButtons) {
         button.addEventListener('click', (event) => {
             const recordId = parseInt(event.target.dataset.id);
             const record = breeding.find(r => r.id === recordId);
-            showBreedingRecordProfile(record);
+            showEditBreedingForm(record);
         });
     }
 }
 
-function showBreedingRecordProfile(record) {
-    const female = livestock.find(a => a.id === record.femaleId);
-    const male = livestock.find(a => a.id === record.maleId);
-    let html = `<h2>Breeding Record Details</h2>`;
-    html += '<ul>';
-    html += `<li><strong>ID:</strong> ${record.id}</li>`;
-    html += `<li><strong>Date:</strong> ${record.date}</li>`;
-    html += `<li><strong>Female:</strong> ${female ? female.name : 'N/A'}</li>`;
-    html += `<li><strong>Male:</strong> ${male ? male.name : 'N/A'}</li>`;
-    html += `<li><strong>Status:</strong> ${record.status}</li>`;
-    html += `<li><strong>Due Date:</strong> ${record.dueDate || 'N/A'}</li>`;
-    html += '</ul>';
-    html += `<button id="edit-breeding-record" data-id="${record.id}">Edit</button>`;
-    html += '<button id="back-to-breeding">Back to Breeding List</button>';
-    app.innerHTML = html;
-
-    document.getElementById('edit-breeding-record').addEventListener('click', () => showEditBreedingForm(record));
-    document.getElementById('back-to-breeding').addEventListener('click', showBreeding);
-}
-
-
 function showAddBreedingForm() {
-    let html = '<h2>Record a Breeding Event</h2>';
+    let html = '<h4>Add Breeding Record</h4>';
     html += '<form id="add-breeding-form">';
     html += '<div class="form-grid">';
 
-    // Female selection
-    html += '<label for="female">Female:</label>';
-    html += '<select id="female" required>';
-    for (const animal of livestock) {
-        if (animal.sex === 'Female') {
-            html += `<option value="${animal.id}">${animal.name}</option>`;
-        }
+    html += '<label for="female">Female:</label><select id="female" required>';
+    for (const animal of livestock.filter(a => a.sex === 'Female')) {
+        html += `<option value="${animal.id}">${animal.name}</option>`;
     }
     html += '</select>';
 
-    // Male selection
-    html += '<label for="male">Male:</label>';
-    html += '<select id="male" required>';
-    for (const animal of livestock) {
-        if (animal.sex === 'Male') {
-            html += `<option value="${animal.id}">${animal.name}</option>`;
-        }
+    html += '<label for="male">Male:</label><select id="male" required>';
+    for (const animal of livestock.filter(a => a.sex === 'Male')) {
+        html += `<option value="${animal.id}">${animal.name}</option>`;
     }
     html += '</select>';
 
-    html += '<label for="date">Date:</label><input type="date" id="date" required>';
-    html += '<label for="status">Status:</label><input type="text" id="status" value="Mated" required>';
+    html += '<label for="heatDate">Heat Date:</label><input type="date" id="heatDate">';
+    html += '<label for="breedingDate">Breeding Date:</label><input type="date" id="breedingDate" required>';
+    html += '<label for="inseminator">Inseminator:</label><input type="text" id="inseminator">';
+    html += '<label for="pregnancyCheck">Pregnancy Check:</label><input type="text" id="pregnancyCheck">';
+    html += '<label for="dueDate">Due Date:</label><input type="date" id="dueDate">';
+    html += '<label for="calfName">Calf Name:</label><input type="text" id="calfName">';
+
     html += '</div>';
     html += '<button type="submit">Save</button>';
     html += '<button type="button" id="cancel-add-breeding">Cancel</button>';
     html += '</form>';
-    app.innerHTML = html;
+    document.getElementById('breeding-content').innerHTML = html;
 
     document.getElementById('add-breeding-form').addEventListener('submit', addBreedingRecord);
     document.getElementById('cancel-add-breeding').addEventListener('click', showBreeding);
@@ -297,88 +422,173 @@ function showAddBreedingForm() {
 
 function addBreedingRecord(event) {
     event.preventDefault();
-
-    const femaleId = parseInt(document.getElementById('female').value);
-    const maleId = parseInt(document.getElementById('male').value);
-    const date = document.getElementById('date').value;
-    const status = document.getElementById('status').value;
-
-    // For this example, we'll set a due date 9 months in the future
-    const dueDate = new Date(date);
-    dueDate.setMonth(dueDate.getMonth() + 9);
-
     const newRecord = {
         id: Date.now(),
-        femaleId,
-        maleId,
-        date,
-        status,
-        dueDate: dueDate.toISOString().split('T')[0] // Format as YYYY-MM-DD
+        femaleId: parseInt(document.getElementById('female').value),
+        maleId: parseInt(document.getElementById('male').value),
+        heatDate: document.getElementById('heatDate').value,
+        breedingDate: document.getElementById('breedingDate').value,
+        inseminator: document.getElementById('inseminator').value,
+        pregnancyCheck: document.getElementById('pregnancyCheck').value,
+        dueDate: document.getElementById('dueDate').value,
+        calfName: document.getElementById('calfName').value,
+        offspringId: null
     };
-
     breeding.push(newRecord);
     showBreeding();
 }
 
 function showEditBreedingForm(record) {
-    let html = `<h2>Edit Breeding Record</h2>`;
+    let html = '<h4>Edit Breeding Record</h4>';
     html += '<form id="edit-breeding-form">';
     html += '<div class="form-grid">';
 
-    // Female selection
-    html += '<label for="female">Female:</label>';
-    html += '<select id="female" required>';
-    for (const animal of livestock) {
-        if (animal.sex === 'Female') {
-            const selected = animal.id === record.femaleId ? 'selected' : '';
-            html += `<option value="${animal.id}" ${selected}>${animal.name}</option>`;
-        }
+    html += '<label for="female">Female:</label><select id="female" required>';
+    for (const animal of livestock.filter(a => a.sex === 'Female')) {
+        const selected = animal.id === record.femaleId ? 'selected' : '';
+        html += `<option value="${animal.id}" ${selected}>${animal.name}</option>`;
     }
     html += '</select>';
 
-    // Male selection
-    html += '<label for="male">Male:</label>';
-    html += '<select id="male" required>';
-    for (const animal of livestock) {
-        if (animal.sex === 'Male') {
-            const selected = animal.id === record.maleId ? 'selected' : '';
-            html += `<option value="${animal.id}" ${selected}>${animal.name}</option>`;
-        }
+     html += '<label for="male">Male:</label><select id="male" required>';
+    for (const animal of livestock.filter(a => a.sex === 'Male')) {
+        const selected = record.maleId === record.maleId ? 'selected' : '';
+        html += `<option value="${animal.id}" ${selected}>${animal.name}</option>`;
     }
     html += '</select>';
 
-    html += `<label for="date">Date:</label><input type="date" id="date" value="${record.date}" required>`;
-    html += `<label for="status">Status:</label><input type="text" id="status" value="${record.status}" required>`;
+    html += `<label for="heatDate">Heat Date:</label><input type="date" id="heatDate" value="${record.heatDate}">`;
+    html += `<label for="breedingDate">Breeding Date:</label><input type="date" id="breedingDate" value="${record.breedingDate}" required>`;
+    html += `<label for="inseminator">Inseminator:</label><input type="text" id="inseminator" value="${record.inseminator}">`;
+    html += `<label for="pregnancyCheck">Pregnancy Check:</label><input type="text" id="pregnancyCheck" value="${record.pregnancyCheck}">`;
+    html += `<label for="dueDate">Due Date:</label><input type="date" id="dueDate" value="${record.dueDate}">`;
+    html += `<label for="calfName">Calf Name:</label><input type="text" id="calfName" value="${record.calfName}">`;
+
     html += '</div>';
     html += '<button type="submit">Save</button>';
     html += '<button type="button" id="cancel-edit-breeding">Cancel</button>';
     html += '</form>';
-    app.innerHTML = html;
-
+    document.getElementById('breeding-content').innerHTML = html;
+    
     document.getElementById('edit-breeding-form').addEventListener('submit', (event) => {
         event.preventDefault();
         updateBreedingRecord(record.id);
     });
-    document.getElementById('cancel-edit-breeding').addEventListener('click', () => showBreedingRecordProfile(record));
+    document.getElementById('cancel-edit-breeding').addEventListener('click', showBreeding);
 }
 
 function updateBreedingRecord(recordId) {
     const recordIndex = breeding.findIndex(r => r.id === recordId);
     if (recordIndex !== -1) {
-        const date = document.getElementById('date').value;
-        const dueDate = new Date(date);
-        dueDate.setMonth(dueDate.getMonth() + 9);
-
         breeding[recordIndex] = {
             id: recordId,
             femaleId: parseInt(document.getElementById('female').value),
             maleId: parseInt(document.getElementById('male').value),
-            date: date,
-            status: document.getElementById('status').value,
-            dueDate: dueDate.toISOString().split('T')[0]
+            heatDate: document.getElementById('heatDate').value,
+            breedingDate: document.getElementById('breedingDate').value,
+            inseminator: document.getElementById('inseminator').value,
+            pregnancyCheck: document.getElementById('pregnancyCheck').value,
+            dueDate: document.getElementById('dueDate').value,
+            calfName: document.getElementById('calfName').value
         };
-        showBreedingRecordProfile(breeding[recordIndex]);
+        showBreeding();
     }
+}
+
+function showHeatDetection() {
+    let html = '<h3>Heat Detection</h3>';
+    html += '<table>';
+    html += '<thead><tr><th>Animal</th><th>Last Heat Date</th><th>Predicted Next Heat</th></tr></thead>';
+    html += '<tbody>';
+
+    const females = livestock.filter(animal => animal.sex === 'Female');
+
+    for (const female of females) {
+        const records = breeding.filter(r => r.femaleId === female.id && r.heatDate)
+                                .sort((a, b) => new Date(b.heatDate) - new Date(a.heatDate));
+        
+        if (records.length > 0) {
+            const lastHeatDate = new Date(records[0].heatDate);
+            const nextHeatDate = new Date(lastHeatDate);
+            nextHeatDate.setDate(lastHeatDate.getDate() + 21);
+
+            html += `<tr>`;
+            html += `<td>${female.name}</td>`;
+            html += `<td>${records[0].heatDate}</td>`;
+            html += `<td>${nextHeatDate.toISOString().split('T')[0]}</td>`;
+            html += `</tr>`;
+        } else {
+             html += `<tr>`;
+            html += `<td>${female.name}</td>`;
+            html += `<td>No heat data</td>`;
+            html += `<td>N/A</td>`;
+            html += `</tr>`;
+        }
+    }
+
+    html += '</tbody></table>';
+    document.getElementById('breeding-content').innerHTML = html;
+}
+
+function showOffspringManagement() {
+    let html = '<h3>Offspring Management</h3>';
+    html += '<table>';
+    html += '<thead><tr><th>Name</th><th>Sex</th><th>Breed</th><th>DOB</th><th>Sire</th><th>Dam</th><th>Actions</th></tr></thead>';
+    html += '<tbody>';
+    for (const off of offspring) {
+        html += `<tr>`;
+        html += `<td>${off.name}</td>`;
+        html += `<td>${off.sex}</td>`;
+        html += `<td>${off.breed}</td>`;
+        html += `<td>${off.dob}</td>`;
+        html += `<td>${off.sire}</td>`;
+        html += `<td>${off.dam}</td>`;
+        html += `<td><button class="view-offspring" data-id="${off.id}">View Profile</button></td>`;
+        html += `</tr>`;
+    }
+    html += '</tbody></table>';
+    document.getElementById('breeding-content').innerHTML = html;
+
+    const viewButtons = document.querySelectorAll('.view-offspring');
+    for (const button of viewButtons) {
+        button.addEventListener('click', (event) => {
+            const offspringId = parseInt(event.target.dataset.id);
+            const off = offspring.find(o => o.id === offspringId);
+            showOffspringProfile(off);
+        });
+    }
+}
+
+function showOffspringProfile(off) {
+    let html = `<h4>Offspring Profile: ${off.name}</h4>`;
+    html += '<ul>';
+    html += `<li><strong>Name:</strong> ${off.name}</li>`;
+    html += `<li><strong>Sex:</strong> ${off.sex}</li>`;
+    html += `<li><strong>Breed:</strong> ${off.breed}</li>`;
+    html += `<li><strong>Date of Birth:</strong> ${off.dob}</li>`;
+    html += `<li><strong>Sire:</strong> ${off.sire}</li>`;
+    html += `<li><strong>Dam:</strong> ${off.dam}</li>`;
+    html += '</ul>';
+
+    html += '<h5>Growth Tracking</h5>';
+    html += '<table><thead><tr><th>Date</th><th>Weight (kg)</th></tr></thead><tbody>';
+    for (const weight of off.weights) {
+        html += `<tr><td>${weight.date}</td><td>${weight.weight}</td></tr>`;
+    }
+    html += '</tbody></table>';
+
+    html += '<button id="back-to-offspring">Back to Offspring List</button>';
+
+    document.getElementById('breeding-content').innerHTML = html;
+    document.getElementById('back-to-offspring').addEventListener('click', showOffspringManagement);
+}
+
+
+function showGeneticAnalysis() {
+    let html = '<h3>Genetic Analysis</h3>';
+    html += '<p>Analyze the performance of different bloodlines to optimize your breeding program.</p>';
+    // Placeholder for genetic analysis tool
+    document.getElementById('breeding-content').innerHTML = html;
 }
 
 function showCrops() {
@@ -395,6 +605,11 @@ function showFinancials() {
 
 function showReports() {
     let html = '<h2>Reports</h2>';
+    html += '<div class="toolbar">';
+    html += '<button id="save-report">Save</button>';
+    html += '<button id="share-report">Share</button>';
+    html += '<button id="download-report">Download</button>';
+    html += '</div>';
 
     // Livestock Summary
     const totalAnimals = livestock.length;
@@ -413,8 +628,11 @@ function showReports() {
     // Breeding Summary
     html += '<h3>Breeding Summary</h3>';
     const totalBreedingRecords = breeding.length;
+    const successfulBreedings = breeding.filter(r => r.pregnancyCheck === 'Positive').length;
     html += '<ul>';
     html += `<li><strong>Total Breeding Records:</strong> ${totalBreedingRecords}</li>`;
+    html += `<li><strong>Successful Breedings:</strong> ${successfulBreedings}</li>`;
+    html += `<li><strong>Success Rate:</strong> ${totalBreedingRecords > 0 ? ((successfulBreedings / totalBreedingRecords) * 100).toFixed(2) : 0}%</li>`;
     html += '</ul>';
 
     app.innerHTML = html;
@@ -425,7 +643,7 @@ showDashboard();
 
 document.getElementById('nav-dashboard').addEventListener('click', showDashboard);
 document.getElementById('nav-livestock').addEventListener('click', () => showLivestock());
-document.getElementById('nav-breeding').addEventListener('click', showBreeding);
+document.getElementById('nav-breeding').addEventListener('click', () => showBreeding());
 document.getElementById('nav-crops').addEventListener('click', showCrops);
 document.getElementById('nav-inventory').addEventListener('click', showInventory);
 document.getElementById('nav-financials').addEventListener('click', showFinancials);
