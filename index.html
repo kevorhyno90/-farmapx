@@ -1,68 +1,64 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmark - Veterinary Clinic Management</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Farmark</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="sample-data.js"></script>
+    <script src="reports.js"></script>
 </head>
 <body>
 
     <header>
-        <h1>Farmark - Veterinary Clinic Management</h1>
+        <h1>Farmark</h1>
+        <p>Your Modern Farming Companion</p>
     </header>
 
     <nav>
         <a href="#" data-section="dashboard">Dashboard</a>
-        <a href="#" data-section="clients">Clients</a>
         <div class="dropdown">
-            <button class="dropbtn">Livestock 
-                <i class="fa fa-caret-down"></i>
-            </button>
+            <button class="dropbtn">Livestock</button>
             <div class="dropdown-content">
-                <a href="#" data-section="livestock">Animal Records</a>
+                <a href="#" data-section="livestock">Livestock</a>
                 <a href="#" data-section="health">Health & Treatment</a>
-                <a href="#" data-section="vaccination">Vaccination & Quarantine</a>
+                <a href="#" data-section="vaccination">Vaccination</a>
                 <a href="#" data-section="breeding">Breeding</a>
                 <a href="#" data-section="feed">Feed Management</a>
                 <a href="#" data-section="lab_results">Lab Results</a>
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">Crop Management 
-                <i class="fa fa-caret-down"></i>
-            </button>
+            <button class="dropbtn">Agronomy</button>
             <div class="dropdown-content">
                 <a href="#" data-section="fields">Fields</a>
                 <a href="#" data-section="crops">Crops</a>
                 <a href="#" data-section="soil_analysis">Soil Analysis</a>
                 <a href="#" data-section="irrigation">Irrigation</a>
                 <a href="#" data-section="scouting">Scouting</a>
-                <a href="#" data-section="pest_control">Pest & Disease</a>
+                <a href="#" data-section="pest_control">Pest Control</a>
                 <a href="#" data-section="harvest_log">Harvest Log</a>
-                <a href="#" data-section="yield">Yield</a>
-            </div>
-        </div>
-        <a href="#" data-section="production">Production</a>
-        <div class="dropdown">
-            <button class="dropbtn">Financials 
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="#" data-section="finance">Transactions</a>
-                <a href="#" data-section="budget">Budgeting</a>
-                <a href="#" data-section="invoicing">Invoicing</a>
+                <a href="#" data-section="yield">Yield Data</a>
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">Inventory 
-                <i class="fa fa-caret-down"></i>
-            </button>
+            <button class="dropbtn">Inventory & Production</button>
             <div class="dropdown-content">
+                <a href="#" data-section="production">Production</a>
                 <a href="#" data-section="supplies">Supplies</a>
                 <a href="#" data-section="harvested_goods">Harvested Goods</a>
                 <a href="#" data-section="equipment">Equipment</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Finance & Admin</button>
+            <div class="dropdown-content">
+                <a href="#" data-section="clients">Clients</a>
+                <a href="#" data-section="finance">Finance</a>
+                <a href="#" data-section="budget">Budget</a>
+                <a href="#" data-section="invoicing">Invoicing</a>
             </div>
         </div>
         <a href="#" data-section="reports">Reports</a>
@@ -73,5 +69,16 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
 </body>
 </html>

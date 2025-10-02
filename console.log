@@ -1,5 +1,632 @@
-A cross-origin resource sharing (CORS) request was blocked because of invalid or missing response headers of the request or the associated preflight request.
-
-To fix this issue, ensure the response to the CORS request and/or the associated preflight request are not missing headers and use valid header values.
-
-Note that if an opaque response is sufficient, the request's mode can be set to no-cors to fetch the resource with CORS disabled; that way CORS headers are not required but the response content is inaccessible (opaque).
+(index):76 ServiceWorker registration successful with scope:  https://8080-firebase-devins-1759322470013.cluster-64pjnskmlbaxowh5lzq6i7v4ra.cloudworkstations.dev/
+logger.ts:115 [2025-10-02T13:26:03.833Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=EefDVw8PYG9Yg0fA4SBCKy4v6bMQSwHXRFo6ef0_k4c&VER=8&RID=rpc&SID=Q9ajt1KfJrq7G9THWEmkWg&CI=0&AID=0&TYPE=xmlhttp&zx=d56jfgelvs5c&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=cEX1Zfxspi2xNM01SEDDcq69xwU3LAleJTq5sbCacyo&VER=8&RID=rpc&SID=qTLMydHu_lIQxKKPvvV3hg&CI=0&AID=0&TYPE=xmlhttp&zx=r9dzky6xl2ik&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+logger.ts:115 [2025-10-02T13:26:05.790Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+logger.ts:115 [2025-10-02T13:26:05.790Z]  @firebase/firestore: Firestore (8.6.8): Could not reach Cloud Firestore backend. Connection failed 1 times. Most recent error: FirebaseError: [code=unavailable]: The operation could not be completed
+This typically indicates that your device does not have a healthy Internet connection at the moment. The client will operate in offline mode until it is able to successfully connect to the backend.
+w @ logger.ts:115
+sample-data.js:106 Database already contains data. Skipping sample data population.
+logger.ts:115 [2025-10-02T13:26:06.367Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=6BXvGIPc6YgqU105EtjfaB2bbRsN3UrHKxuUTnBuvfY&VER=8&RID=rpc&SID=bEkOWOm9vxYyTg1-PCNxpQ&CI=0&AID=0&TYPE=xmlhttp&zx=3fk9y092gu2r&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=Agv8dqbP7GkuxhnLkl38jZZ5T3TZEJbkJcdUpsbm7nM&VER=8&RID=rpc&SID=BYm3SndsRRuORQjAKE550w&CI=0&AID=0&TYPE=xmlhttp&zx=ks72e5vqdkp2&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+logger.ts:115 [2025-10-02T13:26:07.167Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+logger.ts:115 [2025-10-02T13:26:10.528Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=iuI7wZhU9zRkdJ3pjdXfExKJ0QMP7SFDV9fe_UR3f4k&VER=8&RID=rpc&SID=ZA189drOrivqpKju_EYC7Q&CI=0&AID=0&TYPE=xmlhttp&zx=9gpkkjdo29l1&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+logger.ts:115 [2025-10-02T13:26:11.454Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=QSA_FL8WbcFR5mCsGoMgY5haT0HEB-y5jFDeCoYrfUU&VER=8&RID=rpc&SID=T61e1S3U3qwbd_935W4qpA&CI=0&AID=0&TYPE=xmlhttp&zx=m0p3biypjbho&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+logger.ts:115 [2025-10-02T13:26:11.470Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=FRHvQ8PKpvXYycmMVmilQknBSgVrAi3a7Lgz2BaV-iY&VER=8&RID=rpc&SID=nn3Jqq_mPRQ5kftPUj89wg&CI=0&AID=0&TYPE=xmlhttp&zx=9x3ybltnl6s5&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+logger.ts:115 [2025-10-02T13:26:18.184Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=6t0M-ffS5fux_TT8MZXnO1q3ECflWNy-hGrtsHt400k&VER=8&RID=rpc&SID=qpjFtDvxLO-JAozdD78Xog&CI=0&AID=0&TYPE=xmlhttp&zx=xwp6mgn541tx&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+logger.ts:115 [2025-10-02T13:26:23.734Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er
+w @ logger.ts:115
+firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=EPzUBg0WXH04MkGvDVmgU3zvnYJ5Yj0VQSsvi5aq6L0&VER=8&RID=rpc&SID=rS-_D0Pbg1a4PKpKYwjeMg&CI=0&AID=0&TYPE=xmlhttp&zx=e8tilpnf33li&t=1:1  Failed to load resource: the server responded with a status of 400 ()
+ajaxRequestInterceptor.ps.js:1  GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=w6YKsVicNqCkOtDlIE6wQ6uxPT3kF6sdf3bcbOC_tc8&VER=8&RID=rpc&SID=NEW5X-Oai9prPHUavMg5ww&CI=0&AID=0&TYPE=xmlhttp&zx=hy41n3fs5bhn&t=1 400 (Bad Request)
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:578
+cr @ webchannelbase.js:1750
+D.Ga @ webchannelbase.js:1625
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+sr @ webchannelbase.js:1585
+je @ webchannelbase.js:2291
+Me @ channelrequest.js:951
+D.Ia @ channelrequest.js:743
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:575
+Oe @ webchannelbase.js:1416
+D.Ha @ webchannelbase.js:1418
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+wr.m @ webchannelbase.js:767
+Ei @ prebuilt.js:10551
+ul.send @ prebuilt.js:10375
+Ll.cr @ prebuilt.js:10888
+xl.Ar @ prebuilt.js:11112
+(anonymous) @ prebuilt.js:11570
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11569
+(anonymous) @ prebuilt.js:10961
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10961
+ul.Pi @ prebuilt.js:10378
+(anonymous) @ prebuilt.js:10617
+setTimeout
+sl.Oi @ prebuilt.js:10612
+xl.wr @ prebuilt.js:11088
+Ll.lr @ prebuilt.js:10960
+(anonymous) @ prebuilt.js:10950
+Promise.then
+Ll.auth @ prebuilt.js:10941
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+(anonymous) @ prebuilt.js:10970
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:10969
+(anonymous) @ prebuilt.js:10757
+(anonymous) @ prebuilt.js:11764
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+nf.handleDelayElapsed @ prebuilt.js:11763
+(anonymous) @ prebuilt.js:11745
+logger.ts:115 [2025-10-02T13:26:32.389Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er {type: 'c', target: wr, g: wr, defaultPrevented: false, status: 1}
+w @ logger.ts:115
+_.warn @ logger.ts:206
+jr @ prebuilt.js:263
+(anonymous) @ prebuilt.js:10576
+(anonymous) @ prebuilt.js:10559
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Tr.va @ webchannelbasetransport.js:384
+dr @ webchannelbase.js:2377
+lr @ webchannelbase.js:2103
+qe @ channelrequest.js:1247
+D.Ia @ channelrequest.js:715
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:578
+cr @ webchannelbase.js:1750
+D.Ga @ webchannelbase.js:1625
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+sr @ webchannelbase.js:1585
+je @ webchannelbase.js:2291
+Me @ channelrequest.js:951
+D.Ia @ channelrequest.js:743
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:575
+Oe @ webchannelbase.js:1416
+D.Ha @ webchannelbase.js:1418
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+wr.m @ webchannelbase.js:767
+Ei @ prebuilt.js:10551
+ul.send @ prebuilt.js:10375
+Ll.cr @ prebuilt.js:10888
+xl.Ar @ prebuilt.js:11112
+(anonymous) @ prebuilt.js:11570
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11569
+(anonymous) @ prebuilt.js:10961
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10961
+ul.Pi @ prebuilt.js:10378
+(anonymous) @ prebuilt.js:10617
+setTimeout
+sl.Oi @ prebuilt.js:10612
+xl.wr @ prebuilt.js:11088
+Ll.lr @ prebuilt.js:10960
+(anonymous) @ prebuilt.js:10950
+Promise.then
+Ll.auth @ prebuilt.js:10941
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+(anonymous) @ prebuilt.js:10970
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:10969
+(anonymous) @ prebuilt.js:10757
+(anonymous) @ prebuilt.js:11764
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+nf.handleDelayElapsed @ prebuilt.js:11763
+(anonymous) @ prebuilt.js:11745
+ajaxRequestInterceptor.ps.js:1  GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?database=projects%2Fyour-project-id%2Fdatabases%2F(default)&gsessionid=60RuA3Lsm1rymkjWmFmqI9xx9tp5Qwc_oXE_Acy8r0w&VER=8&RID=rpc&SID=20et6bzWurEXWA6DJrIocg&CI=0&AID=0&TYPE=xmlhttp&zx=eu9bfahxsjxt&t=1 400 (Bad Request)
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:578
+cr @ webchannelbase.js:1750
+D.Ga @ webchannelbase.js:1625
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+sr @ webchannelbase.js:1585
+je @ webchannelbase.js:2291
+Me @ channelrequest.js:951
+D.Ia @ channelrequest.js:743
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:575
+Oe @ webchannelbase.js:1416
+D.Ha @ webchannelbase.js:1418
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+wr.m @ webchannelbase.js:767
+Ei @ prebuilt.js:10551
+ul.send @ prebuilt.js:10375
+Ll.cr @ prebuilt.js:10888
+xl.Ar @ prebuilt.js:11112
+(anonymous) @ prebuilt.js:11570
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11569
+(anonymous) @ prebuilt.js:10961
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10961
+ul.Pi @ prebuilt.js:10378
+(anonymous) @ prebuilt.js:10617
+setTimeout
+sl.Oi @ prebuilt.js:10612
+xl.wr @ prebuilt.js:11088
+Ll.lr @ prebuilt.js:10960
+(anonymous) @ prebuilt.js:10950
+Promise.then
+Ll.auth @ prebuilt.js:10941
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+(anonymous) @ prebuilt.js:10970
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:10969
+(anonymous) @ prebuilt.js:10757
+(anonymous) @ prebuilt.js:11764
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+nf.handleDelayElapsed @ prebuilt.js:11763
+(anonymous) @ prebuilt.js:11745
+setTimeout
+nf.start @ prebuilt.js:11745
+nf.createAndSchedule @ prebuilt.js:11739
+mp.enqueueAfterDelay @ prebuilt.js:15049
+Pl.ji @ prebuilt.js:10756
+Ll.nr @ prebuilt.js:10969
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+$l @ prebuilt.js:11566
+(anonymous) @ prebuilt.js:11611
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11587
+(anonymous) @ prebuilt.js:10931
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+Ll.close @ prebuilt.js:10911
+Ll.dr @ prebuilt.js:10979
+(anonymous) @ prebuilt.js:10963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10963
+ul.Vi @ prebuilt.js:10381
+(anonymous) @ prebuilt.js:10576
+(anonymous) @ prebuilt.js:10559
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Tr.va @ webchannelbasetransport.js:384
+dr @ webchannelbase.js:2377
+lr @ webchannelbase.js:2103
+qe @ channelrequest.js:1247
+D.Ia @ channelrequest.js:715
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:578
+cr @ webchannelbase.js:1750
+D.Ga @ webchannelbase.js:1625
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+sr @ webchannelbase.js:1585
+je @ webchannelbase.js:2291
+Me @ channelrequest.js:951
+D.Ia @ channelrequest.js:743
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:575
+Oe @ webchannelbase.js:1416
+D.Ha @ webchannelbase.js:1418
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+wr.m @ webchannelbase.js:767
+Ei @ prebuilt.js:10551
+ul.send @ prebuilt.js:10375
+Ll.cr @ prebuilt.js:10888
+xl.Ar @ prebuilt.js:11112
+(anonymous) @ prebuilt.js:11570
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11569
+(anonymous) @ prebuilt.js:10961
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10961
+ul.Pi @ prebuilt.js:10378
+(anonymous) @ prebuilt.js:10617
+setTimeout
+sl.Oi @ prebuilt.js:10612
+xl.wr @ prebuilt.js:11088
+Ll.lr @ prebuilt.js:10960
+(anonymous) @ prebuilt.js:10950
+Promise.then
+Ll.auth @ prebuilt.js:10941
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+(anonymous) @ prebuilt.js:10970
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:10969
+(anonymous) @ prebuilt.js:10757
+(anonymous) @ prebuilt.js:11764
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+nf.handleDelayElapsed @ prebuilt.js:11763
+(anonymous) @ prebuilt.js:11745
+logger.ts:115 [2025-10-02T13:26:39.854Z]  @firebase/firestore: Firestore (8.6.8): Connection WebChannel transport errored: Er {type: 'c', target: wr, g: wr, defaultPrevented: false, status: 1}
+w @ logger.ts:115
+_.warn @ logger.ts:206
+jr @ prebuilt.js:263
+(anonymous) @ prebuilt.js:10576
+(anonymous) @ prebuilt.js:10559
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Tr.va @ webchannelbasetransport.js:384
+dr @ webchannelbase.js:2377
+lr @ webchannelbase.js:2103
+qe @ channelrequest.js:1247
+D.Ia @ channelrequest.js:715
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:578
+cr @ webchannelbase.js:1750
+D.Ga @ webchannelbase.js:1625
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+sr @ webchannelbase.js:1585
+je @ webchannelbase.js:2291
+Me @ channelrequest.js:951
+D.Ia @ channelrequest.js:743
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:575
+Oe @ webchannelbase.js:1416
+D.Ha @ webchannelbase.js:1418
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+wr.m @ webchannelbase.js:767
+Ei @ prebuilt.js:10551
+ul.send @ prebuilt.js:10375
+Ll.cr @ prebuilt.js:10888
+xl.Ar @ prebuilt.js:11112
+(anonymous) @ prebuilt.js:11570
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11569
+(anonymous) @ prebuilt.js:10961
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10961
+ul.Pi @ prebuilt.js:10378
+(anonymous) @ prebuilt.js:10617
+setTimeout
+sl.Oi @ prebuilt.js:10612
+xl.wr @ prebuilt.js:11088
+Ll.lr @ prebuilt.js:10960
+(anonymous) @ prebuilt.js:10950
+Promise.then
+Ll.auth @ prebuilt.js:10941
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+(anonymous) @ prebuilt.js:10970
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:10969
+(anonymous) @ prebuilt.js:10757
+(anonymous) @ prebuilt.js:11764
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+nf.handleDelayElapsed @ prebuilt.js:11763
+(anonymous) @ prebuilt.js:11745
+setTimeout
+nf.start @ prebuilt.js:11745
+nf.createAndSchedule @ prebuilt.js:11739
+mp.enqueueAfterDelay @ prebuilt.js:15049
+Pl.ji @ prebuilt.js:10756
+Ll.nr @ prebuilt.js:10969
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+$l @ prebuilt.js:11566
+(anonymous) @ prebuilt.js:11611
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11587
+(anonymous) @ prebuilt.js:10931
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+Ll.close @ prebuilt.js:10911
+Ll.dr @ prebuilt.js:10979
+(anonymous) @ prebuilt.js:10963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10963
+ul.Vi @ prebuilt.js:10381
+(anonymous) @ prebuilt.js:10576
+(anonymous) @ prebuilt.js:10559
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Tr.va @ webchannelbasetransport.js:384
+dr @ webchannelbase.js:2377
+lr @ webchannelbase.js:2103
+qe @ channelrequest.js:1247
+D.Ia @ channelrequest.js:715
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:578
+cr @ webchannelbase.js:1750
+D.Ga @ webchannelbase.js:1625
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+sr @ webchannelbase.js:1585
+je @ webchannelbase.js:2291
+Me @ channelrequest.js:951
+D.Ia @ channelrequest.js:743
+D.gb @ channelrequest.js:603
+qt @ eventtarget.js:351
+Ut @ eventtarget.js:481
+Gn @ xhrio.js:910
+D.cb @ xhrio.js:867
+D.Fa @ xhrio.js:850
+XMLHttpRequest.send
+J.XMLHttpRequest.send @ ajaxRequestInterceptor.ps.js:1
+await in J.XMLHttpRequest.send
+ea @ xhrio.js:671
+Le @ channelrequest.js:575
+Oe @ webchannelbase.js:1416
+D.Ha @ webchannelbase.js:1418
+Jt @ run.js:132
+Promise.then
+Ht @ run.js:58
+Yt @ run.js:35
+wr.m @ webchannelbase.js:767
+Ei @ prebuilt.js:10551
+ul.send @ prebuilt.js:10375
+Ll.cr @ prebuilt.js:10888
+xl.Ar @ prebuilt.js:11112
+(anonymous) @ prebuilt.js:11570
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:11569
+(anonymous) @ prebuilt.js:10961
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+(anonymous) @ prebuilt.js:10988
+(anonymous) @ prebuilt.js:10961
+ul.Pi @ prebuilt.js:10378
+(anonymous) @ prebuilt.js:10617
+setTimeout
+sl.Oi @ prebuilt.js:10612
+xl.wr @ prebuilt.js:11088
+Ll.lr @ prebuilt.js:10960
+(anonymous) @ prebuilt.js:10950
+Promise.then
+Ll.auth @ prebuilt.js:10941
+Ll.start @ prebuilt.js:10853
+xl.start @ prebuilt.js:11082
+(anonymous) @ prebuilt.js:10970
+(anonymous) @ tslib.es6.js:102
+(anonymous) @ tslib.es6.js:83
+(anonymous) @ tslib.es6.js:76
+y @ tslib.es6.js:72
+(anonymous) @ prebuilt.js:10969
+(anonymous) @ prebuilt.js:10757
+(anonymous) @ prebuilt.js:11764
+(anonymous) @ prebuilt.js:15010
+Promise.then
+mp.Ac @ prebuilt.js:15010
+mp.enqueue @ prebuilt.js:14978
+mp.enqueueAndForget @ prebuilt.js:14963
+nf.handleDelayElapsed @ prebuilt.js:11763
+(anonymous) @ prebuilt.js:11745
