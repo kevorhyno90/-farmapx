@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/app_state.dart';
-import '../models/transaction.dart';
+import 'package:farm_management_app/services/app_state.dart';
+import 'package:farm_management_app/models/transaction.dart';
 
 class FinancePage extends StatelessWidget {
   const FinancePage({super.key});

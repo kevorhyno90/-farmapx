@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/app_state.dart';
-import '../models/crop.dart';
+import 'package:farm_management_app/services/app_state.dart';
+import 'package:farm_management_app/models/crop.dart';
 
 class CropsPage extends StatelessWidget {
   const CropsPage({super.key});

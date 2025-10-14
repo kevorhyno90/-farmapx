@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:farm_management/services/app_state.dart';
-import 'package:farm_management/models/poultry.dart';
-import 'package:farm_management/widgets/csv_input_dialog.dart';
+import 'package:farm_management_app/services/app_state.dart';
+import 'package:farm_management_app/models/poultry.dart';
+import 'package:farm_management_app/widgets/csv_input_dialog.dart';
 
 class PoultryPage extends StatelessWidget {
   const PoultryPage({super.key});
