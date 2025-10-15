@@ -34,12 +34,12 @@ class FeedFormulationPage extends StatelessWidget {
             onPressed: () async {
               final csv = await showDialog<String?>(
                   context: context, builder: (_) => const CsvInputDialog());
+              if (!context.mounted) return;
               if (csv != null) {
-                final count = await context
-                    .read<AppState>()
-                    .importFeedFormulationsCsvAndSave(csv);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Imported $count formulations')));
+                final messenger = ScaffoldMessenger.of(context);
+                final appState = context.read<AppState>();
+                final count = await appState.importFeedFormulationsCsvAndSave(csv);
+                messenger.showSnackBar(SnackBar(content: Text('Imported $count formulations')));
               }
             })
       ]),
@@ -58,8 +58,9 @@ class FeedFormulationPage extends StatelessWidget {
                     final changed = await Navigator.push<FeedFormulation?>(
                         context,
                         MaterialPageRoute(builder: (_) => _EditFeedPage(f: f)));
-                    if (changed != null)
+                    if (changed != null) {
                       await app.updateFeedFormulation(changed);
+                    }
                   }),
               IconButton(
                   icon: const Icon(Icons.delete),
@@ -75,7 +76,9 @@ class FeedFormulationPage extends StatelessWidget {
           final newF = FeedFormulation(id: id, name: 'New formula');
           final created = await Navigator.push<FeedFormulation?>(context,
               MaterialPageRoute(builder: (_) => _EditFeedPage(f: newF)));
-          if (created != null) await app.addFeedFormulation(created);
+          if (created != null) {
+            await app.addFeedFormulation(created);
+          }
         },
       ),
     );

@@ -25,9 +25,12 @@ class InventoryPage extends StatelessWidget {
             icon: const Icon(Icons.file_upload),
             onPressed: () async {
               final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
-              if (csv != null) {
-                final count = await context.read<AppState>().importInventoryCsvAndSave(csv);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Imported $count items')));
+                  if (csv != null) { 
+                    if (!context.mounted) return;
+                final messenger = ScaffoldMessenger.of(context);
+                final appState = context.read<AppState>();
+                final count = await appState.importInventoryCsvAndSave(csv);
+                messenger.showSnackBar(SnackBar(content: Text('Imported $count items')));
               }
             })
           ]),
@@ -65,13 +68,13 @@ class InventoryPage extends StatelessWidget {
         child: const Icon(Icons.add),
         onPressed: () async {
           final id = DateTime.now().millisecondsSinceEpoch.toString();
-          final newItem = InventoryItem(
-              id: id,
-              name: 'New item',
-              sku: 'NEW-$id',
-              category: 'Uncategorized',
-              quantity: 0,
-              unit: 'pcs');
+      final newItem = InventoryItem(
+        id: id,
+        name: 'New item',
+        sku: 'NEW-$id',
+        category: 'Uncategorized',
+        quantity: 0,
+        unit: 'pcs');
           final created = await Navigator.push<InventoryItem?>(
             context,
             MaterialPageRoute(builder: (_) => InventoryEditPage(item: newItem)),
@@ -165,7 +168,7 @@ class _InventoryEditPageState extends State<InventoryEditPage> {
                 name: _name.text,
                 sku: _sku.text,
                 category: _category.text,
-                quantity: double.tryParse(_quantity.text) ?? 0.0,
+                quantity: int.tryParse(_quantity.text) ?? 0,
                 unit: _unit.text,
               );
               Navigator.pop(context, updated);

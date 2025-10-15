@@ -33,11 +33,12 @@ class CalfPage extends StatelessWidget {
             onPressed: () async {
               final csv = await showDialog<String?>(
                   context: context, builder: (_) => const CsvInputDialog());
+              if (!context.mounted) return;
               if (csv != null) {
-                final count =
-                    await context.read<AppState>().importCalvesCsvAndSave(csv);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Imported $count calves')));
+                final messenger = ScaffoldMessenger.of(context);
+                final appState = context.read<AppState>();
+                final count = await appState.importCalvesCsvAndSave(csv);
+                messenger.showSnackBar(SnackBar(content: Text('Imported $count calves')));
               }
             })
       ]),
@@ -54,7 +55,10 @@ class CalfPage extends StatelessWidget {
                   onPressed: () async {
                     final changed = await Navigator.push<Calf?>(context,
                         MaterialPageRoute(builder: (_) => _EditCalfPage(c: c)));
-                    if (changed != null) await app.updateCalf(changed);
+                    if (changed != null) {
+                      await app.updateCalf(changed);
+                      if (!context.mounted) return;
+                    }
                   }),
               IconButton(
                   icon: const Icon(Icons.delete),

@@ -13,19 +13,32 @@ class AnimalsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Animals'), actions: [
         IconButton(
-            icon: const Icon(Icons.file_download),
-            onPressed: () {
-              final csv = context.read<AppState>().exportAnimalsCsv();
-              showDialog(context: context, builder: (_) => AlertDialog(title: const Text('Export CSV'), content: SingleChildScrollView(child: SelectableText(csv)), actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))]));
-            }),
+          icon: const Icon(Icons.file_download),
+          onPressed: () {
+            final csv = context.read<AppState>().exportAnimalsCsv();
+            showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: const Text('Export CSV'),
+                content: SingleChildScrollView(child: SelectableText(csv)),
+                actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))],
+              ),
+            );
+          },
+        ),
         IconButton(
-            icon: const Icon(Icons.file_upload),
-      }
-              if (csv != null) {
-                final count = await context.read<AppState>().importAnimalsCsvAndSave(csv);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Imported $count animals')));
-              }
-            })
+          icon: const Icon(Icons.file_upload),
+          onPressed: () async {
+            final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
+            if (!context.mounted) return;
+            if (csv != null && csv.isNotEmpty) {
+              final messenger = ScaffoldMessenger.of(context);
+              final appState = context.read<AppState>();
+              final count = await appState.importAnimalsCsvAndSave(csv);
+              messenger.showSnackBar(SnackBar(content: Text('Imported $count animals')));
+            }
+          },
+        ),
       ]),
       body: ListView.builder(
         itemCount: app.animals.length,

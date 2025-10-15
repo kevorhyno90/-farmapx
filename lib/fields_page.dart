@@ -22,9 +22,12 @@ class FieldsPage extends StatelessWidget {
             icon: const Icon(Icons.file_upload),
             onPressed: () async {
               final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
+              if (!context.mounted) return;
               if (csv != null) {
-                final count = await context.read<AppState>().importFieldsCsvAndSave(csv);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Imported $count fields')));
+                final messenger = ScaffoldMessenger.of(context);
+                final appState = context.read<AppState>();
+                final count = await appState.importFieldsCsvAndSave(csv);
+                messenger.showSnackBar(SnackBar(content: Text('Imported $count fields')));
               }
             })
       ]),

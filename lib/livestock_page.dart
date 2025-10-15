@@ -17,7 +17,7 @@ class LivestockPage extends StatelessWidget {
           final a = app.animals[idx];
           return ListTile(
             title: Text('${a.tag} — ${a.species}'),
-            subtitle: Text('${a.breed}'),
+            subtitle: Text(a.breed),
             trailing: IconButton(icon: const Icon(Icons.delete), onPressed: () => app.deleteAnimal(a.id)),
           );
         },
