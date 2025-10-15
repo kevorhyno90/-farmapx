@@ -20,8 +20,7 @@ class AnimalsPage extends StatelessWidget {
             }),
         IconButton(
             icon: const Icon(Icons.file_upload),
-            onPressed: () async {
-              final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
+      }
               if (csv != null) {
                 final count = await context.read<AppState>().importAnimalsCsvAndSave(csv);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Imported $count animals')));
