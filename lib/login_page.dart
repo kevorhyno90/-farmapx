@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dashboard_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   void _login() {
     // Simple stub: accept any non-empty credentials
     if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const DashboardPage()));
+      Navigator.pushReplacementNamed(context, '/dashboard');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Enter email and password')));
     }
