@@ -119,7 +119,7 @@ class _InventoryEditPageState extends State<InventoryEditPage> {
     super.initState();
     _name = TextEditingController(text: widget.item.name);
     _sku = TextEditingController(text: widget.item.sku);
-    _category = TextEditingController(text: widget.item.category);
+    _category = TextEditingController(text: widget.item.category.name);
     _quantity = TextEditingController(text: widget.item.quantity.toString());
     _unit = TextEditingController(text: widget.item.unit);
   }
@@ -149,12 +149,16 @@ class _InventoryEditPageState extends State<InventoryEditPage> {
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () {
+              final categoryEnum = InventoryCategory.values.firstWhere(
+                (cat) => cat.name == _category.text.toLowerCase().replaceAll(' ', '_'),
+                orElse: () => InventoryCategory.feed,
+              );
               final updated = InventoryItem(
                 id: widget.item.id,
                 name: _name.text,
                 sku: _sku.text,
-                category: _category.text,
-                quantity: int.tryParse(_quantity.text) ?? 0,
+                category: categoryEnum,
+                quantity: double.tryParse(_quantity.text) ?? 0.0,
                 unit: _unit.text,
               );
               Navigator.pop(context, updated);

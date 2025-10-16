@@ -56,7 +56,13 @@ class TransactionsPage extends StatelessWidget {
         child: const Icon(Icons.add),
         onPressed: () async {
           final id = DateTime.now().millisecondsSinceEpoch.toString();
-          await app.addTransaction(TransactionModel(id: id, type: 'expense', amount: 0.0, currency: 'USD', category: 'General'));
+          await app.addTransaction(TransactionModel(
+            id: id, 
+            type: TransactionType.expense, 
+            amount: 0.0, 
+            currency: 'USD', 
+            category: 'General'
+          ));
         },
       ),
     );

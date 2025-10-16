@@ -22,6 +22,9 @@ class AppState extends ChangeNotifier {
   final List<FeedFormulation> _feedFormulations = [];
   final List<InventoryItem> _inventory = [];
   final List<TaskItem> _tasks = [];
+  final List<Employee> _employees = [];
+  final List<FieldModel> _fields = [];
+  final List<ReportMeta> _reports = [];
 
   // Expose as unmodifiable lists
   List<TransactionModel> get transactions => List.unmodifiable(_transactions);
@@ -32,19 +35,19 @@ class AppState extends ChangeNotifier {
   List<FeedFormulation> get feedFormulations => List.unmodifiable(_feedFormulations);
   List<InventoryItem> get inventoryItems => List.unmodifiable(_inventory);
   List<TaskItem> get tasks => List.unmodifiable(_tasks);
-  // Alias getters expected by UI
-  List<InventoryItem> get inventory => inventoryItems;
-  List<TaskItem> get taskItems => tasks;
-  // Employees, fields and reports
   List<Employee> get employees => List.unmodifiable(_employees);
   List<FieldModel> get fields => List.unmodifiable(_fields);
   List<ReportMeta> get reports => List.unmodifiable(_reports);
+  
+  // Alias getters expected by UI
+  List<InventoryItem> get inventory => inventoryItems;
+  List<TaskItem> get taskItems => tasks;
 
   // Transactions
   String exportTransactionsCsv() {
-    final rows = ['id,type,amount,currency,category'];
+    final rows = ['id,type,amount,currency,category,subcategory,date,description'];
     for (final t in _transactions) {
-      rows.add('${t.id},${t.type},${t.amount},${t.currency},${t.category}');
+      rows.add('${t.id},${t.type.name},${t.amount},${t.currency},${t.category},${t.subcategory},${t.date.toIso8601String()},${t.description}');
     }
     return rows.join('\n');
   }
@@ -55,7 +58,16 @@ class AppState extends ChangeNotifier {
     for (var i = 1; i < lines.length; i++) {
       final parts = lines[i].split(',');
       if (parts.length >= 5) {
-        _transactions.add(TransactionModel(id: parts[0], type: parts[1], amount: double.tryParse(parts[2]) ?? 0.0, currency: parts[3], category: parts[4]));
+        _transactions.add(TransactionModel(
+          id: parts[0], 
+          type: TransactionType.values.firstWhere((e) => e.name == parts[1], orElse: () => TransactionType.expense), 
+          amount: double.tryParse(parts[2]) ?? 0.0, 
+          currency: parts[3], 
+          category: parts[4],
+          subcategory: parts.length > 5 ? parts[5] : '',
+          date: parts.length > 6 ? DateTime.tryParse(parts[6]) : null,
+          description: parts.length > 7 ? parts[7] : '',
+        ));
         count++;
       }
     }
@@ -174,8 +186,8 @@ class AppState extends ChangeNotifier {
   }
 
   String exportCropsCsv() => _crops.isEmpty
-      ? 'id,fieldId,crop,plantingDate'
-      : 'id,fieldId,crop,plantingDate\n${_crops.map((c) => '${c.id},${c.fieldId},${c.crop},${c.plantingDate}').join('\n')}';
+      ? 'id,fieldId,cropName,plantingDate'
+      : 'id,fieldId,cropName,plantingDate\n${_crops.map((c) => '${c.id},${c.fieldId},${c.cropName},${c.plantingDate.toIso8601String()}').join('\n')}';
   Future<int> importCropsCsvAndSave(String csv) async => 0;
 
   String exportInventoryCsv() => _inventory.isEmpty
@@ -196,14 +208,8 @@ class AppState extends ChangeNotifier {
   Future<int> importFieldsCsvAndSave(String csv) async => 0;
   String exportReportsCsv() => '';
   Future<int> importReportsCsvAndSave(String csv) async => 0;
-  // Employees and fields basic in-memory stores
-  final List<Employee> _employees = [];
-  final List<FieldModel> _fields = [];
-  final List<ReportMeta> _reports = [];
 
-  List<Employee> get employeeList => List.unmodifiable(_employees);
-  List<FieldModel> get fieldList => List.unmodifiable(_fields);
-
+  // Employees
   Future<void> addEmployee(Employee e) async {
     _employees.add(e);
     notifyListeners();
@@ -214,6 +220,7 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Fields
   Future<void> addField(FieldModel f) async {
     _fields.add(f);
     notifyListeners();

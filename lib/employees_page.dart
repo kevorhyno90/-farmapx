@@ -46,7 +46,12 @@ class EmployeesPage extends StatelessWidget {
         child: const Icon(Icons.add),
         onPressed: () async {
           final id = DateTime.now().millisecondsSinceEpoch.toString();
-          await app.addEmployee(Employee(id: id, name: 'Employee $id', role: 'worker'));
+          await app.addEmployee(Employee(
+            id: id, 
+            firstName: 'Employee', 
+            lastName: id, 
+            role: 'worker'
+          ));
         },
       ),
     );

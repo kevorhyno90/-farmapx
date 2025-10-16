@@ -21,8 +21,8 @@ class CropsPage extends StatelessWidget {
         itemBuilder: (context, idx) {
           final c = app.crops[idx];
           return ListTile(
-            title: Text('${c.crop} — ${c.fieldId}'),
-            subtitle: Text('Planted: ${c.plantingDate}'),
+            title: Text('${c.cropName} — ${c.fieldId}'),
+            subtitle: Text('Planted: ${c.plantingDate.toString().split(' ')[0]}'),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
               IconButton(
                   icon: const Icon(Icons.edit),
@@ -80,8 +80,8 @@ class _CropEditPageState extends State<CropEditPage> {
   void initState() {
     super.initState();
     _fieldId = TextEditingController(text: widget.crop.fieldId);
-    _crop = TextEditingController(text: widget.crop.crop);
-    _planting = TextEditingController(text: widget.crop.plantingDate);
+    _crop = TextEditingController(text: widget.crop.cropName);
+    _planting = TextEditingController(text: widget.crop.plantingDate.toString().split(' ')[0]);
   }
 
   @override
@@ -107,8 +107,8 @@ class _CropEditPageState extends State<CropEditPage> {
             final updated = CropModel(
               id: widget.crop.id,
               fieldId: _fieldId.text,
-              crop: _crop.text,
-              plantingDate: _planting.text,
+              cropName: _crop.text,
+              plantingDate: DateTime.tryParse(_planting.text) ?? DateTime.now(),
             );
             Navigator.pop(context, updated);
           }, child: const Text('Save'))

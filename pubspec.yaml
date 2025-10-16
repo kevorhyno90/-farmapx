@@ -1,5 +1,5 @@
 name: farm_management_app
-description: A new Flutter project.
+description: A comprehensive farm management system with analytics and reporting.
 
 publish_to: 'none'
 
@@ -13,6 +13,14 @@ dependencies:
     sdk: flutter
   provider: ^6.0.5
   cupertino_icons: ^1.0.2
+  fl_chart: ^0.64.0
+  shared_preferences: ^2.2.2
+  intl: ^0.18.1
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  csv: ^5.0.2
+  file_picker: ^6.1.1
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:
