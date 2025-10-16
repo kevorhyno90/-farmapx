@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 import '../services/app_state.dart';
 import '../models/feed_formulation.dart';
 import '../widgets/csv_input_dialog.dart';
+import 'ingredient_management_page.dart';
+import 'advanced_formulation_page.dart';
+import 'widgets/section_scaffold.dart';
 
 class FeedFormulationPage extends StatefulWidget {
   const FeedFormulationPage({super.key});
@@ -19,60 +22,47 @@ class _FeedFormulationPageState extends State<FeedFormulationPage> {
   @override
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
-    
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Feed Formulation System'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.list_alt), text: 'Formulations'),
-              Tab(icon: Icon(Icons.engineering), text: 'Formulator'),
-              Tab(icon: Icon(Icons.storage), text: 'Ingredients'),
-              Tab(icon: Icon(Icons.analytics), text: 'Analysis'),
-            ],
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.file_download),
-              onPressed: () => _exportData(context),
-            ),
-            IconButton(
-              icon: const Icon(Icons.file_upload),
-              onPressed: () => _importData(context),
-            ),
-          ],
-        ),
-        body: TabBarView(
-          children: [
-            _buildFormulationsList(app),
-            _buildFormulator(app),
-            _buildIngredientsLibrary(app),
-            _buildAnalysisTab(app),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () async {
-            final id = DateTime.now().millisecondsSinceEpoch.toString();
-            final newF = FeedFormulation(id: id, name: 'New Formula');
-            final created = await Navigator.push<FeedFormulation?>(
-              context,
-              MaterialPageRoute(builder: (_) => _EditFeedPage(f: newF)),
-            );
-            if (created != null) {
-              await app.addFeedFormulation(created);
-            }
-          },
-        ),
-      ),
+    return SectionScaffold(
+      title: 'Feed Formulation System',
+      subsections: const ['Formulations', 'Formulator', 'Ingredients', 'Analysis'],
+      builder: (ctx, sub) {
+        if (sub == 'Formulations') return _buildFormulationsList(app);
+        if (sub == 'Formulator') return _buildFormulator(app);
+        if (sub == 'Ingredients') return const IngredientManagementPage();
+        return _buildAnalysisTab(app);
+      },
     );
   }
 
   Widget _buildFormulationsList(AppState app) {
     return Column(
       children: [
+        // Actions row: export, import, add
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton.icon(onPressed: () => _exportData(context), icon: const Icon(Icons.file_download), label: const Text('Export')),
+              const SizedBox(width: 8),
+              TextButton.icon(onPressed: () => _importData(context), icon: const Icon(Icons.file_upload), label: const Text('Import')),
+              const SizedBox(width: 8),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  final id = DateTime.now().millisecondsSinceEpoch.toString();
+                  final newF = FeedFormulation(id: id, name: 'New Formula');
+                  final created = await Navigator.push<FeedFormulation?>(
+                    context,
+                    MaterialPageRoute(builder: (_) => _EditFeedPage(f: newF)),
+                  );
+                  if (created != null) await app.addFeedFormulation(created);
+                },
+                icon: const Icon(Icons.add),
+                label: const Text('Add'),
+              ),
+            ],
+          ),
+        ),
         // Quick stats bar
         Container(
           padding: const EdgeInsets.all(16),
@@ -173,7 +163,43 @@ class _FeedFormulationPageState extends State<FeedFormulationPage> {
   }
 
   Widget _buildFormulator(AppState app) {
-    return const _FormulatorWidget();
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AdvancedFormulationPage(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.rocket_launch),
+                label: const Text('Advanced Formulator'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[700],
+                  foregroundColor: Colors.white,
+                ),
+              ),
+              Text(
+                'Professional optimization engine',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Expanded(child: _FormulatorWidget()),
+      ],
+    );
   }
 
   Widget _buildIngredientsLibrary(AppState app) {
@@ -218,7 +244,7 @@ class _FeedFormulationPageState extends State<FeedFormulationPage> {
         await app.addFeedFormulation(duplicate);
         break;
       case 'delete':
-        await app.deleteFeedFormulation(f.id);
+        app.deleteFeedFormulation(f.id);
         break;
       // Add other actions as needed
     }

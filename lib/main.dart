@@ -17,6 +17,8 @@ import 'crops_page.dart';
 import 'dashboard_page.dart';
 import 'employees_page.dart';
 import 'feed_formulation_page.dart';
+import 'quality_assurance_page.dart';
+import 'feed_cost_management_page.dart';
 import 'fields_page.dart';
 import 'finance_page.dart';
 import 'inventory_page.dart';
@@ -26,8 +28,6 @@ import 'reports_page.dart';
 import 'shell_page.dart';
 import 'tasks_page.dart';
 import 'transactions_page.dart';
-
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'services/app_state.dart';
@@ -301,6 +301,9 @@ class MyApp extends StatelessWidget {
         '/crops': (context) => const CropsPage(),
         '/employees': (context) => const EmployeesPage(),
         '/feed_formulation': (context) => const FeedFormulationPage(),
+        '/feed-formulation': (context) => const FeedFormulationPage(),
+        '/quality-assurance': (context) => const QualityAssurancePage(),
+        '/cost-management': (context) => const FeedCostManagementPage(),
         '/fields': (context) => const FieldsPage(),
         '/finance': (context) => const FinancePage(),
         '/inventory': (context) => const InventoryPage(),

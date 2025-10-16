@@ -350,7 +350,7 @@ class FeedFormulation {
   double get crudeProteinTarget => calculatedNutrition['crudeProtein'] ?? 0.0;
   double get metabolisableEnergyTarget => calculatedNutrition['metabolizableEnergy'] ?? 0.0;
 
-  const FeedFormulation({
+  FeedFormulation({
     required this.id,
     required this.name,
     this.description = '',
