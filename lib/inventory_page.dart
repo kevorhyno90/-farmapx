@@ -3,87 +3,73 @@ import 'package:provider/provider.dart';
 import '../services/app_state.dart';
 import '../models/inventory_item.dart';
 import '../widgets/csv_input_dialog.dart';
+import 'widgets/section_scaffold.dart';
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({super.key});
 
+  Widget _overview(BuildContext context, AppState app) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text('Inventory Overview', style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 12),
+        Wrap(spacing: 12, children: [
+          Card(child: Padding(padding: const EdgeInsets.all(8.0), child: Text('Total items: ${app.inventory.length}'))),
+          Card(child: Padding(padding: const EdgeInsets.all(8.0), child: Text('Distinct SKUs: ${app.inventory.map((e) => e.sku).toSet().length}'))),
+        ])
+      ]),
+    );
+  }
+
+  Widget _list(BuildContext context, AppState app) {
+    return ListView.builder(
+      itemCount: app.inventory.length,
+      itemBuilder: (context, idx) {
+        final item = app.inventory[idx];
+        return ListTile(
+          title: Text(item.name),
+          subtitle: Text('${item.quantity} ${item.unit} — ${item.category}'),
+          trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+            IconButton(icon: const Icon(Icons.edit), onPressed: () async {
+              final changed = await Navigator.push<InventoryItem?>(context, MaterialPageRoute(builder: (_) => InventoryEditPage(item: item)));
+              if (changed != null) await app.updateInventory(changed);
+            }),
+            IconButton(icon: const Icon(Icons.delete), onPressed: () => app.deleteInventory(item.id))
+          ]),
+        );
+      },
+    );
+  }
+
+  Widget _csv(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () async {
+          final appState = context.read<AppState>();
+          final messenger = ScaffoldMessenger.of(context);
+          final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
+          if (csv == null || csv.isEmpty) return;
+          final count = await appState.importInventoryCsvAndSave(csv);
+          if (!context.mounted) return;
+          messenger.showSnackBar(SnackBar(content: Text('Imported $count items')));
+        },
+        child: const Text('Import CSV'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Inventory'), actions: [
-        IconButton(
-            icon: const Icon(Icons.file_download),
-            onPressed: () {
-              final s = context.read<AppState>().exportInventoryCsv();
-              showDialog(
-                  context: context,
-                  builder: (_) => AlertDialog(title: const Text('Export CSV'), content: SingleChildScrollView(child: SelectableText(s)), actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))]));
-            }),
-        IconButton(
-            icon: const Icon(Icons.file_upload),
-            onPressed: () async {
-              final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
-                  if (csv != null) { 
-                    if (!context.mounted) return;
-                final messenger = ScaffoldMessenger.of(context);
-                final appState = context.read<AppState>();
-                final count = await appState.importInventoryCsvAndSave(csv);
-                messenger.showSnackBar(SnackBar(content: Text('Imported $count items')));
-              }
-            })
-          ]),
-      body: ListView.builder(
-        itemCount: app.inventory.length,
-        itemBuilder: (context, idx) {
-          final item = app.inventory[idx];
-          return ListTile(
-            title: Text(item.name),
-            subtitle: Text('${item.quantity} ${item.unit} — ${item.category}'),
-            trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-              IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () async {
-                    final changed = await Navigator.push<InventoryItem?>(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => InventoryEditPage(item: item),
-                      ),
-                    );
-                    if (changed != null) {
-                      await app.updateInventory(changed);
-                    }
-                  }),
-              IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () async {
-                    await app.deleteInventory(item.id);
-                  })
-            ]),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          final id = DateTime.now().millisecondsSinceEpoch.toString();
-      final newItem = InventoryItem(
-        id: id,
-        name: 'New item',
-        sku: 'NEW-$id',
-        category: 'Uncategorized',
-        quantity: 0,
-        unit: 'pcs');
-          final created = await Navigator.push<InventoryItem?>(
-            context,
-            MaterialPageRoute(builder: (_) => InventoryEditPage(item: newItem)),
-          );
-          if (created != null) {
-            await app.addInventory(created);
-          }
-        },
-      ),
+    return SectionScaffold(
+      title: 'Inventory',
+      subsections: const ['Overview', 'List', 'CSV'],
+      builder: (ctx, sub) {
+        if (sub == 'Overview') return _overview(ctx, app);
+        if (sub == 'List') return _list(ctx, app);
+        return _csv(ctx);
+      },
     );
   }
 }

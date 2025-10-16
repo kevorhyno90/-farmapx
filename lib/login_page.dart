@@ -21,7 +21,14 @@ class _LoginPageState extends State<LoginPage> {
   void _login() {
     // Simple stub: accept any non-empty credentials
     if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
-      Navigator.pushReplacementNamed(context, '/dashboard');
+      // show a small visual confirmation so we can verify the login path
+      final messenger = ScaffoldMessenger.of(context);
+      messenger.showSnackBar(const SnackBar(content: Text('Logging in...')));
+      // delay briefly so the SnackBar is visible in release builds, then navigate
+      Future.delayed(const Duration(milliseconds: 400), () {
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Enter email and password')));
     }

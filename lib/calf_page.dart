@@ -3,80 +3,70 @@ import 'package:provider/provider.dart';
 import '../services/app_state.dart';
 import '../models/calf.dart';
 import '../widgets/csv_input_dialog.dart';
+import 'widgets/section_scaffold.dart';
 
 class CalfPage extends StatelessWidget {
   const CalfPage({super.key});
 
+  Widget _overview(BuildContext context, AppState app) => Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Calves Overview', style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 8),
+          Text('Total calves: ${app.calves.length}'),
+        ]),
+      );
+
+  Widget _list(BuildContext context, AppState app) {
+    return ListView.builder(
+      itemCount: app.calves.length,
+      itemBuilder: (context, idx) {
+        final c = app.calves[idx];
+        return ListTile(
+          title: Text(c.tag),
+          subtitle: Text('${c.sex} • ${c.dob}'),
+          trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+            IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () async {
+                  final changed = await Navigator.push<Calf?>(context, MaterialPageRoute(builder: (_) => _EditCalfPage(c: c)));
+                  if (changed != null) await app.updateCalf(changed);
+                }),
+            IconButton(icon: const Icon(Icons.delete), onPressed: () => app.deleteCalf(c.id))
+          ]),
+        );
+      },
+    );
+  }
+
+  Widget _csv(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () async {
+          final appState = context.read<AppState>();
+          final messenger = ScaffoldMessenger.of(context);
+          final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
+          if (csv == null || csv.isEmpty) return;
+          final count = await appState.importCalvesCsvAndSave(csv);
+          if (!context.mounted) return;
+          messenger.showSnackBar(SnackBar(content: Text('Imported $count calves')));
+        },
+        child: const Text('Import CSV'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
-    return Scaffold(
-      appBar: AppBar(title: const Text('Calves'), actions: [
-        IconButton(
-            icon: const Icon(Icons.file_download),
-            onPressed: () {
-              final csv = context.read<AppState>().exportCalvesCsv();
-              showDialog(
-                  context: context,
-                  builder: (_) => AlertDialog(
-                          title: const Text('Export CSV'),
-                          content:
-                              SingleChildScrollView(child: SelectableText(csv)),
-                          actions: [
-                            TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Close'))
-                          ]));
-            }),
-        IconButton(
-            icon: const Icon(Icons.file_upload),
-            onPressed: () async {
-              final csv = await showDialog<String?>(
-                  context: context, builder: (_) => const CsvInputDialog());
-              if (!context.mounted) return;
-              if (csv != null) {
-                final messenger = ScaffoldMessenger.of(context);
-                final appState = context.read<AppState>();
-                final count = await appState.importCalvesCsvAndSave(csv);
-                messenger.showSnackBar(SnackBar(content: Text('Imported $count calves')));
-              }
-            })
-      ]),
-      body: ListView.builder(
-        itemCount: app.calves.length,
-        itemBuilder: (context, idx) {
-          final c = app.calves[idx];
-          return ListTile(
-            title: Text(c.tag),
-            subtitle: Text('${c.sex} • ${c.dob}'),
-            trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-              IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () async {
-                    final changed = await Navigator.push<Calf?>(context,
-                        MaterialPageRoute(builder: (_) => _EditCalfPage(c: c)));
-                    if (changed != null) {
-                      await app.updateCalf(changed);
-                      if (!context.mounted) return;
-                    }
-                  }),
-              IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () => app.deleteCalf(c.id))
-            ]),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          final id = DateTime.now().millisecondsSinceEpoch.toString();
-          final newC = Calf(id: id, tag: 'Calf $id');
-          final created = await Navigator.push<Calf?>(context,
-              MaterialPageRoute(builder: (_) => _EditCalfPage(c: newC)));
-          if (created != null) await app.addCalf(created);
-        },
-      ),
+    return SectionScaffold(
+      title: 'Calves',
+      subsections: const ['Overview', 'List', 'CSV'],
+      builder: (ctx, sub) {
+        if (sub == 'Overview') return _overview(ctx, app);
+        if (sub == 'List') return _list(ctx, app);
+        return _csv(ctx);
+      },
     );
   }
 }
