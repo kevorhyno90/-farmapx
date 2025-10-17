@@ -3,7 +3,7 @@ import 'dashboard_page.dart';
 import 'livestock_page.dart';
 import 'crops_page.dart';
 import 'inventory_page.dart';
-import 'feed_formulation_page.dart';
+import 'compact_feed_formulation_page.dart';
 import 'finance_page.dart';
 import 'tasks_page.dart';
 import 'reports_page.dart';
@@ -33,7 +33,7 @@ class _ShellPageState extends State<ShellPage> {
       case 3:
         return _pages[3] = const InventoryPage();
       case 4:
-        return _pages[4] = const FeedFormulationPage();
+        return _pages[4] = const CompactFeedFormulationPage();
       case 5:
         return _pages[5] = const FinancePage();
       case 6:

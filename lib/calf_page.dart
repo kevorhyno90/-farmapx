@@ -5,8 +5,14 @@ import '../models/calf.dart';
 import '../widgets/csv_input_dialog.dart';
 import 'widgets/section_scaffold.dart';
 
-class CalfPage extends StatelessWidget {
+class CalfPage extends StatefulWidget {
   const CalfPage({super.key});
+
+  @override
+  State<CalfPage> createState() => _CalfPageState();
+}
+
+class _CalfPageState extends State<CalfPage> {
 
   Widget _overview(BuildContext context, AppState app) => Padding(
         padding: const EdgeInsets.all(12.0),

@@ -26,6 +26,7 @@ import 'livestock_page.dart';
 import 'poultry_page.dart';
 import 'reports_page.dart';
 import 'shell_page.dart';
+import 'enhanced_shell_page.dart';
 import 'tasks_page.dart';
 import 'transactions_page.dart';
 
@@ -266,7 +267,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-  initialRoute: '/dashboard',
+  initialRoute: '/shell',
       routes: {
         '/dashboard': (context) => const DashboardPage(),
         '/animals': (context) => const AnimalsPage(),
@@ -283,7 +284,7 @@ class MyApp extends StatelessWidget {
         '/livestock': (context) => const LivestockPage(),
         '/poultry': (context) => const PoultryPage(),
         '/reports': (context) => const ReportsPage(),
-        '/shell': (context) => const ShellPage(),
+        '/shell': (context) => const EnhancedShellPage(),
         '/tasks': (context) => const TasksPage(),
         '/transactions': (context) => const TransactionsPage(),
       },

@@ -12,6 +12,13 @@ class IngredientDatabase {
     _initializeMinerals();
     _initializeVitamins();
     _initializeAdditives();
+    _initializeSpecialtyIngredients();
+    _initializeRootTubers();
+    _initializeLegumes();
+    _initializeOilseeds();
+    _initializeFiberSources();
+    _initializeAnimalProteins();
+    _initializePremixes();
   }
 
   static List<FeedIngredient> getAllIngredients() {
@@ -924,6 +931,748 @@ class IngredientDatabase {
       maxInclusionRate: 0.2,
       storageRequirements: 'Dry storage',
       shelfLifeDays: 1095,
+    );
+  }
+
+  static void _initializeSpecialtyIngredients() {
+    // Rice Bran
+    _ingredients['rice_bran'] = FeedIngredient(
+      id: 'rice_bran',
+      name: 'Rice Bran',
+      commonName: 'Rice Bran',
+      scientificName: 'Oryza sativa',
+      category: IngredientCategory.by_products,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 90.0,
+        crudeProtein: 13.5,
+        digestibleProtein: 11.2,
+        metabolizableEnergy: 2950.0,
+        crudeFat: 13.0,
+        ndf: 25.0,
+        adf: 12.0,
+        ash: 9.8,
+        minerals: MineralProfile(
+          calcium: 0.07,
+          phosphorus: 1.6,
+          potassium: 1.5,
+          magnesium: 0.9,
+        ),
+      ),
+      currentPrice: 280.0,
+      unit: 'ton',
+      availabilityScore: 85.0,
+      palatabilityScore: 75.0,
+      digestibilityScore: 80.0,
+      suitableSpecies: ['cattle', 'swine', 'poultry'],
+      maxInclusionRate: 15.0,
+      storageRequirements: 'Cool, dry storage',
+      shelfLifeDays: 60,
+    );
+
+    // DDGS (Distillers Dried Grains with Solubles)
+    _ingredients['ddgs'] = FeedIngredient(
+      id: 'ddgs',
+      name: 'Distillers Dried Grains with Solubles',
+      commonName: 'DDGS',
+      category: IngredientCategory.by_products,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 89.0,
+        crudeProtein: 27.0,
+        digestibleProtein: 24.0,
+        metabolizableEnergy: 2800.0,
+        crudeFat: 10.0,
+        ndf: 35.0,
+        adf: 15.0,
+        ash: 5.2,
+        minerals: MineralProfile(
+          phosphorus: 0.9,
+          potassium: 1.1,
+          sulfur: 0.8,
+        ),
+      ),
+      currentPrice: 320.0,
+      unit: 'ton',
+      availabilityScore: 90.0,
+      palatabilityScore: 70.0,
+      digestibilityScore: 85.0,
+      suitableSpecies: ['cattle', 'swine'],
+      maxInclusionRate: 20.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 180,
+    );
+
+    // Sunflower Meal
+    _ingredients['sunflower_meal'] = FeedIngredient(
+      id: 'sunflower_meal',
+      name: 'Sunflower Meal',
+      commonName: 'Sunflower Meal',
+      scientificName: 'Helianthus annuus',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 90.5,
+        crudeProtein: 34.0,
+        digestibleProtein: 29.0,
+        metabolizableEnergy: 2200.0,
+        crudeFat: 2.5,
+        ndf: 30.0,
+        adf: 22.0,
+        ash: 7.1,
+        minerals: MineralProfile(
+          phosphorus: 1.1,
+          potassium: 1.2,
+          magnesium: 0.4,
+        ),
+      ),
+      currentPrice: 380.0,
+      unit: 'ton',
+      availabilityScore: 75.0,
+      palatabilityScore: 80.0,
+      digestibilityScore: 75.0,
+      suitableSpecies: ['cattle', 'swine', 'poultry'],
+      maxInclusionRate: 15.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 120,
+    );
+
+    // Cottonseed Meal
+    _ingredients['cottonseed_meal'] = FeedIngredient(
+      id: 'cottonseed_meal',
+      name: 'Cottonseed Meal',
+      commonName: 'Cottonseed Meal',
+      scientificName: 'Gossypium hirsutum',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 91.0,
+        crudeProtein: 41.0,
+        digestibleProtein: 35.0,
+        metabolizableEnergy: 2400.0,
+        crudeFat: 2.0,
+        ndf: 25.0,
+        adf: 18.0,
+        ash: 6.8,
+        minerals: MineralProfile(
+          phosphorus: 1.2,
+          potassium: 1.4,
+          magnesium: 0.6,
+        ),
+      ),
+      currentPrice: 420.0,
+      unit: 'ton',
+      availabilityScore: 70.0,
+      palatabilityScore: 70.0,
+      digestibilityScore: 80.0,
+      suitableSpecies: ['cattle'],
+      maxInclusionRate: 12.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 90,
+      restrictions: ['Limited in poultry due to gossypol'],
+    );
+
+    // Brewers Grains (Wet)
+    _ingredients['brewers_grains_wet'] = FeedIngredient(
+      id: 'brewers_grains_wet',
+      name: 'Brewers Grains, Wet',
+      commonName: 'Wet Brewers Grains',
+      category: IngredientCategory.by_products,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 25.0,
+        crudeProtein: 26.0,
+        digestibleProtein: 22.0,
+        metabolizableEnergy: 2500.0,
+        crudeFat: 6.5,
+        ndf: 45.0,
+        adf: 25.0,
+        ash: 4.2,
+        minerals: MineralProfile(
+          phosphorus: 0.6,
+          potassium: 0.3,
+        ),
+      ),
+      currentPrice: 80.0,
+      unit: 'ton',
+      availabilityScore: 85.0,
+      palatabilityScore: 85.0,
+      digestibilityScore: 75.0,
+      suitableSpecies: ['cattle'],
+      maxInclusionRate: 30.0,
+      storageRequirements: 'Use fresh, refrigerated',
+      shelfLifeDays: 7,
+    );
+
+    // Palm Kernel Meal
+    _ingredients['palm_kernel_meal'] = FeedIngredient(
+      id: 'palm_kernel_meal',
+      name: 'Palm Kernel Meal',
+      commonName: 'Palm Kernel Meal',
+      scientificName: 'Elaeis guineensis',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 90.0,
+        crudeProtein: 14.5,
+        digestibleProtein: 11.0,
+        metabolizableEnergy: 2100.0,
+        crudeFat: 8.0,
+        ndf: 65.0,
+        adf: 45.0,
+        ash: 4.5,
+        minerals: MineralProfile(
+          phosphorus: 0.6,
+          potassium: 0.8,
+        ),
+      ),
+      currentPrice: 250.0,
+      unit: 'ton',
+      availabilityScore: 80.0,
+      palatabilityScore: 65.0,
+      digestibilityScore: 65.0,
+      suitableSpecies: ['cattle', 'swine'],
+      maxInclusionRate: 20.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 120,
+    );
+  }
+
+  static void _initializeRootTubers() {
+    // Cassava Root Meal
+    _ingredients['cassava_root_meal'] = FeedIngredient(
+      id: 'cassava_root_meal',
+      name: 'Cassava Root Meal',
+      commonName: 'Cassava Meal',
+      scientificName: 'Manihot esculenta',
+      category: IngredientCategory.cereal_grains,
+      processing: ProcessingMethod.ground,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 89.0,
+        crudeProtein: 2.5,
+        digestibleProtein: 1.8,
+        metabolizableEnergy: 3200.0,
+        crudeFat: 0.8,
+        ndf: 15.0,
+        adf: 8.0,
+        ash: 3.2,
+        totalCarbohydrates: 85.0,
+        minerals: MineralProfile(
+          calcium: 0.15,
+          phosphorus: 0.09,
+          potassium: 0.3,
+        ),
+      ),
+      currentPrice: 180.0,
+      unit: 'ton',
+      availabilityScore: 85.0,
+      palatabilityScore: 90.0,
+      digestibilityScore: 90.0,
+      suitableSpecies: ['swine', 'poultry', 'cattle'],
+      maxInclusionRate: 25.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 180,
+    );
+
+    // Sweet Potato Meal
+    _ingredients['sweet_potato_meal'] = FeedIngredient(
+      id: 'sweet_potato_meal',
+      name: 'Sweet Potato Meal',
+      commonName: 'Sweet Potato Meal',
+      scientificName: 'Ipomoea batatas',
+      category: IngredientCategory.cereal_grains,
+      processing: ProcessingMethod.ground,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 87.0,
+        crudeProtein: 4.2,
+        digestibleProtein: 3.5,
+        metabolizableEnergy: 3000.0,
+        crudeFat: 1.2,
+        ndf: 18.0,
+        adf: 10.0,
+        ash: 3.8,
+        totalCarbohydrates: 78.0,
+        minerals: MineralProfile(
+          calcium: 0.2,
+          phosphorus: 0.15,
+          potassium: 0.8,
+        ),
+      ),
+      currentPrice: 200.0,
+      unit: 'ton',
+      availabilityScore: 75.0,
+      palatabilityScore: 95.0,
+      digestibilityScore: 85.0,
+      suitableSpecies: ['swine', 'poultry'],
+      maxInclusionRate: 20.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 120,
+    );
+  }
+
+  static void _initializeLegumes() {
+    // Field Peas
+    _ingredients['field_peas'] = FeedIngredient(
+      id: 'field_peas',
+      name: 'Field Peas',
+      commonName: 'Field Peas',
+      scientificName: 'Pisum arvense',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.ground,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 89.0,
+        crudeProtein: 23.0,
+        digestibleProtein: 20.0,
+        metabolizableEnergy: 3100.0,
+        crudeFat: 1.5,
+        ndf: 15.0,
+        adf: 8.0,
+        ash: 3.0,
+        totalCarbohydrates: 60.0,
+        minerals: MineralProfile(
+          calcium: 0.08,
+          phosphorus: 0.4,
+          potassium: 1.0,
+        ),
+        aminoAcids: AminoAcidProfile(
+          lysine: 1.6,
+          methionine: 0.2,
+          threonine: 0.9,
+        ),
+      ),
+      currentPrice: 350.0,
+      unit: 'ton',
+      availabilityScore: 80.0,
+      palatabilityScore: 85.0,
+      digestibilityScore: 85.0,
+      suitableSpecies: ['swine', 'poultry', 'cattle'],
+      maxInclusionRate: 15.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 365,
+    );
+
+    // Cowpeas
+    _ingredients['cowpeas'] = FeedIngredient(
+      id: 'cowpeas',
+      name: 'Cowpeas',
+      commonName: 'Black-eyed Peas',
+      scientificName: 'Vigna unguiculata',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.ground,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 90.0,
+        crudeProtein: 24.0,
+        digestibleProtein: 21.0,
+        metabolizableEnergy: 3050.0,
+        crudeFat: 1.8,
+        ndf: 18.0,
+        adf: 10.0,
+        ash: 3.5,
+        totalCarbohydrates: 58.0,
+        minerals: MineralProfile(
+          calcium: 0.12,
+          phosphorus: 0.45,
+          potassium: 1.2,
+        ),
+      ),
+      currentPrice: 380.0,
+      unit: 'ton',
+      availabilityScore: 70.0,
+      palatabilityScore: 80.0,
+      digestibilityScore: 80.0,
+      suitableSpecies: ['swine', 'poultry'],
+      maxInclusionRate: 12.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 300,
+    );
+  }
+
+  static void _initializeOilseeds() {
+    // Safflower Meal
+    _ingredients['safflower_meal'] = FeedIngredient(
+      id: 'safflower_meal',
+      name: 'Safflower Meal',
+      commonName: 'Safflower Meal',
+      scientificName: 'Carthamus tinctorius',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 91.0,
+        crudeProtein: 24.0,
+        digestibleProtein: 20.0,
+        metabolizableEnergy: 1900.0,
+        crudeFat: 2.5,
+        ndf: 45.0,
+        adf: 35.0,
+        ash: 6.0,
+        minerals: MineralProfile(
+          phosphorus: 0.7,
+          potassium: 0.9,
+        ),
+      ),
+      currentPrice: 300.0,
+      unit: 'ton',
+      availabilityScore: 60.0,
+      palatabilityScore: 70.0,
+      digestibilityScore: 70.0,
+      suitableSpecies: ['cattle'],
+      maxInclusionRate: 10.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 120,
+    );
+
+    // Linseed Meal
+    _ingredients['linseed_meal'] = FeedIngredient(
+      id: 'linseed_meal',
+      name: 'Linseed Meal',
+      commonName: 'Flax Meal',
+      scientificName: 'Linum usitatissimum',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 91.0,
+        crudeProtein: 35.0,
+        digestibleProtein: 30.0,
+        metabolizableEnergy: 2300.0,
+        crudeFat: 3.0,
+        ndf: 25.0,
+        adf: 15.0,
+        ash: 6.2,
+        minerals: MineralProfile(
+          phosphorus: 0.9,
+          potassium: 1.1,
+          magnesium: 0.6,
+        ),
+      ),
+      currentPrice: 450.0,
+      unit: 'ton',
+      availabilityScore: 65.0,
+      palatabilityScore: 75.0,
+      digestibilityScore: 80.0,
+      suitableSpecies: ['cattle', 'swine'],
+      maxInclusionRate: 8.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 90,
+    );
+
+    // Sesame Meal
+    _ingredients['sesame_meal'] = FeedIngredient(
+      id: 'sesame_meal',
+      name: 'Sesame Meal',
+      commonName: 'Sesame Meal',
+      scientificName: 'Sesamum indicum',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 92.0,
+        crudeProtein: 45.0,
+        digestibleProtein: 40.0,
+        metabolizableEnergy: 2800.0,
+        crudeFat: 12.0,
+        ndf: 20.0,
+        adf: 12.0,
+        ash: 8.5,
+        minerals: MineralProfile(
+          calcium: 2.1,
+          phosphorus: 1.4,
+          magnesium: 0.8,
+        ),
+      ),
+      currentPrice: 550.0,
+      unit: 'ton',
+      availabilityScore: 55.0,
+      palatabilityScore: 85.0,
+      digestibilityScore: 85.0,
+      suitableSpecies: ['poultry', 'swine'],
+      maxInclusionRate: 10.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 120,
+    );
+  }
+
+  static void _initializeFiberSources() {
+    // Sugar Beet Pulp
+    _ingredients['sugar_beet_pulp'] = FeedIngredient(
+      id: 'sugar_beet_pulp',
+      name: 'Sugar Beet Pulp',
+      commonName: 'Beet Pulp',
+      scientificName: 'Beta vulgaris',
+      category: IngredientCategory.by_products,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 90.0,
+        crudeProtein: 9.0,
+        digestibleProtein: 7.0,
+        metabolizableEnergy: 2800.0,
+        crudeFat: 0.8,
+        ndf: 45.0,
+        adf: 22.0,
+        ash: 5.8,
+        totalCarbohydrates: 75.0,
+        minerals: MineralProfile(
+          calcium: 0.8,
+          phosphorus: 0.1,
+          potassium: 0.6,
+        ),
+      ),
+      currentPrice: 220.0,
+      unit: 'ton',
+      availabilityScore: 85.0,
+      palatabilityScore: 90.0,
+      digestibilityScore: 85.0,
+      suitableSpecies: ['cattle', 'sheep'],
+      maxInclusionRate: 20.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 180,
+    );
+
+    // Citrus Pulp
+    _ingredients['citrus_pulp'] = FeedIngredient(
+      id: 'citrus_pulp',
+      name: 'Citrus Pulp',
+      commonName: 'Citrus Pulp',
+      scientificName: 'Citrus spp.',
+      category: IngredientCategory.by_products,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 90.0,
+        crudeProtein: 7.0,
+        digestibleProtein: 5.5,
+        metabolizableEnergy: 2900.0,
+        crudeFat: 3.5,
+        ndf: 25.0,
+        adf: 18.0,
+        ash: 6.2,
+        totalCarbohydrates: 78.0,
+        minerals: MineralProfile(
+          calcium: 1.8,
+          phosphorus: 0.12,
+          potassium: 0.9,
+        ),
+      ),
+      currentPrice: 200.0,
+      unit: 'ton',
+      availabilityScore: 80.0,
+      palatabilityScore: 85.0,
+      digestibilityScore: 85.0,
+      suitableSpecies: ['cattle', 'sheep'],
+      maxInclusionRate: 15.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 150,
+    );
+
+    // Oat Hulls
+    _ingredients['oat_hulls'] = FeedIngredient(
+      id: 'oat_hulls',
+      name: 'Oat Hulls',
+      commonName: 'Oat Hulls',
+      scientificName: 'Avena sativa',
+      category: IngredientCategory.by_products,
+      processing: ProcessingMethod.ground,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 91.0,
+        crudeProtein: 4.0,
+        digestibleProtein: 2.0,
+        metabolizableEnergy: 1200.0,
+        crudeFat: 1.5,
+        ndf: 75.0,
+        adf: 45.0,
+        ash: 3.5,
+        minerals: MineralProfile(
+          calcium: 0.08,
+          phosphorus: 0.05,
+        ),
+      ),
+      currentPrice: 120.0,
+      unit: 'ton',
+      availabilityScore: 70.0,
+      palatabilityScore: 60.0,
+      digestibilityScore: 40.0,
+      suitableSpecies: ['cattle'],
+      maxInclusionRate: 15.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 365,
+    );
+  }
+
+  static void _initializeAnimalProteins() {
+    // Meat and Bone Meal
+    _ingredients['meat_bone_meal'] = FeedIngredient(
+      id: 'meat_bone_meal',
+      name: 'Meat and Bone Meal',
+      commonName: 'MBM',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 94.0,
+        crudeProtein: 50.0,
+        digestibleProtein: 45.0,
+        metabolizableEnergy: 2200.0,
+        crudeFat: 10.0,
+        ash: 30.0,
+        minerals: MineralProfile(
+          calcium: 10.0,
+          phosphorus: 5.0,
+          sodium: 0.7,
+        ),
+        aminoAcids: AminoAcidProfile(
+          lysine: 2.5,
+          methionine: 0.7,
+          threonine: 1.8,
+        ),
+      ),
+      currentPrice: 600.0,
+      unit: 'ton',
+      availabilityScore: 70.0,
+      palatabilityScore: 75.0,
+      digestibilityScore: 85.0,
+      suitableSpecies: ['swine', 'poultry'],
+      maxInclusionRate: 5.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 180,
+      restrictions: ['Check local regulations'],
+    );
+
+    // Blood Meal
+    _ingredients['blood_meal'] = FeedIngredient(
+      id: 'blood_meal',
+      name: 'Blood Meal',
+      commonName: 'Blood Meal',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 92.0,
+        crudeProtein: 90.0,
+        digestibleProtein: 80.0,
+        metabolizableEnergy: 2800.0,
+        crudeFat: 1.0,
+        ash: 4.5,
+        minerals: MineralProfile(
+          iron: 0.25,
+          phosphorus: 0.3,
+        ),
+        aminoAcids: AminoAcidProfile(
+          lysine: 8.0,
+          methionine: 1.2,
+          threonine: 4.2,
+        ),
+      ),
+      currentPrice: 800.0,
+      unit: 'ton',
+      availabilityScore: 65.0,
+      palatabilityScore: 60.0,
+      digestibilityScore: 75.0,
+      suitableSpecies: ['swine', 'poultry'],
+      maxInclusionRate: 3.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 120,
+    );
+
+    // Feather Meal
+    _ingredients['feather_meal'] = FeedIngredient(
+      id: 'feather_meal',
+      name: 'Feather Meal',
+      commonName: 'Feather Meal',
+      category: IngredientCategory.protein_meals,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 93.0,
+        crudeProtein: 85.0,
+        digestibleProtein: 75.0,
+        metabolizableEnergy: 2400.0,
+        crudeFat: 7.0,
+        ash: 3.0,
+        minerals: MineralProfile(
+          phosphorus: 0.6,
+        ),
+        aminoAcids: AminoAcidProfile(
+          lysine: 2.0,
+          methionine: 0.7,
+          cystine: 4.8,
+        ),
+      ),
+      currentPrice: 650.0,
+      unit: 'ton',
+      availabilityScore: 70.0,
+      palatabilityScore: 65.0,
+      digestibilityScore: 70.0,
+      suitableSpecies: ['swine', 'poultry'],
+      maxInclusionRate: 4.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 150,
+    );
+  }
+
+  static void _initializePremixes() {
+    // Vitamin Premix
+    _ingredients['vitamin_premix'] = FeedIngredient(
+      id: 'vitamin_premix',
+      name: 'Vitamin Premix',
+      commonName: 'Vitamin Premix',
+      category: IngredientCategory.premixes,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 95.0,
+        vitamins: VitaminProfile(
+          vitaminA: 1000000.0, // IU/kg
+          vitaminD3: 200000.0, // IU/kg
+          vitaminE: 5000.0, // IU/kg
+          vitaminK: 500.0, // mg/kg
+          thiamine: 200.0, // mg/kg
+          riboflavin: 400.0, // mg/kg
+          niacin: 2000.0, // mg/kg
+          pantothenicAcid: 1000.0, // mg/kg
+          pyridoxine: 300.0, // mg/kg
+          biotin: 10.0, // mg/kg
+          folicAcid: 100.0, // mg/kg
+          vitaminB12: 2.0, // mg/kg
+        ),
+      ),
+      currentPrice: 3500.0,
+      unit: 'ton',
+      availabilityScore: 95.0,
+      palatabilityScore: 90.0,
+      digestibilityScore: 95.0,
+      suitableSpecies: ['cattle', 'swine', 'poultry'],
+      maxInclusionRate: 0.25,
+      storageRequirements: 'Cool, dry, dark storage',
+      shelfLifeDays: 365,
+    );
+
+    // Mineral Premix
+    _ingredients['mineral_premix'] = FeedIngredient(
+      id: 'mineral_premix',
+      name: 'Mineral Premix',
+      commonName: 'Mineral Premix',
+      category: IngredientCategory.premixes,
+      processing: ProcessingMethod.raw,
+      nutritionalProfile: NutritionalProfile(
+        dryMatter: 96.0,
+        minerals: MineralProfile(
+          calcium: 20.0,
+          phosphorus: 8.0,
+          sodium: 5.0,
+          potassium: 2.0,
+          magnesium: 3.0,
+          sulfur: 1.5,
+          iron: 0.15,
+          zinc: 0.12,
+          copper: 0.02,
+          manganese: 0.08,
+          iodine: 0.002,
+          selenium: 0.0003,
+          cobalt: 0.001,
+        ),
+      ),
+      currentPrice: 1200.0,
+      unit: 'ton',
+      availabilityScore: 95.0,
+      palatabilityScore: 85.0,
+      digestibilityScore: 90.0,
+      suitableSpecies: ['cattle', 'swine', 'poultry'],
+      maxInclusionRate: 1.0,
+      storageRequirements: 'Dry storage',
+      shelfLifeDays: 730,
     );
   }
 }
