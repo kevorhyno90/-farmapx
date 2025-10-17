@@ -28,33 +28,6 @@ import 'reports_page.dart';
 import 'shell_page.dart';
 import 'tasks_page.dart';
 import 'transactions_page.dart';
-import 'package:provider/provider.dart';
-
-import 'services/app_state.dart';
-import 'models/animal.dart';
-import 'models/poultry.dart';
-import 'models/inventory_item.dart';
-import 'models/task_item.dart';
-import 'models/transaction.dart';
-import 'models/calf.dart';
-import 'models/crop_model.dart';
-import 'models/employee.dart';
-import 'models/field.dart';
-import 'animals_page.dart';
-import 'calf_page.dart';
-import 'crops_page.dart';
-import 'dashboard_page.dart';
-import 'employees_page.dart';
-import 'feed_formulation_page.dart';
-import 'fields_page.dart';
-import 'finance_page.dart';
-import 'inventory_page.dart';
-import 'livestock_page.dart';
-import 'poultry_page.dart';
-import 'reports_page.dart';
-import 'shell_page.dart';
-import 'tasks_page.dart';
-import 'transactions_page.dart';
 
 void main() {
   runApp(

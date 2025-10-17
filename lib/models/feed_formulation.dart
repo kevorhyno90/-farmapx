@@ -513,4 +513,80 @@ class FeedFormulation {
       }).join(', '),
     };
   }
+
+  // JSON serialization methods
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'description': description,
+    'targetSpecies': targetSpecies.name,
+    'targetStage': targetStage.name,
+    'form': form.name,
+    'ingredients': ingredients.map((ing) => {
+      'ingredientId': ing.ingredientId,
+      'percentage': ing.percentage,
+    }).toList(),
+    'targetCost': targetCost,
+    'createdDate': createdDate.toIso8601String(),
+    'lastModified': lastModified?.toIso8601String(),
+    'formulatedBy': formulatedBy,
+    'approved': approved,
+    'approvedBy': approvedBy,
+    'approvalDate': approvalDate?.toIso8601String(),
+    'batchNumber': batchNumber,
+    'batchSize': batchSize,
+    'calculatedNutrition': calculatedNutrition,
+    'totalCost': totalCost,
+    'costPerKg': costPerKg,
+    'qualityScore': qualityScore,
+    'warnings': warnings,
+    'recommendations': recommendations,
+    'notes': notes,
+  };
+
+  static FeedFormulation fromJson(Map<String, dynamic> json) => FeedFormulation(
+    id: json['id'] ?? '',
+    name: json['name'] ?? '',
+    description: json['description'] ?? '',
+    targetSpecies: AnimalSpecies.values.firstWhere(
+      (species) => species.name == json['targetSpecies'], 
+      orElse: () => AnimalSpecies.cattle
+    ),
+    targetStage: ProductionStage.values.firstWhere(
+      (stage) => stage.name == json['targetStage'], 
+      orElse: () => ProductionStage.grower
+    ),
+    form: FeedForm.values.firstWhere(
+      (form) => form.name == json['form'], 
+      orElse: () => FeedForm.mash
+    ),
+    ingredients: (json['ingredients'] as List<dynamic>?)
+        ?.map((ingJson) => FormulaIngredient(
+              ingredientId: ingJson['ingredientId'] ?? '',
+              percentage: (ingJson['percentage'] as num?)?.toDouble() ?? 0.0,
+            ))
+        .toList() ?? [],
+    targetCost: (json['targetCost'] as num?)?.toDouble() ?? 0.0,
+    createdDate: json['createdDate'] != null 
+        ? DateTime.parse(json['createdDate']) 
+        : DateTime.now(),
+    lastModified: json['lastModified'] != null 
+        ? DateTime.parse(json['lastModified']) 
+        : null,
+    formulatedBy: json['formulatedBy'] ?? '',
+    approved: json['approved'] ?? false,
+    approvedBy: json['approvedBy'] ?? '',
+    approvalDate: json['approvalDate'] != null 
+        ? DateTime.parse(json['approvalDate']) 
+        : null,
+    batchNumber: json['batchNumber'] ?? '',
+    batchSize: (json['batchSize'] as num?)?.toDouble() ?? 0.0,
+    calculatedNutrition: Map<String, double>.from(json['calculatedNutrition'] ?? {}),
+    totalCost: (json['totalCost'] as num?)?.toDouble() ?? 0.0,
+    costPerKg: (json['costPerKg'] as num?)?.toDouble() ?? 0.0,
+    qualityScore: json['qualityScore'] ?? 0,
+    warnings: List<String>.from(json['warnings'] ?? []),
+    recommendations: List<String>.from(json['recommendations'] ?? []),
+    notes: json['notes'] ?? '',
+  );
 }

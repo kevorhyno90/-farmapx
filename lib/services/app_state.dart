@@ -202,8 +202,100 @@ class AppState extends ChangeNotifier {
 
   String exportEmployeesCsv() => '';
   Future<int> importEmployeesCsvAndSave(String csv) async => 0;
-  String exportFeedFormulationsCsv() => '';
-  Future<int> importFeedFormulationsCsvAndSave(String csv) async => 0;
+  String exportFeedFormulationsCsv() {
+    if (_feedFormulations.isEmpty) {
+      return 'id,name,description,targetSpecies,targetStage,form,ingredients,targetCost,createdDate,formulatedBy,approved,batchNumber,batchSize,totalCost,costPerKg,qualityScore,notes';
+    }
+    final rows = ['id,name,description,targetSpecies,targetStage,form,ingredients,targetCost,createdDate,formulatedBy,approved,batchNumber,batchSize,totalCost,costPerKg,qualityScore,notes'];
+    for (final f in _feedFormulations) {
+      final ingredientsStr = f.ingredients.map((ing) => '${ing.ingredientId}:${ing.percentage}').join(';');
+      rows.add('${f.id},"${f.name}","${f.description}",${f.targetSpecies.name},${f.targetStage.name},${f.form.name},"$ingredientsStr",${f.targetCost},${f.createdDate.toIso8601String()},"${f.formulatedBy}",${f.approved},"${f.batchNumber}",${f.batchSize},${f.totalCost},${f.costPerKg},${f.qualityScore},"${f.notes}"');
+    }
+    return rows.join('\n');
+  }
+
+  Future<int> importFeedFormulationsCsvAndSave(String csv) async {
+    final lines = csv.split('\n').where((line) => line.trim().isNotEmpty).toList();
+    if (lines.length <= 1) return 0;
+
+    int imported = 0;
+
+    for (int i = 1; i < lines.length; i++) {
+      try {
+        final parts = _parseCsvLine(lines[i]);
+        if (parts.length >= 17) {
+          // Parse ingredients
+          final ingredientsStr = parts[6].replaceAll('"', '');
+          final ingredients = ingredientsStr.split(';')
+              .where((ing) => ing.contains(':'))
+              .map((ing) {
+                final pair = ing.split(':');
+                return FormulaIngredient(
+                  ingredientId: pair[0],
+                  percentage: double.tryParse(pair[1]) ?? 0.0,
+                );
+              }).toList();
+
+          final formulation = FeedFormulation(
+            id: parts[0],
+            name: parts[1].replaceAll('"', ''),
+            description: parts[2].replaceAll('"', ''),
+            targetSpecies: AnimalSpecies.values.firstWhere(
+              (species) => species.name == parts[3], 
+              orElse: () => AnimalSpecies.cattle
+            ),
+            targetStage: ProductionStage.values.firstWhere(
+              (stage) => stage.name == parts[4], 
+              orElse: () => ProductionStage.grower
+            ),
+            form: FeedForm.values.firstWhere(
+              (form) => form.name == parts[5], 
+              orElse: () => FeedForm.mash
+            ),
+            ingredients: ingredients,
+            targetCost: double.tryParse(parts[7]) ?? 0.0,
+            createdDate: DateTime.tryParse(parts[8]) ?? DateTime.now(),
+            formulatedBy: parts[9].replaceAll('"', ''),
+            approved: parts[10].toLowerCase() == 'true',
+            batchNumber: parts[11].replaceAll('"', ''),
+            batchSize: double.tryParse(parts[12]) ?? 0.0,
+            totalCost: double.tryParse(parts[13]) ?? 0.0,
+            costPerKg: double.tryParse(parts[14]) ?? 0.0,
+            qualityScore: int.tryParse(parts[15]) ?? 0,
+            notes: parts[16].replaceAll('"', ''),
+          );
+
+          await addFeedFormulation(formulation);
+          imported++;
+        }
+      } catch (e) {
+        // Skip malformed lines
+        debugPrint('Error parsing feed formulation line ${i + 1}: $e');
+      }
+    }
+    return imported;
+  }
+
+  // Helper method to parse CSV lines considering quoted fields
+  List<String> _parseCsvLine(String line) {
+    final result = <String>[];
+    bool inQuotes = false;
+    String current = '';
+    
+    for (int i = 0; i < line.length; i++) {
+      final char = line[i];
+      if (char == '"') {
+        inQuotes = !inQuotes;
+      } else if (char == ',' && !inQuotes) {
+        result.add(current);
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    result.add(current);
+    return result;
+  }
   String exportFieldsCsv() => '';
   Future<int> importFieldsCsvAndSave(String csv) async => 0;
   String exportReportsCsv() => '';

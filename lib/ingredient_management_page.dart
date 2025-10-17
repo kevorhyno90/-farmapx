@@ -52,12 +52,12 @@ class _IngredientManagementPageState extends State<IngredientManagementPage> wit
           comparison = a.name.compareTo(b.name);
           break;
         case 'protein':
-          comparison = (a.nutritionalProfile.crudeProtein ?? 0)
-              .compareTo(b.nutritionalProfile.crudeProtein ?? 0);
+          comparison = a.nutritionalProfile.crudeProtein
+              .compareTo(b.nutritionalProfile.crudeProtein);
           break;
         case 'energy':
-          comparison = (a.nutritionalProfile.metabolizableEnergy ?? 0)
-              .compareTo(b.nutritionalProfile.metabolizableEnergy ?? 0);
+          comparison = a.nutritionalProfile.metabolizableEnergy
+              .compareTo(b.nutritionalProfile.metabolizableEnergy);
           break;
         case 'price':
           comparison = a.currentPrice.compareTo(b.currentPrice);
@@ -364,10 +364,8 @@ class _IngredientManagementPageState extends State<IngredientManagementPage> wit
                 overflow: TextOverflow.ellipsis,
               ),
               const Spacer(),
-              if (ingredient.nutritionalProfile.crudeProtein != null)
-                _buildNutrientRow('CP', '${ingredient.nutritionalProfile.crudeProtein!.toStringAsFixed(1)}%'),
-              if (ingredient.nutritionalProfile.metabolizableEnergy != null)
-                _buildNutrientRow('ME', '${ingredient.nutritionalProfile.metabolizableEnergy!.toInt()} kcal'),
+              _buildNutrientRow('CP', '${ingredient.nutritionalProfile.crudeProtein.toStringAsFixed(1)}%'),
+              _buildNutrientRow('ME', '${ingredient.nutritionalProfile.metabolizableEnergy.toInt()} kcal'),
               const SizedBox(height: 4),
               Text(
                 '\$${ingredient.currentPrice.toStringAsFixed(0)}/${ingredient.unit}',
@@ -626,13 +624,13 @@ class _IngredientManagementPageState extends State<IngredientManagementPage> wit
 
   Widget _buildNutritionalOverview(List<FeedIngredient> ingredients) {
     final proteinIngredients = ingredients
-        .where((i) => (i.nutritionalProfile.crudeProtein ?? 0) > 20)
+        .where((i) => i.nutritionalProfile.crudeProtein > 20)
         .length;
     final energyIngredients = ingredients
-        .where((i) => (i.nutritionalProfile.metabolizableEnergy ?? 0) > 3000)
+        .where((i) => i.nutritionalProfile.metabolizableEnergy > 3000)
         .length;
     final fiberIngredients = ingredients
-        .where((i) => (i.nutritionalProfile.ndf ?? 0) > 30)
+        .where((i) => i.nutritionalProfile.ndf > 30)
         .length;
 
     return Card(
@@ -884,10 +882,6 @@ class IngredientDetailDialog extends StatelessWidget {
 
   Widget _buildAminoAcidsTab() {
     final aminoAcids = ingredient.nutritionalProfile.aminoAcids;
-    if (aminoAcids == null) {
-      return const Center(child: Text('No amino acid data available'));
-    }
-
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -910,9 +904,6 @@ class IngredientDetailDialog extends StatelessWidget {
 
   Widget _buildMineralsTab() {
     final minerals = ingredient.nutritionalProfile.minerals;
-    if (minerals == null) {
-      return const Center(child: Text('No mineral data available'));
-    }
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -999,9 +990,7 @@ class IngredientDetailDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildNutritionRow(String label, double? value, String unit) {
-    if (value == null) return Container();
-    
+  Widget _buildNutritionRow(String label, double value, String unit) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(

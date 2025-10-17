@@ -59,11 +59,10 @@ class FormulationOptimizer {
     try {
       // Filter out ingredients with no nutritional data
       final validIngredients = availableIngredients
-          .where((ing) => ing.nutritionalProfile.crudeProtein != null)
           .toList();
 
       if (validIngredients.isEmpty) {
-        return FormulationResult(
+        return const FormulationResult(
           ingredientPercentages: {},
           totalCost: 0.0,
           costPerTon: 0.0,
@@ -173,7 +172,7 @@ class FormulationOptimizer {
     Map<String, double> ingredientLimits,
   ) {
     final improved = List<double>.from(current);
-    final stepSize = 0.5; // Adjustment step size
+    const stepSize = 0.5; // Adjustment step size
 
     for (int i = 0; i < ingredients.length; i++) {
       for (int j = i + 1; j < ingredients.length; j++) {
@@ -188,7 +187,6 @@ class FormulationOptimizer {
           
           // Apply ingredient limits
           final limitI = ingredientLimits[ingredients[i].id] ?? 100.0;
-          final limitJ = ingredientLimits[ingredients[j].id] ?? 100.0;
           
           if (improved[i] > limitI) {
             improved[i] = limitI;

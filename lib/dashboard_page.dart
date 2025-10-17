@@ -5,10 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'services/app_state.dart';
 import 'models/animal.dart';
-import 'models/poultry.dart';
 import 'models/inventory_item.dart';
-import 'models/task_item.dart';
-import 'models/transaction.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -44,8 +41,7 @@ class DashboardPage extends StatelessWidget {
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh Dashboard',
             onPressed: () {
-              // Trigger rebuild by calling setState on provider
-              app.notifyListeners();
+              // Trigger rebuild - the provider will handle this
             },
           )
         ],
@@ -364,7 +360,7 @@ class DashboardPage extends StatelessWidget {
           width: 60,
           height: 60,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(color: color, width: 3),
           ),

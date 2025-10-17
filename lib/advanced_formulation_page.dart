@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../services/app_state.dart';
 import '../services/formulation_optimizer.dart';
 import '../services/ingredient_database.dart';
 import '../services/requirements_database.dart';
@@ -39,7 +37,7 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
   bool _isOptimizing = false;
   
   // Custom constraints
-  List<FormulationConstraint> _customConstraints = [];
+  final List<FormulationConstraint> _customConstraints = [];
 
   @override
   void initState() {
@@ -192,7 +190,7 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<AnimalSpecies>(
-                    value: _selectedSpecies,
+                    initialValue: _selectedSpecies,
                     decoration: const InputDecoration(
                       labelText: 'Species',
                       border: OutlineInputBorder(),
@@ -212,7 +210,7 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<ProductionStage>(
-                    value: _selectedStage,
+                    initialValue: _selectedStage,
                     decoration: const InputDecoration(
                       labelText: 'Production Stage',
                       border: OutlineInputBorder(),
@@ -232,7 +230,7 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
                   const SizedBox(height: 16),
                   if (_selectedSpecies == AnimalSpecies.poultry)
                     DropdownButtonFormField<String>(
-                      value: _selectedSubType,
+                      initialValue: _selectedSubType,
                       decoration: const InputDecoration(
                         labelText: 'Poultry Type',
                         border: OutlineInputBorder(),
@@ -250,7 +248,7 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
                     ),
                   if (_selectedSpecies == AnimalSpecies.swine)
                     DropdownButtonFormField<String>(
-                      value: _selectedSubType,
+                      initialValue: _selectedSubType,
                       decoration: const InputDecoration(
                         labelText: 'Swine Type',
                         border: OutlineInputBorder(),
@@ -348,7 +346,7 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
-                    value: _objective,
+                    initialValue: _objective,
                     decoration: const InputDecoration(
                       labelText: 'Optimization Objective',
                       border: OutlineInputBorder(),
@@ -433,8 +431,8 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'CP: ${ingredient.nutritionalProfile.crudeProtein?.toStringAsFixed(1) ?? 'N/A'}% | '
-                              'ME: ${ingredient.nutritionalProfile.metabolizableEnergy?.toInt() ?? 'N/A'} kcal/kg',
+                              'CP: ${ingredient.nutritionalProfile.crudeProtein.toStringAsFixed(1)}% | '
+                              'ME: ${ingredient.nutritionalProfile.metabolizableEnergy.toInt()} kcal/kg',
                               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                             ),
                             Text(
@@ -681,7 +679,7 @@ class _AdvancedFormulationPageState extends State<AdvancedFormulationPage> with 
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -1116,7 +1114,7 @@ class _CustomConstraintDialogState extends State<CustomConstraintDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             DropdownButtonFormField<String>(
-              value: _nutrient,
+              initialValue: _nutrient,
               decoration: const InputDecoration(
                 labelText: 'Nutrient',
                 border: OutlineInputBorder(),
@@ -1163,7 +1161,7 @@ class _CustomConstraintDialogState extends State<CustomConstraintDialog> {
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              value: _unit,
+              initialValue: _unit,
               decoration: const InputDecoration(
                 labelText: 'Unit',
                 border: OutlineInputBorder(),

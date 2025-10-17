@@ -15,7 +15,6 @@ class _FeedCostManagementPageState extends State<FeedCostManagementPage>
   
   // Cost data
   List<CostAnalysis> _costAnalyses = [];
-  List<PriceHistory> _priceHistories = [];
   List<SupplierQuote> _supplierQuotes = [];
   Map<String, double> _currentPrices = {};
   
@@ -38,7 +37,6 @@ class _FeedCostManagementPageState extends State<FeedCostManagementPage>
 
   void _loadCostData() {
     _costAnalyses = _generateSampleCostAnalyses();
-    _priceHistories = _generateSamplePriceHistories();
     _supplierQuotes = _generateSampleSupplierQuotes();
     _currentPrices = _generateCurrentPrices();
   }
@@ -164,7 +162,7 @@ class _FeedCostManagementPageState extends State<FeedCostManagementPage>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -438,7 +436,6 @@ class _FeedCostManagementPageState extends State<FeedCostManagementPage>
     
     return ingredients.asMap().entries.map((entry) {
       final index = entry.key;
-      final ingredient = entry.value;
       
       return LineChartBarData(
         spots: List.generate(30, (i) {
@@ -485,7 +482,7 @@ class _FeedCostManagementPageState extends State<FeedCostManagementPage>
                       child: const Icon(Icons.grain),
                     ),
                     title: Text(entry.key.replaceAll('_', ' ').toUpperCase()),
-                    subtitle: Text('per metric ton'),
+                    subtitle: const Text('per metric ton'),
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -624,8 +621,392 @@ class _FeedCostManagementPageState extends State<FeedCostManagementPage>
   }
 
   Widget _buildBudgetsTab() {
-    return const Center(
-      child: Text('Budget management coming soon...'),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          // Budget Overview Card
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    children: [
+                      Icon(Icons.account_balance_wallet, color: Colors.blue),
+                      SizedBox(width: 8),
+                      Text(
+                        'Budget Overview - October 2025',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: _buildBudgetMetric('Total Budget', '\$125,000', Colors.blue)),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildBudgetMetric('Spent', '\$89,430', Colors.orange)),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildBudgetMetric('Remaining', '\$35,570', Colors.green)),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  LinearProgressIndicator(
+                    value: 0.715, // 89,430 / 125,000
+                    backgroundColor: Colors.grey[300],
+                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.orange),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    '71.5% of budget used (15 days remaining)',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Category Budgets
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Budget by Category',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: _createBudget,
+                        icon: const Icon(Icons.add, size: 16),
+                        label: const Text('New Budget'),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _buildCategoryBudget('Grains & Cereals', 45000, 32100, Colors.amber),
+                  _buildCategoryBudget('Protein Meals', 35000, 28450, Colors.green),
+                  _buildCategoryBudget('Vitamins & Minerals', 18000, 12200, Colors.blue),
+                  _buildCategoryBudget('Processing & Packaging', 15000, 9680, Colors.purple),
+                  _buildCategoryBudget('Transportation', 12000, 7000, Colors.orange),
+                ],
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Budget Alerts
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    children: [
+                      Icon(Icons.warning, color: Colors.orange),
+                      SizedBox(width: 8),
+                      Text(
+                        'Budget Alerts',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _buildAlert(
+                    'Protein Meals category is 89% consumed',
+                    'Consider adjusting sourcing strategy',
+                    Icons.trending_up,
+                    Colors.orange,
+                  ),
+                  _buildAlert(
+                    'Transportation costs exceeding forecast',
+                    'Review logistics and supplier locations',
+                    Icons.local_shipping,
+                    Colors.red,
+                  ),
+                  _buildAlert(
+                    'Grains budget on track',
+                    'Good progress for this category',
+                    Icons.check_circle,
+                    Colors.green,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Monthly Forecast
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Monthly Forecast',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildForecastItem('November 2025', 118000, Colors.blue),
+                  _buildForecastItem('December 2025', 122000, Colors.blue),
+                  _buildForecastItem('January 2026', 135000, Colors.orange),
+                  const SizedBox(height: 16),
+                  const Text(
+                    '* January forecast includes seasonal price increases',
+                    style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Quick Actions
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: _exportBudgetReport,
+                  icon: const Icon(Icons.download),
+                  label: const Text('Export Report'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(16),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: _adjustBudget,
+                  icon: const Icon(Icons.edit),
+                  label: const Text('Adjust Budget'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.all(16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBudgetMetric(String label, String value, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryBudget(String category, double budgeted, double spent, Color color) {
+    final percentage = spent / budgeted;
+    final remaining = budgeted - spent;
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[300]!),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                category,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '\$${spent.toStringAsFixed(0)} / \$${budgeted.toStringAsFixed(0)}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          LinearProgressIndicator(
+            value: percentage,
+            backgroundColor: Colors.grey[300],
+            valueColor: AlwaysStoppedAnimation<Color>(
+              percentage > 0.9 ? Colors.red : 
+              percentage > 0.75 ? Colors.orange : Colors.green,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${(percentage * 100).toStringAsFixed(1)}% used',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+              Text(
+                '\$${remaining.toStringAsFixed(0)} remaining',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: remaining > 0 ? Colors.green : Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAlert(String title, String description, IconData icon, Color color) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: color),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  description,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildForecastItem(String month, double amount, Color color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(month),
+          Text(
+            '\$${amount.toStringAsFixed(0)}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _createBudget() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Create New Budget'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Budget Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Total Amount (\$)',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 16),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Duration (months)',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Budget created successfully!')),
+              );
+            },
+            child: const Text('Create'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _exportBudgetReport() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Budget report exported to Downloads')),
+    );
+  }
+
+  void _adjustBudget() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Budget adjustment feature opened')),
     );
   }
 
@@ -685,20 +1066,6 @@ class _FeedCostManagementPageState extends State<FeedCostManagementPage>
           'Hay quality premium',
           'Efficient processing',
         ],
-      ),
-    ];
-  }
-
-  List<PriceHistory> _generateSamplePriceHistories() {
-    return [
-      PriceHistory(
-        ingredient: 'Corn',
-        prices: List.generate(30, (i) => 
-          300 + math.sin(i * 0.1) * 20 + math.Random().nextDouble() * 10
-        ),
-        dates: List.generate(30, (i) => 
-          DateTime.now().subtract(Duration(days: 29 - i))
-        ),
       ),
     ];
   }
