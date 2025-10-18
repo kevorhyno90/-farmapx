@@ -26,7 +26,7 @@ class _SectionScaffoldState extends State<SectionScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title, style: TextStyle(fontSize: 18)),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -34,8 +34,12 @@ class _SectionScaffoldState extends State<SectionScaffold> {
               child: DropdownButton<String>(
                 value: _current,
                 dropdownColor: Theme.of(context).primaryColor,
+                style: TextStyle(fontSize: 16),
                 items: widget.subsections
-                    .map((s) => DropdownMenuItem(value: s, child: Text(s, style: const TextStyle(color: Colors.white))))
+                    .map((s) => DropdownMenuItem(
+                        value: s, 
+                        child: Text(s, style: const TextStyle(color: Colors.white, fontSize: 16))
+                    ))
                     .toList(),
                 onChanged: (v) => setState(() {
                   if (v != null) _current = v;
@@ -47,10 +51,12 @@ class _SectionScaffoldState extends State<SectionScaffold> {
       ),
       body: widget.builder(context, _current),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, size: 24),
         onPressed: () {
           // Modules should override/add specific actions when required via navigation to edit pages
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Use + inside a subsection to add an item')));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Use + inside a subsection to add an item', style: TextStyle(fontSize: 16))
+          ));
         },
       ),
     );

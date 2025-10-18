@@ -108,15 +108,15 @@ class _AnimalsPageState extends State<AnimalsPage>
   Widget _buildStatCard(String title, String value, IconData icon, Color iconColor) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.2),
           borderRadius: BorderRadius.circular(6),
         ),
         child: Row(
           children: [
-            Icon(icon, color: iconColor, size: 18),
-            const SizedBox(width: 6),
+            Icon(icon, color: iconColor, size: 22),
+            const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -124,7 +124,7 @@ class _AnimalsPageState extends State<AnimalsPage>
                   value,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -132,7 +132,7 @@ class _AnimalsPageState extends State<AnimalsPage>
                   title,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
-                    fontSize: 10,
+                    fontSize: 13,
                   ),
                 ),
               ],

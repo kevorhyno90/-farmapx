@@ -12,31 +12,33 @@ class PoultryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Poultry'), actions: [
+      appBar: AppBar(
+        title: const Text('Poultry', style: TextStyle(fontSize: 20)), 
+        actions: [
         IconButton(
-          icon: const Icon(Icons.file_download),
+          icon: const Icon(Icons.file_download, size: 24),
           onPressed: () {
             final csv = context.read<AppState>().exportPoultryCsv();
             showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                title: const Text('Export CSV'),
-                content: SingleChildScrollView(child: SelectableText(csv)),
-                actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))],
+                title: const Text('Export CSV', style: TextStyle(fontSize: 18)),
+                content: SingleChildScrollView(child: SelectableText(csv, style: TextStyle(fontSize: 14))),
+                actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close', style: TextStyle(fontSize: 16)))],
               ),
             );
           },
         ),
         IconButton(
-          icon: const Icon(Icons.file_upload),
+          icon: const Icon(Icons.file_upload, size: 24),
           onPressed: () async {
       final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
       if (!context.mounted) return;
-      if (csv != null) {
+        if (csv != null) {
         final messenger = ScaffoldMessenger.of(context);
         final appState = context.read<AppState>();
         final count = await appState.importPoultryCsvAndSave(csv);
-        messenger.showSnackBar(SnackBar(content: Text('Imported $count poultry records')));
+        messenger.showSnackBar(SnackBar(content: Text('Imported $count poultry records', style: TextStyle(fontSize: 16))));
       }
           },
         ),
@@ -46,23 +48,24 @@ class PoultryPage extends StatelessWidget {
         itemBuilder: (context, idx) {
           final p = app.poultry[idx];
           return ListTile(
-            title: Text(p.tag),
-            subtitle: Text('${p.species} • ${p.breed}'),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            title: Text(p.tag, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            subtitle: Text('${p.species} • ${p.breed}', style: TextStyle(fontSize: 14)),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
               IconButton(
-                icon: const Icon(Icons.edit),
+                icon: const Icon(Icons.edit, size: 24),
                 onPressed: () async {
                   final changed = await Navigator.push<Poultry?>(context, MaterialPageRoute(builder: (_) => _EditPoultryPage(p: p)));
                   if (changed != null) await app.updatePoultry(changed);
                 },
               ),
-              IconButton(icon: const Icon(Icons.delete), onPressed: () => app.deletePoultry(p.id))
+              IconButton(icon: const Icon(Icons.delete, size: 24), onPressed: () => app.deletePoultry(p.id))
             ]),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, size: 28),
         onPressed: () async {
           final id = DateTime.now().millisecondsSinceEpoch.toString();
           final newP = Poultry(id: id, tag: 'P$id');

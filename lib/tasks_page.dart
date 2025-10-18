@@ -11,15 +11,19 @@ class TasksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Tasks'), actions: [
+      appBar: AppBar(title: const Text('Tasks', style: TextStyle(fontSize: 20)), actions: [
         IconButton(
-            icon: const Icon(Icons.file_download),
+            icon: const Icon(Icons.file_download, size: 24),
             onPressed: () {
               final s = context.read<AppState>().exportTasksCsv();
-              showDialog(context: context, builder: (_) => AlertDialog(title: const Text('Export CSV'), content: SingleChildScrollView(child: SelectableText(s)), actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))]));
+              showDialog(context: context, builder: (_) => AlertDialog(
+                title: const Text('Export CSV', style: TextStyle(fontSize: 18)), 
+                content: SingleChildScrollView(child: SelectableText(s, style: TextStyle(fontSize: 14))), 
+                actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close', style: TextStyle(fontSize: 16)))]
+              ));
             }),
         IconButton(
-            icon: const Icon(Icons.file_upload),
+            icon: const Icon(Icons.file_upload, size: 24),
             onPressed: () async {
               final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
               if (!context.mounted) return;
@@ -27,7 +31,7 @@ class TasksPage extends StatelessWidget {
                 final messenger = ScaffoldMessenger.of(context);
                 final appState = context.read<AppState>();
                 final count = await appState.importTasksCsvAndSave(csv);
-                messenger.showSnackBar(SnackBar(content: Text('Imported $count tasks')));
+                messenger.showSnackBar(SnackBar(content: Text('Imported $count tasks', style: TextStyle(fontSize: 16))));
               }
             })
       ]),
@@ -36,14 +40,15 @@ class TasksPage extends StatelessWidget {
         itemBuilder: (context, idx) {
           final t = app.tasks[idx];
           return ListTile(
-            title: Text(t.title),
-            subtitle: Text('${t.status} — ${t.assignedTo}'),
-            trailing: IconButton(icon: const Icon(Icons.delete), onPressed: () => app.deleteTask(t.id)),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            title: Text(t.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            subtitle: Text('${t.status} — ${t.assignedTo}', style: TextStyle(fontSize: 14)),
+            trailing: IconButton(icon: const Icon(Icons.delete, size: 24), onPressed: () => app.deleteTask(t.id)),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, size: 28),
         onPressed: () async {
           final id = DateTime.now().millisecondsSinceEpoch.toString();
           final newT = TaskItem(id: id, title: 'New Task');

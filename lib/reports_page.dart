@@ -11,15 +11,19 @@ class ReportsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Reports'), actions: [
+      appBar: AppBar(title: const Text('Reports', style: TextStyle(fontSize: 20)), actions: [
         IconButton(
-            icon: const Icon(Icons.file_download),
+            icon: const Icon(Icons.file_download, size: 24),
             onPressed: () {
               final csv = context.read<AppState>().exportReportsCsv();
-              showDialog(context: context, builder: (_) => AlertDialog(title: const Text('Export CSV'), content: SingleChildScrollView(child: SelectableText(csv)), actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))]));
+              showDialog(context: context, builder: (_) => AlertDialog(
+                title: const Text('Export CSV', style: TextStyle(fontSize: 18)), 
+                content: SingleChildScrollView(child: SelectableText(csv, style: TextStyle(fontSize: 14))), 
+                actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close', style: TextStyle(fontSize: 16)))]
+              ));
             }),
         IconButton(
-            icon: const Icon(Icons.file_upload),
+            icon: const Icon(Icons.file_upload, size: 24),
             onPressed: () async {
               final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
               if (!context.mounted) return;
@@ -27,15 +31,19 @@ class ReportsPage extends StatelessWidget {
                 final messenger = ScaffoldMessenger.of(context);
                 final appState = context.read<AppState>();
                 final count = await appState.importReportsCsvAndSave(csv);
-                messenger.showSnackBar(SnackBar(content: Text('Imported $count reports')));
+                messenger.showSnackBar(SnackBar(content: Text('Imported $count reports', style: TextStyle(fontSize: 16))));
               }
             })
       ]),
       body: ListView(
-        children: app.reports.map((r) => ListTile(title: Text(r.name), subtitle: Text(r.generatedAt))).toList(),
+        children: app.reports.map((r) => ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          title: Text(r.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)), 
+          subtitle: Text(r.generatedAt, style: TextStyle(fontSize: 14))
+        )).toList(),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, size: 28),
         onPressed: () async {
           final id = DateTime.now().millisecondsSinceEpoch.toString();
           // use ReportMeta since AppState/reports use ReportMeta for storage

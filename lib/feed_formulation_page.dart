@@ -227,7 +227,7 @@ class _FeedFormulationPageState extends State<FeedFormulationPage> {
     return Column(
       children: [
         Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-        Text(title, style: const TextStyle(fontSize: 12)),
+        Text(title, style: const TextStyle(fontSize: 14)),
       ],
     );
   }

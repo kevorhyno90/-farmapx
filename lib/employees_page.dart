@@ -11,15 +11,19 @@ class EmployeesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Employees'), actions: [
+      appBar: AppBar(title: const Text('Employees', style: TextStyle(fontSize: 20)), actions: [
         IconButton(
-            icon: const Icon(Icons.file_download),
+            icon: const Icon(Icons.file_download, size: 24),
             onPressed: () {
               final csv = context.read<AppState>().exportEmployeesCsv();
-              showDialog(context: context, builder: (_) => AlertDialog(title: const Text('Export CSV'), content: SingleChildScrollView(child: SelectableText(csv)), actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))]));
+              showDialog(context: context, builder: (_) => AlertDialog(
+                title: const Text('Export CSV', style: TextStyle(fontSize: 18)), 
+                content: SingleChildScrollView(child: SelectableText(csv, style: TextStyle(fontSize: 14))), 
+                actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close', style: TextStyle(fontSize: 16)))]
+              ));
             }),
         IconButton(
-            icon: const Icon(Icons.file_upload),
+            icon: const Icon(Icons.file_upload, size: 24),
             onPressed: () async {
               final csv = await showDialog<String?>(context: context, builder: (_) => const CsvInputDialog());
               if (!context.mounted) return;
@@ -27,7 +31,7 @@ class EmployeesPage extends StatelessWidget {
                 final messenger = ScaffoldMessenger.of(context);
                 final appState = context.read<AppState>();
                 final count = await appState.importEmployeesCsvAndSave(csv);
-                messenger.showSnackBar(SnackBar(content: Text('Imported $count employees')));
+                messenger.showSnackBar(SnackBar(content: Text('Imported $count employees', style: TextStyle(fontSize: 16))));
               }
             })
       ]),
@@ -36,14 +40,15 @@ class EmployeesPage extends StatelessWidget {
         itemBuilder: (context, idx) {
           final e = app.employees[idx];
           return ListTile(
-            title: Text(e.name),
-            subtitle: Text(e.role),
-            trailing: IconButton(icon: const Icon(Icons.delete), onPressed: () => app.deleteEmployee(e.id)),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            title: Text(e.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            subtitle: Text(e.role, style: TextStyle(fontSize: 14)),
+            trailing: IconButton(icon: const Icon(Icons.delete, size: 24), onPressed: () => app.deleteEmployee(e.id)),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, size: 28),
         onPressed: () async {
           final id = DateTime.now().millisecondsSinceEpoch.toString();
           await app.addEmployee(Employee(

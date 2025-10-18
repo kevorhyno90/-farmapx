@@ -92,7 +92,7 @@ class _LivestockPageState extends State<LivestockPage>
                     ),
                     Text(
                       'Professional livestock tracking',
-                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 10),
+                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 13),
                     ),
                   ],
                 ),

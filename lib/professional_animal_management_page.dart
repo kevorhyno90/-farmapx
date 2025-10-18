@@ -53,6 +53,8 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
       body: Column(
         children: [
           _buildHeader(),
+          _buildNavigationTabs(),
+          _buildSearchAndFilters(),
           Expanded(
             child: IndexedStack(
               index: _selectedIndex,
@@ -92,8 +94,8 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
         children: [
           Row(
             children: [
-              Icon(Icons.pets, color: Colors.white, size: 16),
-              const SizedBox(width: 4),
+              Icon(Icons.pets, color: Colors.white, size: 20),
+              const SizedBox(width: 6),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,12 +105,12 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                        fontSize: 16,
                       ),
                     ),
                     Text(
                       'Comprehensive veterinary-grade animal care system',
-                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 9),
+                      style: TextStyle(color: Colors.white.withValues(alpha: 0.9), fontSize: 12),
                     ),
                   ],
                 ),
@@ -116,7 +118,7 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
             ],
           ),
           const SizedBox(height: 6),
-
+          _buildQuickStats(),
         ],
       ),
     );
@@ -141,20 +143,20 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
 
   Widget _buildStatCard(String title, String value, IconData icon, {Color? color}) {
     return Container(
-      padding: EdgeInsets.all(4),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Column(
         children: [
-          Icon(icon, color: color ?? Colors.white, size: 12),
-          SizedBox(height: 1),
+          Icon(icon, color: color ?? Colors.white, size: 16),
+          SizedBox(height: 2),
           Text(
             value,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 10,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -162,7 +164,7 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
             title,
             style: TextStyle(
               color: Colors.white70,
-              fontSize: 7,
+              fontSize: 10,
             ),
             textAlign: TextAlign.center,
           ),
@@ -182,14 +184,14 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
     ];
 
     return Container(
-      height: 28,
+      height: 40,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             blurRadius: 1,
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
           ),
         ],
       ),
@@ -217,14 +219,14 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
                     Icon(
                       tab['icon'] as IconData,
                       color: isSelected ? Colors.green[600] : Colors.grey[600],
-                      size: 10,
+                      size: 16,
                     ),
-                    SizedBox(height: 0.5),
+                    SizedBox(height: 2),
                     Text(
                       tab['title'] as String,
                       style: TextStyle(
                         color: isSelected ? Colors.green[600] : Colors.grey[600],
-                        fontSize: 7,
+                        fontSize: 11,
                         fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                       ),
                     ),
@@ -304,7 +306,7 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -528,7 +530,7 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
 
   Widget _buildSearchAndFilters() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.grey[50],
         border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
@@ -540,14 +542,17 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
               _searchQuery = value;
               _applyFilters();
             },
+            style: TextStyle(fontSize: 14),
             decoration: InputDecoration(
               hintText: 'Search animals by name, ID, or breed...',
-              prefixIcon: Icon(Icons.search),
+              hintStyle: TextStyle(fontSize: 14),
+              prefixIcon: Icon(Icons.search, size: 20),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               filled: true,
               fillColor: Colors.white,
+              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             ),
           ),
           SizedBox(height: 12),
@@ -555,42 +560,51 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: _selectedSpecies,
+                  initialValue: _selectedSpecies,
                   onChanged: (value) {
                     _selectedSpecies = value;
                     _applyFilters();
                   },
                   decoration: InputDecoration(
                     labelText: 'Species',
+                    labelStyle: TextStyle(fontSize: 14),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                     filled: true,
                     fillColor: Colors.white,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                   ),
+                  style: TextStyle(fontSize: 14),
                   items: ['All', 'Cattle', 'Goat', 'Pig', 'Poultry']
                     .map((species) => DropdownMenuItem(
                       value: species == 'All' ? null : species,
-                      child: Text(species),
+                      child: Text(species, style: TextStyle(fontSize: 14)),
                     )).toList(),
                 ),
               ),
               SizedBox(width: 12),
               Expanded(
                 child: DropdownButtonFormField<AnimalStatus>(
-                  value: _selectedStatus,
+                  initialValue: _selectedStatus,
                   onChanged: (value) {
                     _selectedStatus = value;
                     _applyFilters();
                   },
                   decoration: InputDecoration(
                     labelText: 'Status',
+                    labelStyle: TextStyle(fontSize: 14),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                     filled: true,
                     fillColor: Colors.white,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                   ),
+                  style: TextStyle(fontSize: 14),
                   items: [null, ...AnimalStatus.values]
                     .map((status) => DropdownMenuItem(
                       value: status,
-                      child: Text(status?.toString().split('.').last.toUpperCase() ?? 'All'),
+                      child: Text(
+                        status?.toString().split('.').last.toUpperCase() ?? 'All',
+                        style: TextStyle(fontSize: 14),
+                      ),
                     )).toList(),
                 ),
               ),

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'design/xfarm_theme.dart';
+import 'widgets/xfarm_components.dart';
 import 'dashboard_page.dart';
-import 'animals_page.dart';
-import 'livestock_page.dart';
-import 'calf_page.dart';
-import 'poultry_page.dart';
 import 'crops_page.dart';
 import 'fields_page.dart';
 import 'inventory_page.dart';
-import 'compact_feed_formulation_page.dart';
 import 'feed_formulation_page.dart';
 import 'advanced_formulation_page.dart';
 import 'ingredient_management_page.dart';
@@ -19,6 +16,8 @@ import 'tasks_page.dart';
 import 'reports_page.dart';
 import 'employees_page.dart';
 import 'professional_animal_management_page.dart';
+import 'professional_calf_management_page.dart';
+import 'professional_poultry_management_page.dart';
 
 class EnhancedShellPage extends StatefulWidget {
   const EnhancedShellPage({Key? key}) : super(key: key);
@@ -34,19 +33,16 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
 
   final Map<String, List<Map<String, dynamic>>> _moduleStructure = {
     'Dashboard': [],
-    'Animals & Livestock': [
-      {'name': 'Professional Management', 'page': () => const ProfessionalAnimalManagementPage(), 'icon': Icons.medical_services},
-      {'name': 'Basic Animals View', 'page': () => const AnimalsPage(), 'icon': Icons.pets},
-      {'name': 'Basic Livestock View', 'page': () => const LivestockPage(), 'icon': Icons.agriculture},
-      {'name': 'Calf Management', 'page': () => const CalfPage(), 'icon': Icons.child_care},
-      {'name': 'Poultry Management', 'page': () => const PoultryPage(), 'icon': Icons.flutter_dash},
+    'Professional Animals': [
+      {'name': 'Comprehensive Management', 'page': () => const ProfessionalAnimalManagementPage(), 'icon': Icons.medical_services},
+      {'name': 'Calf Management', 'page': () => const ProfessionalCalfManagementPage(), 'icon': Icons.child_care},
+      {'name': 'Poultry Management', 'page': () => const ProfessionalPoultryManagementPage(), 'icon': Icons.flutter_dash},
     ],
     'Crops & Fields': [
       {'name': 'Crop Management', 'page': () => const CropsPage(), 'icon': Icons.agriculture},
       {'name': 'Field Management', 'page': () => const FieldsPage(), 'icon': Icons.landscape},
     ],
     'Feed & Nutrition': [
-      {'name': 'Compact Formulation', 'page': () => const CompactFeedFormulationPage(), 'icon': Icons.science},
       {'name': 'Feed Formulation', 'page': () => const FeedFormulationPage(), 'icon': Icons.biotech},
       {'name': 'Advanced Formulation', 'page': () => const AdvancedFormulationPage(), 'icon': Icons.psychology},
       {'name': 'Ingredient Management', 'page': () => const IngredientManagementPage(), 'icon': Icons.inventory_2},
@@ -75,252 +71,325 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
     _currentPage = const DashboardPage();
   }
 
-  Widget _buildModuleDropdown(String moduleName) {
-    final subModules = _moduleStructure[moduleName] ?? [];
-    final isSelected = _selectedModule == moduleName;
-    
-    if (subModules.isEmpty) {
-      // Single module without dropdown
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
+  Widget _buildFarmModuleChip(String moduleName, bool isSelected) {
+    return GestureDetector(
+      onTap: () => _selectModule(moduleName),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: XFarmTheme.spacingLarge,
+          vertical: XFarmTheme.spacingMedium,
+        ),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.green[600] : Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          gradient: isSelected 
+              ? XFarmTheme.farmGradient
+              : null,
+          color: isSelected 
+              ? null 
+              : XFarmTheme.cardBackground,
+          borderRadius: BorderRadius.circular(XFarmTheme.radiusLarge),
           border: Border.all(
-            color: isSelected ? Colors.green[700]! : Colors.grey[300]!,
-            width: 1.5,
+            color: isSelected 
+                ? XFarmTheme.primaryGreen 
+                : XFarmTheme.borderColor,
+            width: isSelected ? 2 : 1,
           ),
-          boxShadow: isSelected ? [
-            BoxShadow(
-              color: Colors.green.withOpacity(0.3),
-              blurRadius: 4,
-              offset: Offset(0, 2),
+          boxShadow: isSelected 
+              ? XFarmTheme.farmElevatedShadow
+              : XFarmTheme.farmCardShadow,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              _getModuleIcon(moduleName),
+              size: 20,
+              color: isSelected 
+                  ? XFarmTheme.lightText 
+                  : XFarmTheme.primaryGreen,
             ),
-          ] : [],
-        ),
-        child: TextButton(
-          onPressed: () => _selectModule(moduleName, ''),
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            foregroundColor: isSelected ? Colors.white : Colors.grey[800],
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          ),
-          child: Text(
-            moduleName, 
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-              letterSpacing: 0.3,
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-        color: isSelected ? Colors.green[600] : Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: isSelected ? Colors.green[700]! : Colors.grey[300]!,
-          width: 1.5,
-        ),
-        boxShadow: isSelected ? [
-          BoxShadow(
-            color: Colors.green.withOpacity(0.3),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ] : [],
-      ),
-      child: PopupMenuButton<String>(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                moduleName,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                  letterSpacing: 0.3,
-                  color: isSelected ? Colors.white : Colors.grey[800],
-                ),
-              ),
-              const SizedBox(width: 4),
-              Icon(
-                Icons.arrow_drop_down,
-                color: isSelected ? Colors.white : Colors.grey[700],
-                size: 16,
-              ),
-            ],
-          ),
-        ),
-        elevation: 8,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        color: Colors.white,
-        itemBuilder: (context) => subModules.map((subModule) {
-          return PopupMenuItem<String>(
-            value: subModule['name'],
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.green[50],
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Icon(
-                      subModule['icon'], 
-                      size: 14, 
-                      color: Colors.green[700],
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      subModule['name'],
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-                  ),
-                ],
+            const SizedBox(width: XFarmTheme.spacingSmall),
+            Text(
+              moduleName,
+              style: XFarmTheme.farmLabelLarge.copyWith(
+                color: isSelected 
+                    ? XFarmTheme.lightText 
+                    : XFarmTheme.primaryText,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          );
-        }).toList(),
-        onSelected: (subModuleName) => _selectModule(moduleName, subModuleName),
+          ],
+        ),
       ),
     );
   }
 
-  void _selectModule(String moduleName, String subModuleName) {
+  Widget _buildFarmSubModuleChip(Map<String, dynamic> subModule, bool isSelected) {
+    return GestureDetector(
+      onTap: () => _selectSubModule(subModule['name'], subModule['page']),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: XFarmTheme.spacingMedium,
+          vertical: XFarmTheme.spacingSmall,
+        ),
+        decoration: BoxDecoration(
+          gradient: isSelected 
+              ? XFarmTheme.skyGradient
+              : null,
+          color: isSelected 
+              ? null 
+              : XFarmTheme.cardBackground,
+          borderRadius: BorderRadius.circular(XFarmTheme.radiusMedium),
+          border: Border.all(
+            color: isSelected 
+                ? XFarmTheme.farmBlue 
+                : XFarmTheme.borderColor,
+            width: 1,
+          ),
+          boxShadow: isSelected 
+              ? XFarmTheme.farmCardShadow
+              : [],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: isSelected 
+                    ? XFarmTheme.lightText.withValues(alpha: 0.2)
+                    : XFarmTheme.farmBlue.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(XFarmTheme.radiusSmall),
+              ),
+              child: Icon(
+                subModule['icon'],
+                size: 16,
+                color: isSelected 
+                    ? XFarmTheme.lightText 
+                    : XFarmTheme.farmBlue,
+              ),
+            ),
+            const SizedBox(width: XFarmTheme.spacingSmall),
+            Text(
+              subModule['name'],
+              style: XFarmTheme.farmLabelMedium.copyWith(
+                color: isSelected 
+                    ? XFarmTheme.lightText 
+                    : XFarmTheme.primaryText,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  IconData _getModuleIcon(String moduleName) {
+    switch (moduleName) {
+      case 'Dashboard':
+        return XFarmIcons.analytics;
+      case 'Professional Animals':
+        return XFarmIcons.livestock;
+      case 'Crops & Fields':
+        return XFarmIcons.crops;
+      case 'Feed & Nutrition':
+        return XFarmIcons.feed;
+      case 'Inventory & Stock':
+        return XFarmIcons.storage;
+      case 'Finance & Accounting':
+        return XFarmIcons.money;
+      case 'Operations & HR':
+        return XFarmIcons.calendar;
+      case 'Reports & Analytics':
+        return XFarmIcons.analytics;
+      default:
+        return XFarmIcons.farm;
+    }
+  }
+
+  Widget _buildCurrentPage() {
+    return Container(
+      padding: const EdgeInsets.all(XFarmTheme.spacingMedium),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            XFarmTheme.lightBackground,
+            XFarmTheme.cardBackground,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: _currentPage ?? Center(
+        child: XFarmCard(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                XFarmIcons.farm,
+                size: 64,
+                color: XFarmTheme.primaryGreen.withValues(alpha: 0.5),
+              ),
+              const SizedBox(height: XFarmTheme.spacingMedium),
+              Text(
+                'Select a module to begin',
+                style: XFarmTheme.farmHeadingSmall.copyWith(
+                  color: XFarmTheme.secondaryText,
+                ),
+              ),
+              const SizedBox(height: XFarmTheme.spacingSmall),
+              Text(
+                'Choose from the navigation above to access your farm management tools',
+                style: XFarmTheme.farmBodyMedium.copyWith(
+                  color: XFarmTheme.hintText,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _selectModule(String moduleName) {
     setState(() {
       _selectedModule = moduleName;
-      _selectedSubModule = subModuleName;
+      _selectedSubModule = '';
       
       if (moduleName == 'Dashboard') {
         _currentPage = const DashboardPage();
-      } else if (moduleName == 'Animals & Livestock' && subModuleName.isEmpty) {
-        // Automatically load Professional Management for Animals & Livestock
-        _selectedSubModule = 'Professional Management';
-        _currentPage = const ProfessionalAnimalManagementPage();
-      } else if (subModuleName.isNotEmpty) {
-        final subModules = _moduleStructure[moduleName] ?? [];
-        final selectedSubModule = subModules.firstWhere(
-          (sub) => sub['name'] == subModuleName,
-          orElse: () => subModules.first,
-        );
-        _currentPage = selectedSubModule['page']();
       } else if (_moduleStructure[moduleName]?.isNotEmpty == true) {
-        // Default to first sub-module if no specific one selected
-        final firstSubModule = _moduleStructure[moduleName]!.first;
-        _selectedSubModule = firstSubModule['name'];
-        _currentPage = firstSubModule['page']();
+        // Don't auto-select first submodule, let user choose
+        _currentPage = null;
+      } else {
+        _currentPage = const DashboardPage(); // Fallback
       }
     });
   }
 
-  String get _currentTitle {
-    if (_selectedModule == 'Dashboard') return 'Overview & Analytics';
-    if (_selectedSubModule.isNotEmpty) return _selectedSubModule;
-    if (_moduleStructure[_selectedModule]?.isNotEmpty == true) {
-      return '${_moduleStructure[_selectedModule]!.length} modules available';
-    }
-    return _selectedModule;
+  void _selectSubModule(String subModuleName, Widget Function() pageBuilder) {
+    setState(() {
+      _selectedSubModule = subModuleName;
+      _currentPage = pageBuilder();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: Colors.green[700],
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Icon(Icons.agriculture, color: Colors.white, size: 18),
+      backgroundColor: XFarmTheme.lightBackground,
+      appBar: XFarmAppBar(
+        title: 'XFarm',
+        subtitle: 'Agricultural Management Platform',
+        gradient: XFarmTheme.farmGradient,
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: XFarmTheme.spacingSmall),
+            padding: const EdgeInsets.all(XFarmTheme.spacingSmall),
+            decoration: BoxDecoration(
+              color: XFarmTheme.lightText.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(XFarmTheme.radiusSmall),
             ),
-            const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Farm Management Pro',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[800],
-                    letterSpacing: 0.3,
-                  ),
+            child: Icon(
+              Icons.notifications_outlined,
+              color: XFarmTheme.lightText,
+              size: 24,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(right: XFarmTheme.spacingMedium),
+            padding: const EdgeInsets.all(XFarmTheme.spacingSmall),
+            decoration: BoxDecoration(
+              color: XFarmTheme.lightText.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(XFarmTheme.radiusSmall),
+            ),
+            child: Icon(
+              Icons.account_circle_outlined,
+              color: XFarmTheme.lightText,
+              size: 24,
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // XFarm Agricultural Navigation
+          Container(
+            decoration: BoxDecoration(
+              color: XFarmTheme.cardBackground,
+              border: Border(
+                bottom: BorderSide(
+                  color: XFarmTheme.borderColor,
+                  width: 1,
                 ),
-                Text(
-                  _currentTitle,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green[700],
-                  ),
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: XFarmTheme.shadowColor,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
                 ),
               ],
             ),
-          ],
-        ),
-        backgroundColor: Colors.white,
-        elevation: 2,
-        shadowColor: Colors.grey.withOpacity(0.3),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(45),
-          child: Container(
-            height: 45,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.grey[50]!, Colors.white],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-              border: Border(
-                top: BorderSide(color: Colors.grey[200]!, width: 1),
-                bottom: BorderSide(color: Colors.grey[300]!, width: 1),
-              ),
-            ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(
+                horizontal: XFarmTheme.spacingMedium,
+                vertical: XFarmTheme.spacingMedium,
+              ),
               child: Row(
-                children: _moduleStructure.keys
-                    .map((module) => _buildModuleDropdown(module))
-                    .toList(),
+                children: _moduleStructure.keys.map((module) {
+                  final isSelected = _selectedModule == module;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: XFarmTheme.spacingMedium),
+                    child: _buildFarmModuleChip(module, isSelected),
+                  );
+                }).toList(),
               ),
             ),
           ),
-        ),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.grey[50]!, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+          // Agricultural Submodules
+          if (_moduleStructure[_selectedModule]?.isNotEmpty == true)
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    XFarmTheme.lightGreen,
+                    XFarmTheme.cardBackground,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                border: Border(
+                  bottom: BorderSide(
+                    color: XFarmTheme.borderColor,
+                    width: 1,
+                  ),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: XFarmTheme.spacingMedium,
+                vertical: XFarmTheme.spacingMedium,
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: _moduleStructure[_selectedModule]!.map((subModule) {
+                    final isSelected = _selectedSubModule == subModule['name'];
+                    return Padding(
+                      padding: const EdgeInsets.only(right: XFarmTheme.spacingMedium),
+                      child: _buildFarmSubModuleChip(subModule, isSelected),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          // Farm Content Area
+          Expanded(
+            child: _buildCurrentPage(),
           ),
-        ),
-        child: _currentPage ?? const Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-          ),
-        ),
+        ],
       ),
     );
   }

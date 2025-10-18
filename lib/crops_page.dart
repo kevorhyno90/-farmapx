@@ -8,11 +8,11 @@ class CropsPage extends StatelessWidget {
   const CropsPage({super.key});
 
   Widget _overview(BuildContext context, AppState app) => Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Crops Overview', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 8),
-          Text('Total cycles: ${app.crops.length}'),
+          Text('Crops Overview', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 22)),
+          const SizedBox(height: 12),
+          Text('Total cycles: ${app.crops.length}', style: TextStyle(fontSize: 16)),
         ]),
       );
 
@@ -21,16 +21,17 @@ class CropsPage extends StatelessWidget {
         itemBuilder: (context, idx) {
           final c = app.crops[idx];
           return ListTile(
-            title: Text('${c.cropName} — ${c.fieldId}'),
-            subtitle: Text('Planted: ${c.plantingDate.toString().split(' ')[0]}'),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            title: Text('${c.cropName} — ${c.fieldId}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            subtitle: Text('Planted: ${c.plantingDate.toString().split(' ')[0]}', style: TextStyle(fontSize: 14)),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
               IconButton(
-                  icon: const Icon(Icons.edit),
+                  icon: const Icon(Icons.edit, size: 24),
                   onPressed: () async {
                     final changed = await Navigator.push<CropModel?>(context, MaterialPageRoute(builder: (_) => CropEditPage(crop: c)));
                     if (changed != null) await app.updateCrop(changed);
                   }),
-              IconButton(icon: const Icon(Icons.delete), onPressed: () => app.deleteCrop(c.id))
+              IconButton(icon: const Icon(Icons.delete, size: 24), onPressed: () => app.deleteCrop(c.id))
             ]),
           );
         },
