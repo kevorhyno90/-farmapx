@@ -103,15 +103,15 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
           style: TextButton.styleFrom(
             backgroundColor: Colors.transparent,
             foregroundColor: isSelected ? Colors.white : Colors.grey[800],
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
           child: Text(
             moduleName, 
             style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
-              letterSpacing: 0.5,
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+              letterSpacing: 0.3,
             ),
           ),
         ),
@@ -137,24 +137,24 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
       ),
       child: PopupMenuButton<String>(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 moduleName,
                 style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  letterSpacing: 0.5,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                  letterSpacing: 0.3,
                   color: isSelected ? Colors.white : Colors.grey[800],
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 4),
               Icon(
                 Icons.arrow_drop_down,
                 color: isSelected ? Colors.white : Colors.grey[700],
-                size: 20,
+                size: 16,
               ),
             ],
           ),
@@ -166,28 +166,28 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
           return PopupMenuItem<String>(
             value: subModule['name'],
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(vertical: 2),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: Colors.green[50],
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(4),
                     ),
                     child: Icon(
                       subModule['icon'], 
-                      size: 18, 
+                      size: 14, 
                       color: Colors.green[700],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       subModule['name'],
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey[800],
                       ),
                     ),
@@ -245,14 +245,14 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
         title: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: Colors.green[700],
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(6),
               ),
-              child: Icon(Icons.agriculture, color: Colors.white, size: 24),
+              child: Icon(Icons.agriculture, color: Colors.white, size: 18),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -260,16 +260,16 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
                 Text(
                   'Farm Management Pro',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[800],
-                    letterSpacing: 0.5,
+                    letterSpacing: 0.3,
                   ),
                 ),
                 Text(
                   _currentTitle,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.w500,
                     color: Colors.green[700],
                   ),
@@ -282,10 +282,10 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
         elevation: 2,
         shadowColor: Colors.grey.withOpacity(0.3),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(70),
+          preferredSize: const Size.fromHeight(45),
           child: Container(
-            height: 70,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: 45,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.grey[50]!, Colors.white],
@@ -294,7 +294,7 @@ class _EnhancedShellPageState extends State<EnhancedShellPage> {
               ),
               border: Border(
                 top: BorderSide(color: Colors.grey[200]!, width: 1),
-                bottom: BorderSide(color: Colors.grey[300]!, width: 2),
+                bottom: BorderSide(color: Colors.grey[300]!, width: 1),
               ),
             ),
             child: SingleChildScrollView(

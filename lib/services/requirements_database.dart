@@ -80,8 +80,8 @@ class RequirementsDatabase {
       dailyGain: 0.05,
       description: 'Broiler starter feed (0-3 weeks)',
       source: 'NRC 1994, Broiler Nutrition',
-      requirements: [
-        NutritionalRequirement(
+      requirements: const [
+  const NutritionalRequirement(
           nutrient: 'metabolizable_energy',
           minimum: 3000,
           maximum: 3200,
@@ -89,7 +89,7 @@ class RequirementsDatabase {
           isCritical: true,
           description: 'High energy for rapid growth',
         ),
-        NutritionalRequirement(
+  const NutritionalRequirement(
           nutrient: 'crude_protein',
           minimum: 22.0,
           maximum: 24.0,
@@ -97,21 +97,21 @@ class RequirementsDatabase {
           isCritical: true,
           description: 'High protein for muscle development',
         ),
-        NutritionalRequirement(
+  const NutritionalRequirement(
           nutrient: 'lysine',
           minimum: 1.35,
           unit: '%',
           isCritical: true,
           description: 'Essential amino acid for growth',
         ),
-        NutritionalRequirement(
+  const NutritionalRequirement(
           nutrient: 'methionine',
           minimum: 0.50,
           unit: '%',
           isCritical: true,
           description: 'Limiting amino acid in corn-soy diets',
         ),
-        NutritionalRequirement(
+  const NutritionalRequirement(
           nutrient: 'calcium',
           minimum: 1.0,
           maximum: 1.2,
@@ -143,7 +143,7 @@ class RequirementsDatabase {
       dailyGain: 0.07,
       description: 'Broiler grower feed (3-6 weeks)',
       source: 'NRC 1994, Broiler Nutrition',
-      requirements: [
+      requirements: const [
         NutritionalRequirement(
           nutrient: 'metabolizable_energy',
           minimum: 3100,
@@ -193,7 +193,7 @@ class RequirementsDatabase {
       dailyGain: 0.08,
       description: 'Broiler finisher feed (6+ weeks)',
       source: 'NRC 1994, Broiler Nutrition',
-      requirements: [
+      requirements: const [
         NutritionalRequirement(
           nutrient: 'metabolizable_energy',
           minimum: 3150,
@@ -243,7 +243,7 @@ class RequirementsDatabase {
       dailyGain: 0.012,
       description: 'Layer pullet grower feed (0-18 weeks)',
       source: 'NRC 1994, Layer Nutrition',
-      requirements: [
+      requirements: const [
         NutritionalRequirement(
           nutrient: 'metabolizable_energy',
           minimum: 2800,
@@ -293,7 +293,7 @@ class RequirementsDatabase {
       eggProduction: 0.85, // eggs per day
       description: 'Layer production feed (18+ weeks)',
       source: 'NRC 1994, Layer Nutrition',
-      requirements: [
+      requirements: const [
         NutritionalRequirement(
           nutrient: 'metabolizable_energy',
           minimum: 2750,

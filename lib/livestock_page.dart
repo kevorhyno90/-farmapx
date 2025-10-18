@@ -63,7 +63,7 @@ class _LivestockPageState extends State<LivestockPage>
 
   Widget _buildHeader(AppState app) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.blue[700]!, Colors.blue[500]!],
@@ -76,36 +76,36 @@ class _LivestockPageState extends State<LivestockPage>
         children: [
           Row(
             children: [
-              Icon(Icons.agriculture, color: Colors.white, size: 28),
-              const SizedBox(width: 8),
+              Icon(Icons.agriculture, color: Colors.white, size: 20),
+              const SizedBox(width: 6),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Livestock Management',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                     Text(
                       'Professional livestock tracking',
-                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 12),
+                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 10),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           Row(
             children: [
               _buildStatCard('Total Animals', '${app.animals.length}', Icons.pets),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               _buildStatCard('Active', '${app.animals.where((a) => a.species.isNotEmpty).length}', Icons.check_circle),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               _buildStatCard('Species', '${_getUniqueSpecies(app.animals).length}', Icons.category),
             ],
           ),
@@ -117,15 +117,15 @@ class _LivestockPageState extends State<LivestockPage>
   Widget _buildStatCard(String title, String value, IconData icon) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6),
         ),
         child: Row(
           children: [
-            Icon(icon, color: Colors.white, size: 24),
-            const SizedBox(width: 8),
+            Icon(icon, color: Colors.white, size: 18),
+            const SizedBox(width: 6),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -133,7 +133,7 @@ class _LivestockPageState extends State<LivestockPage>
                   value,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -141,7 +141,7 @@ class _LivestockPageState extends State<LivestockPage>
                   title,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
-                    fontSize: 12,
+                    fontSize: 10,
                   ),
                 ),
               ],
@@ -154,25 +154,26 @@ class _LivestockPageState extends State<LivestockPage>
 
   Widget _buildSearchAndFilters() {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(6),
       color: Colors.grey[50],
       child: Column(
         children: [
           TextField(
             decoration: InputDecoration(
               hintText: 'Search animals...',
-              prefixIcon: const Icon(Icons.search, size: 20),
+              hintStyle: TextStyle(fontSize: 11),
+              prefixIcon: const Icon(Icons.search, size: 14),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(4),
               ),
               filled: true,
               fillColor: Colors.white,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               isDense: true,
             ),
             onChanged: (value) => setState(() => _searchQuery = value),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -193,16 +194,17 @@ class _LivestockPageState extends State<LivestockPage>
   Widget _buildFilterChip(String label, String? species) {
     final isSelected = _selectedSpecies == species;
     return Padding(
-      padding: const EdgeInsets.only(right: 6),
+      padding: const EdgeInsets.only(right: 3),
       child: FilterChip(
-        label: Text(label, style: const TextStyle(fontSize: 12)),
+        label: Text(label, style: const TextStyle(fontSize: 9)),
         selected: isSelected,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        labelPadding: const EdgeInsets.symmetric(horizontal: 4),
         onSelected: (selected) {
           setState(() => _selectedSpecies = selected ? species : null);
         },
         selectedColor: Colors.blue[100],
         checkmarkColor: Colors.blue[700],
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         visualDensity: VisualDensity.compact,
       ),
     );
@@ -216,13 +218,13 @@ class _LivestockPageState extends State<LivestockPage>
         labelColor: Colors.blue[700],
         unselectedLabelColor: Colors.grey[600],
         indicatorColor: Colors.blue[700],
-        labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-        unselectedLabelStyle: const TextStyle(fontSize: 12),
+        labelStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+        unselectedLabelStyle: const TextStyle(fontSize: 10),
         tabs: const [
-          Tab(icon: Icon(Icons.dashboard, size: 20), text: 'Overview'),
-          Tab(icon: Icon(Icons.list, size: 20), text: 'Animals'),
-          Tab(icon: Icon(Icons.health_and_safety, size: 20), text: 'Health'),
-          Tab(icon: Icon(Icons.analytics), text: 'Reports'),
+          Tab(icon: Icon(Icons.dashboard, size: 16), text: 'Overview'),
+          Tab(icon: Icon(Icons.list, size: 16), text: 'Animals'),
+          Tab(icon: Icon(Icons.health_and_safety, size: 16), text: 'Health'),
+          Tab(icon: Icon(Icons.analytics, size: 16), text: 'Reports'),
         ],
       ),
     );
@@ -231,46 +233,47 @@ class _LivestockPageState extends State<LivestockPage>
   Widget _buildOverviewTab(AppState app) {
     final species = _getSpeciesBreakdown(app.animals);
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Livestock Overview',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 12),
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1.3,
               children: species.entries.map((entry) {
                 return Card(
-                  elevation: 4,
+                  elevation: 2,
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           _getSpeciesIcon(entry.key),
-                          size: 48,
+                          size: 32,
                           color: Colors.blue[600],
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 8),
                         Text(
                           '${entry.value}',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.blue[700],
                           ),
                         ),
                         Text(
                           entry.key,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 12),
                         ),
                       ],
                     ),

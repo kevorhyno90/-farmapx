@@ -15,7 +15,7 @@ class _IngredientComponentTableState extends State<IngredientComponentTable> {
   List<FeedIngredient> _filteredIngredients = [];
   String _searchQuery = '';
   IngredientCategory? _selectedCategory;
-  Set<String> _selectedColumns = {
+  final Set<String> _selectedColumns = {
     'name',
     'crudeProtein',
     'metabolizableEnergy',
@@ -109,7 +109,7 @@ class _IngredientComponentTableState extends State<IngredientComponentTable> {
               const SizedBox(width: 16),
               Expanded(
                 child: DropdownButtonFormField<IngredientCategory?>(
-                  value: _selectedCategory,
+                  initialValue: _selectedCategory,
                   decoration: InputDecoration(
                     labelText: 'Category',
                     border: OutlineInputBorder(
@@ -326,19 +326,24 @@ class _IngredientComponentTableState extends State<IngredientComponentTable> {
       case 'crudeProtein':
         return ingredient.nutritionalProfile.crudeProtein.toStringAsFixed(1);
       case 'digestibleProtein':
-        return ingredient.nutritionalProfile.digestibleProtein?.toStringAsFixed(1) ?? '-';
+        final dp = ingredient.nutritionalProfile.digestibleProtein;
+        return dp == null ? '-' : dp.toStringAsFixed(1);
       case 'metabolizableEnergy':
         return ingredient.nutritionalProfile.metabolizableEnergy.toStringAsFixed(0);
       case 'digestibleEnergy':
-        return ingredient.nutritionalProfile.digestibleEnergy?.toStringAsFixed(0) ?? '-';
+        final de = ingredient.nutritionalProfile.digestibleEnergy;
+        return de == null ? '-' : de.toStringAsFixed(0);
       case 'crudeFat':
         return ingredient.nutritionalProfile.crudeFat.toStringAsFixed(1);
       case 'ndf':
-        return ingredient.nutritionalProfile.ndf?.toStringAsFixed(1) ?? '-';
+        final ndfVal = ingredient.nutritionalProfile.ndf;
+        return ndfVal == null ? '-' : ndfVal.toStringAsFixed(1);
       case 'adf':
-        return ingredient.nutritionalProfile.adf?.toStringAsFixed(1) ?? '-';
+        final adfVal = ingredient.nutritionalProfile.adf;
+        return adfVal == null ? '-' : adfVal.toStringAsFixed(1);
       case 'crudeFiber':
-        return ingredient.nutritionalProfile.adf?.toStringAsFixed(1) ?? '-';
+        final cf = ingredient.nutritionalProfile.adf;
+        return cf == null ? '-' : cf.toStringAsFixed(1);
       case 'ash':
         return ingredient.nutritionalProfile.ash.toStringAsFixed(1);
       case 'calcium':
@@ -352,11 +357,14 @@ class _IngredientComponentTableState extends State<IngredientComponentTable> {
       case 'sodium':
         return ingredient.nutritionalProfile.minerals.sodium.toStringAsFixed(2);
       case 'lysine':
-        return ingredient.nutritionalProfile.aminoAcids?.lysine?.toStringAsFixed(2) ?? '-';
+        final lys = ingredient.nutritionalProfile.aminoAcids?.lysine;
+        return lys == null ? '-' : lys.toStringAsFixed(2);
       case 'methionine':
-        return ingredient.nutritionalProfile.aminoAcids?.methionine?.toStringAsFixed(2) ?? '-';
+        final met = ingredient.nutritionalProfile.aminoAcids?.methionine;
+        return met == null ? '-' : met.toStringAsFixed(2);
       case 'threonine':
-        return ingredient.nutritionalProfile.aminoAcids?.threonine?.toStringAsFixed(2) ?? '-';
+        final thr = ingredient.nutritionalProfile.aminoAcids?.threonine;
+        return thr == null ? '-' : thr.toStringAsFixed(2);
       case 'price':
         return ingredient.currentPrice.toStringAsFixed(0);
       case 'availability':

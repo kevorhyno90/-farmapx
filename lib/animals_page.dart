@@ -54,7 +54,7 @@ class _AnimalsPageState extends State<AnimalsPage>
 
   Widget _buildHeader(AppState app) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.purple[700]!, Colors.purple[500]!],
@@ -67,36 +67,36 @@ class _AnimalsPageState extends State<AnimalsPage>
         children: [
           Row(
             children: [
-              Icon(Icons.pets, color: Colors.white, size: 28),
-              const SizedBox(width: 8),
+              Icon(Icons.pets, color: Colors.white, size: 20),
+              const SizedBox(width: 6),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'All Animals Overview',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                     Text(
                       'Complete farm animal management dashboard',
-                      style: TextStyle(color: Colors.white.withOpacity(0.9)),
+                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 12),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Row(
             children: [
               _buildStatCard('Total Animals', '${app.animals.length}', Icons.pets, Colors.white),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               _buildStatCard('Calves', '${app.calves.length}', Icons.child_care, Colors.white),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               _buildStatCard('Poultry', '${app.poultry.length}', Icons.flutter_dash, Colors.white),
             ],
           ),
@@ -108,15 +108,15 @@ class _AnimalsPageState extends State<AnimalsPage>
   Widget _buildStatCard(String title, String value, IconData icon, Color iconColor) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6),
         ),
         child: Row(
           children: [
-            Icon(icon, color: iconColor, size: 24),
-            const SizedBox(width: 8),
+            Icon(icon, color: iconColor, size: 18),
+            const SizedBox(width: 6),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -124,7 +124,7 @@ class _AnimalsPageState extends State<AnimalsPage>
                   value,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -132,7 +132,7 @@ class _AnimalsPageState extends State<AnimalsPage>
                   title,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
-                    fontSize: 11,
+                    fontSize: 10,
                   ),
                 ),
               ],
@@ -162,69 +162,69 @@ class _AnimalsPageState extends State<AnimalsPage>
 
   Widget _buildOverviewTab(AppState app) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Farm Overview',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 12),
           
           // Enhanced KPI Cards
           Row(
             children: [
               Expanded(
                 child: Card(
-                  elevation: 4,
+                  elevation: 2,
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       children: [
-                        Icon(Icons.pets, size: 40, color: Colors.purple[600]),
-                        const SizedBox(height: 8),
+                        Icon(Icons.pets, size: 28, color: Colors.purple[600]),
+                        const SizedBox(height: 6),
                         Text(
                           '${app.animals.length}',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.purple[700],
                           ),
                         ),
-                        Text('Livestock'),
+                        Text('Livestock', style: TextStyle(fontSize: 12)),
                         if (app.animals.isNotEmpty)
                           Text(
                             '${_getSpeciesCount(app.animals)} species',
-                            style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                            style: TextStyle(color: Colors.grey[600], fontSize: 10),
                           ),
                       ],
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               Expanded(
                 child: Card(
-                  elevation: 4,
+                  elevation: 2,
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       children: [
-                        Icon(Icons.child_care, size: 40, color: Colors.orange[600]),
-                        const SizedBox(height: 8),
+                        Icon(Icons.child_care, size: 28, color: Colors.orange[600]),
+                        const SizedBox(height: 6),
                         Text(
                           '${app.calves.length}',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.orange[700],
                           ),
                         ),
-                        Text('Calves'),
+                        Text('Calves', style: TextStyle(fontSize: 12)),
                         Text(
                           'Young stock',
-                          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                          style: TextStyle(color: Colors.grey[600], fontSize: 10),
                         ),
                       ],
                     ),
@@ -233,56 +233,56 @@ class _AnimalsPageState extends State<AnimalsPage>
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
                 child: Card(
-                  elevation: 4,
+                  elevation: 2,
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       children: [
-                        Icon(Icons.flutter_dash, size: 40, color: Colors.blue[600]),
-                        const SizedBox(height: 8),
+                        Icon(Icons.flutter_dash, size: 28, color: Colors.blue[600]),
+                        const SizedBox(height: 6),
                         Text(
                           '${app.poultry.length}',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.blue[700],
                           ),
                         ),
-                        Text('Poultry'),
+                        Text('Poultry', style: TextStyle(fontSize: 12)),
                         Text(
                           'Birds',
-                          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                          style: TextStyle(color: Colors.grey[600], fontSize: 10),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               Expanded(
                 child: Card(
-                  elevation: 4,
+                  elevation: 2,
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       children: [
-                        Icon(Icons.trending_up, size: 40, color: Colors.green[600]),
-                        const SizedBox(height: 8),
+                        Icon(Icons.trending_up, size: 28, color: Colors.green[600]),
+                        const SizedBox(height: 6),
                         Text(
                           '${app.animals.length + app.calves.length + app.poultry.length}',
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.green[700],
                           ),
                         ),
-                        Text('Total'),
+                        Text('Total', style: TextStyle(fontSize: 12)),
                         Text(
                           'All animals',
-                          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                          style: TextStyle(color: Colors.grey[600], fontSize: 10),
                         ),
                       ],
                     ),
@@ -292,23 +292,23 @@ class _AnimalsPageState extends State<AnimalsPage>
             ],
           ),
           
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           
           // Quick Actions
           Text(
             'Quick Actions',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.5,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 2.0,
             children: [
               _buildActionCard(
                 'Add Livestock',
@@ -343,21 +343,22 @@ class _AnimalsPageState extends State<AnimalsPage>
 
   Widget _buildActionCard(String title, IconData icon, MaterialColor color, VoidCallback onTap) {
     return Card(
-      elevation: 4,
+      elevation: 2,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 32, color: color[600]),
-              const SizedBox(height: 8),
+              Icon(icon, size: 24, color: color[600]),
+              const SizedBox(height: 6),
               Text(
                 title,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
+                  fontSize: 12,
                   color: color[700],
                 ),
                 textAlign: TextAlign.center,
@@ -407,20 +408,20 @@ class _AnimalsPageState extends State<AnimalsPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.pets, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
+            Icon(Icons.pets, size: 48, color: Colors.grey[400]),
+            const SizedBox(height: 12),
             Text(
               'No animals yet',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Text(
               'Add your first animal to get started',
-              style: TextStyle(color: Colors.grey[500]),
+              style: TextStyle(color: Colors.grey[500], fontSize: 12),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             ElevatedButton.icon(
               onPressed: () => _showAddAnimalDialog(app),
               icon: const Icon(Icons.add),
@@ -432,7 +433,7 @@ class _AnimalsPageState extends State<AnimalsPage>
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       itemCount: allAnimals.length,
       itemBuilder: (context, index) {
         final item = allAnimals[index];
@@ -442,15 +443,25 @@ class _AnimalsPageState extends State<AnimalsPage>
         final color = item['color'] as MaterialColor;
 
         return Card(
-          margin: const EdgeInsets.only(bottom: 12),
+          margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             leading: CircleAvatar(
+              radius: 18,
               backgroundColor: color[100],
-              child: Icon(icon, color: color[700]),
+              child: Icon(icon, color: color[700], size: 18),
             ),
-            title: Text(_getAnimalTitle(type, data)),
-            subtitle: Text(_getAnimalSubtitle(type, data)),
+            title: Text(
+              _getAnimalTitle(type, data),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+            subtitle: Text(
+              _getAnimalSubtitle(type, data),
+              style: TextStyle(fontSize: 12),
+            ),
             trailing: PopupMenuButton(
+              iconSize: 20,
+              padding: EdgeInsets.zero,
               itemBuilder: (context) => [
                 const PopupMenuItem(
                   value: 'view',

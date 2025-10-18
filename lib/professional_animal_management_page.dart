@@ -53,7 +53,6 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
       body: Column(
         children: [
           _buildHeader(),
-          _buildNavigationTabs(),
           Expanded(
             child: IndexedStack(
               index: _selectedIndex,
@@ -80,10 +79,10 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.green[700]!, Colors.green[500]!],
+          colors: [Colors.blue[700]!, Colors.blue[500]!],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -93,34 +92,31 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
         children: [
           Row(
             children: [
-              Icon(Icons.pets, color: Colors.white, size: 24),
-              SizedBox(width: 8),
+              Icon(Icons.pets, color: Colors.white, size: 16),
+              const SizedBox(width: 4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Professional Animal Management',
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: Colors.white,
-                        fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        fontSize: 12,
                       ),
                     ),
                     Text(
-                      'Comprehensive Livestock & Veterinary System',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 12,
-                      ),
+                      'Comprehensive veterinary-grade animal care system',
+                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 9),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          SizedBox(height: 10),
-          _buildQuickStats(),
+          const SizedBox(height: 6),
+
         ],
       ),
     );
@@ -145,20 +141,20 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
 
   Widget _buildStatCard(String title, String value, IconData icon, {Color? color}) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6),
       ),
       child: Column(
         children: [
-          Icon(icon, color: color ?? Colors.white, size: 18),
-          SizedBox(height: 2),
+          Icon(icon, color: color ?? Colors.white, size: 12),
+          SizedBox(height: 1),
           Text(
             value,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 14,
+              fontSize: 10,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -166,7 +162,7 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
             title,
             style: TextStyle(
               color: Colors.white70,
-              fontSize: 9,
+              fontSize: 7,
             ),
             textAlign: TextAlign.center,
           ),
@@ -186,13 +182,13 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
     ];
 
     return Container(
-      height: 45,
+      height: 28,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
-            blurRadius: 2,
+            blurRadius: 1,
             offset: Offset(0, 1),
           ),
         ],
@@ -221,14 +217,14 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
                     Icon(
                       tab['icon'] as IconData,
                       color: isSelected ? Colors.green[600] : Colors.grey[600],
-                      size: 16,
+                      size: 10,
                     ),
-                    SizedBox(height: 2),
+                    SizedBox(height: 0.5),
                     Text(
                       tab['title'] as String,
                       style: TextStyle(
                         color: isSelected ? Colors.green[600] : Colors.grey[600],
-                        fontSize: 10,
+                        fontSize: 7,
                         fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                       ),
                     ),
@@ -244,16 +240,16 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
 
   Widget _buildAnimalOverview() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildOverviewCards(),
-          SizedBox(height: 20),
+          SizedBox(height: 6),
           _buildSpeciesBreakdown(),
-          SizedBox(height: 20),
+          SizedBox(height: 6),
           _buildRecentActivity(),
-          SizedBox(height: 20),
+          SizedBox(height: 6),
           _buildUpcomingTasks(),
         ],
       ),
@@ -268,9 +264,9 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
       crossAxisCount: 2,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      childAspectRatio: 1.5,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      childAspectRatio: 2.0,
       children: [
         _buildOverviewCard(
           'Active Animals',
@@ -302,11 +298,11 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
 
   Widget _buildOverviewCard(String title, String value, IconData icon, Color color) {
     return Card(
-      elevation: 4,
+      elevation: 1,
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(4),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(4),
           gradient: LinearGradient(
             colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
             begin: Alignment.topLeft,
@@ -316,12 +312,12 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 32, color: color),
-            SizedBox(height: 8),
+            Icon(icon, size: 12, color: color),
+            SizedBox(height: 2),
             Text(
               value,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 11,
                 fontWeight: FontWeight.bold,
                 color: color,
               ),
@@ -329,7 +325,7 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
             Text(
               title,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 7,
                 color: Colors.grey[600],
               ),
               textAlign: TextAlign.center,
@@ -345,15 +341,15 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
     
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Species Breakdown',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
             ...speciesCounts.entries.map((entry) => 
               _buildSpeciesRow(entry.key, entry.value)),
           ],
@@ -607,31 +603,31 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
 
   Widget _buildAnimalCard(AnimalProfile animal) {
     return Card(
-      margin: EdgeInsets.only(bottom: 12),
-      elevation: 2,
+      margin: EdgeInsets.only(bottom: 4),
+      elevation: 1,
       child: InkWell(
         onTap: () => _showAnimalDetails(animal),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6),
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(6),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 25,
+                    radius: 12,
                     backgroundColor: _getSpeciesColor(animal.species),
                     child: Text(
                       animal.name.substring(0, 1).toUpperCase(),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 10,
                       ),
                     ),
                   ),
-                  SizedBox(width: 12),
+                  SizedBox(width: 6),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -639,7 +635,7 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
                         Text(
                           animal.name,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 11,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -647,23 +643,23 @@ class _ProfessionalAnimalManagementPageState extends State<ProfessionalAnimalMan
                           '${animal.breed} ${animal.species} • ${animal.identificationNumber}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 12,
+                            fontSize: 8,
                           ),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                     decoration: BoxDecoration(
                       color: _getStatusColor(animal.status).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       animal.status.toString().split('.').last.toUpperCase(),
                       style: TextStyle(
                         color: _getStatusColor(animal.status),
-                        fontSize: 10,
+                        fontSize: 7,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

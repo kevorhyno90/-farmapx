@@ -47,43 +47,43 @@ class DashboardPage extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Quick Stats Row
             _buildQuickStatsSection(app, currency),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             
             // Charts Row
             Row(
               children: [
                 Expanded(child: _buildFinancialChart(app)),
-                const SizedBox(width: 16),
+                const SizedBox(width: 8),
                 Expanded(child: _buildInventoryStatusChart(app)),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             
             // Animal Health and Production
             Row(
               children: [
                 Expanded(child: _buildAnimalHealthChart(app)),
-                const SizedBox(width: 16),
+                const SizedBox(width: 8),
                 Expanded(child: _buildProductionMetrics(app, currency)),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             
             // Recent Activities and Alerts
             Row(
               children: [
                 Expanded(child: _buildRecentActivities(app)),
-                const SizedBox(width: 16),
+                const SizedBox(width: 8),
                 Expanded(child: _buildAlertsSection(app)),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             
             // Navigation Cards
             _buildNavigationSection(context),
@@ -119,21 +119,21 @@ class DashboardPage extends StatelessWidget {
           Icons.pets,
           Colors.blue.shade600,
         )),
-        const SizedBox(width: 12),
+        const SizedBox(width: 6),
         Expanded(child: _buildStatCard(
           'Monthly Revenue', 
           currency.format(totalRevenue),
           Icons.trending_up,
           Colors.green.shade600,
         )),
-        const SizedBox(width: 12),
+        const SizedBox(width: 6),
         Expanded(child: _buildStatCard(
           'Monthly Expenses', 
           currency.format(totalExpenses),
           Icons.trending_down,
           Colors.red.shade600,
         )),
-        const SizedBox(width: 12),
+        const SizedBox(width: 6),
         Expanded(child: _buildStatCard(
           'Low Stock Items', 
           lowStockItems.toString(),
@@ -146,17 +146,17 @@ class DashboardPage extends StatelessWidget {
 
   Widget _buildStatCard(String title, String value, IconData icon, Color color) {
     return Card(
-      elevation: 4,
+      elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Icon(icon, size: 32, color: color),
-            const SizedBox(height: 8),
+            Icon(icon, size: 20, color: color),
+            const SizedBox(height: 4),
             Text(
               value,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: color,
               ),
@@ -164,7 +164,7 @@ class DashboardPage extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.grey.shade600,
               ),
               textAlign: TextAlign.center,
@@ -184,19 +184,19 @@ class DashboardPage extends StatelessWidget {
         .fold(0.0, (sum, t) => sum + t.amount);
 
     return Card(
-      elevation: 4,
+      elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(6.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Financial Overview',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 4),
             SizedBox(
-              height: 200,
+              height: 100,
               child: PieChart(
                 PieChartData(
                   sections: [
